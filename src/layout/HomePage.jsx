@@ -6,9 +6,9 @@ import { Outlet } from "react-router-dom";
 
 const HomePage = () => {
     return (
-        <div className="max-w-[1920px]">
+        <div className="max-w-[1920px] mx-auto">
            <Navbar></Navbar>
-           <div className="w-11/12 mx-auto ">
+           <div className=" ">
             <Outlet></Outlet>
            </div>
         </div>
