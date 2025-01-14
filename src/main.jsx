@@ -13,6 +13,7 @@ import {
 } from "react-router-dom";
 import HomePage from './layout/HomePage';
 import Home from './pages/Home';
+import PetListing from './pages/PetListing';
 
 const queryClient = new QueryClient()
 const router = createBrowserRouter([
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
       {
         path: '/',
         element:<Home></Home>
+      },
+      {
+        path: '/pet-listing',
+        element: <PetListing></PetListing>
       }
     ]
   },
