@@ -106,3 +106,6 @@ animation: animate-image 10s infinite ease-in-out ;
 opacity: 100;
 
 }
+.swiper-pagination {
+  display: none;
+}

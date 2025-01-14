@@ -22,7 +22,7 @@ const Banner = () => {
 
             <div className="w-2/4 flex justify-center relative">
 
-            <img src={pet} alt="" className='animate-img w-96 h-96 object-cover ' />
+            <img src={pet} alt="" className='animate-im w-96 h-96 object-cover ' />
             </div>
         </div>
     );

@@ -1,0 +1,43 @@
+[
+    {
+      "pet_name": "Max",
+      "pet_category": "Dog",
+      "story": "Max, a playful Golden Retriever, was found roaming the streets and brought to the shelter. He had a difficult start, being shy and reserved, but after a few weeks, his true personality started to shine. When the Thompson family visited the shelter, Max immediately bonded with their kids. They knew he was the one. After a smooth adoption process, Max became a part of their family. Now, he enjoys long walks, weekend adventures, and is the center of attention at family gatherings. Max’s journey is a beautiful reminder that every pet deserves a second chance at love and happiness.",
+      "adopted_date": "2023-05-15",
+      "location": "New York",
+      "image": "https://www.nylabone.com/-/media/project/oneweb/nylabone/images/dog101/10-intelligent-dog-breeds/golden-retriever-tongue-out.jpg?h=430&w=710&hash=7FEB820D235A44B76B271060E03572C7"
+    },
+    {
+      "pet_name": "Luna",
+      "pet_category": "Cat",
+      "story": "Luna, a sweet tabby cat, was abandoned at a park and rescued by a local animal shelter. Initially shy and uncertain, Luna took some time to adjust. However, when Emma visited the shelter looking for a companion, Luna's gentle nature won her heart. After a few visits to build trust, Emma adopted Luna. Since then, Luna has flourished in her new home, playing with her favorite toys and cuddling up on Emma's lap. Emma says, 'Luna has brought so much joy and peace to my life. I couldn’t imagine my home without her.'",
+      "adopted_date": "2023-06-10",
+      "location": "Los Angeles",
+      "image": "https://media.4-paws.org/9/c/9/7/9c97c38666efa11b79d94619cc1db56e8c43d430/Molly_006-2829x1886-2726x1886-1920x1328.jpg"
+    },
+    {
+      "pet_name": "Charlie",
+      "pet_category": "Dog",
+      "story": "Charlie, a high-energy Beagle, spent months in the shelter without being adopted due to his lively nature. But when Sarah and her children visited, Charlie’s boundless energy and playful demeanor instantly caught their attention. They knew he would be the perfect fit for their active lifestyle. After a successful adoption, Charlie became a beloved member of the family, joining them for daily runs, hikes, and park trips. Sarah says, 'Charlie has brought so much joy and excitement into our lives. He fits perfectly with our family dynamic.'",
+      "adopted_date": "2023-07-22",
+      "location": "Chicago",
+      "image": "https://image.petmd.com/files/styles/978x550/public/2024-06/hip-dysplasia-in-dogs.jpg"
+    },
+    {
+      "pet_name": "Bella",
+      "pet_category": "Dog",
+      "story": "Bella, a 3-year-old Labrador, was found abandoned on the streets and taken to the shelter. At first, Bella was timid and unsure of people, but with the care of the shelter staff, she began to warm up. When the Johnson family saw her profile on the website, they immediately knew she was the one. Bella’s transformation was astounding. After her adoption, she thrived in her new home, enjoying family walks, playing with her new toys, and bonding with her human siblings. The Johnsons say, 'Bella has truly completed our family. She brings so much happiness and love to our lives.'",
+      "adopted_date": "2023-08-05",
+      "location": "San Francisco",
+      "image": "https://media.cnn.com/api/v1/images/stellar/prod/201030094143-stock-rhodesian-ridgeback.jpg?q=w_2187,h_1458,x_0,y_0,c_fill"
+    },
+    {
+      "pet_name": "Daisy",
+      "pet_category": "Rabbit",
+      "story": "Daisy, a shy rabbit, was found in a neglected state at the shelter. She spent most of her life in a cage, and her social skills were underdeveloped. However, when the Parkers came to adopt, they knew she needed a safe, loving environment to thrive. They adopted Daisy and gave her plenty of space and time to adjust. Over time, Daisy became more confident, enjoying the freedom of hopping around their garden and cuddling with her new family. The Parkers say, 'Daisy has brought so much joy into our home. She’s a part of our family now, and we couldn’t be happier.'",
+      "adopted_date": "2023-09-12",
+      "location": "Austin",
+      "image": "https://www.humanesociety.org/sites/default/files/2019/03/rabbit-475261_0.jpg"
+    }
+  ]
+  

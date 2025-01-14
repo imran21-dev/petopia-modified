@@ -12,7 +12,7 @@ import { Pagination, Autoplay } from "swiper/modules";
 
 const SwiperImage = () => {
   return (
-    <div className="py-10">
+    <div className="py-10 relative z-0">
       <Swiper
         slidesPerView={3}
         spaceBetween={30}
