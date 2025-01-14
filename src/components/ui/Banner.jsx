@@ -1,7 +1,6 @@
 import React from 'react';
 import { Button } from "@/components/ui/button"
 
-import cloud from '../../assets/cloud.png'
 import pet from '../../assets/pet.jpg'
 const Banner = () => {
     return (
