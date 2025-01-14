@@ -16,6 +16,7 @@ import Home from './pages/Home';
 import PetListing from './pages/PetListing';
 import SignUp from './pages/SignUp';
 import ContextApi from './auth/ContextApi';
+import Login from './pages/Login';
 
 const queryClient = new QueryClient()
 const router = createBrowserRouter([
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
       {
         path: '/registration',
         element: <SignUp></SignUp>
+      },
+      {
+        path: '/login',
+        element: <Login></Login>
       }
     ]
   },
