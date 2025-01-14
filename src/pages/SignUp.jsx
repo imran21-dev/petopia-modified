@@ -1,4 +1,7 @@
 import { Button } from "@/components/ui/button";
+import { ImSpinner3 } from "react-icons/im";
+
+
 import {
   Card,
   CardContent,
@@ -9,40 +12,103 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import googlePng from "../assets/google.png";
 import facebookPng from "../assets/facebook.png";
 import { useForm } from "react-hook-form";
 import useAxiosPublic from "@/hooks/useAxiosPublic";
 import axios from "axios";
+import { AssetContext } from "@/auth/ContextApi";
+import { updateProfile } from "firebase/auth";
+import { auth } from "@/auth/firebase.config";
+import { useToast } from "@/hooks/use-toast";
+import { ToastAction } from "@/components/ui/toast";
+
+
 const imageHostingKey = import.meta.env.VITE_API_KEY;
 const imageHostingAPI = `https://api.imgbb.com/1/upload?key=${imageHostingKey}`;
 
 const SignUp = () => {
+  const {
+    register,
+    handleSubmit,
+    watch,
+    reset,
+    formState: { errors },
+  } = useForm();
   const [isChecked, setIsChecked] = useState(false);
   const handleCheckbox = (checked) => {
     setIsChecked(checked);
   };
   const axiosPublic = useAxiosPublic();
-
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm();
+  const {registration} = useContext(AssetContext)
+  const { toast } = useToast()
+  const [spin, setSpin] = useState(false)
+  const navigate = useNavigate()
 
   const onSubmit = async (data) => {
+    setSpin(true)
+    const {name, email, password} = data
     const imageFile = data.image[0];
     const formData = new FormData();
     formData.append("image", imageFile);
 
     try {
       const res = await axios.post(imageHostingAPI, formData);
+      registration(email, password)
+      .then(() => {
+        updateProfile(auth.currentUser, {
+          displayName: name,
+          photoURL: res.data.data.display_url
+        })
+        .then(() => {
+          const user = {
+            name,
+            email,
+            image: res.data.data.display_url,
+            role: 'user'
+          }
+          axiosPublic.post('/users', user)
+          .then(res => {
+            if (res.data.insertedId) {
+              setSpin(false)
+              reset()
+              toast({
+               title: 'Account Created Successfully!',
+                description: "Your account has been successfully created. Log in to get started!",
+              })
+              navigate('/')
+            }
+          })
+        })
+        .catch(error => {
+          setSpin(false)
+          reset()
+          toast({
+            variant: "destructive",
+            title: "Uh oh! Something went wrong.",
+            description: `${error.code}`,
+            action: <ToastAction altText="Try again">Try again</ToastAction>,
+          })
+        })
+      })
 
-      console.log("image uploaded", res.data);
+      .catch(error => {
+        
+        setSpin(false)
+        reset()
+        toast({
+          variant: "destructive",
+          title: "Uh oh! Something went wrong.",
+          description: `${error.code}`,
+          action: <ToastAction altText="Try again">Try again</ToastAction>,
+        })
+      })
+  
     } catch (error) {
+      setSpin(false)
+      reset()
       console.log("failed to upload", error);
     }
   };
@@ -176,17 +242,17 @@ const SignUp = () => {
                         "Only image files are allowed",
                     },
                   })}
-                  className={errors.picture && "border-red-600"}
+                  className={errors.image && "border-red-600"}
                   type="file"
                 />
-                {errors.picture && (
+                {errors.image && (
                   <p className="text-red-600 text-sm">
-                    {errors.picture.message}
+                    {errors.image.message}
                   </p>
                 )}
               </div>
             </div>
-            <Button className="w-full">Sign Up</Button>
+            <Button disabled={spin} className="w-full">{spin && <ImSpinner3 className="animate-spin"/>}Sign Up</Button>
           </form>
           <h1 className="text-xs text-center py-2 font-medium">
             Already have an account?{" "}

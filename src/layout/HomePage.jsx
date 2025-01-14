@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button"
 import Navbar from "@/components/ui/Navbar";
 import ThemeToggler from "@/components/ui/ThemeToggler";
+import { Toaster } from "@/components/ui/toaster";
 import { Outlet } from "react-router-dom";
 
 
@@ -11,6 +12,7 @@ const HomePage = () => {
            <div className=" ">
             <Outlet></Outlet>
            </div>
+           <Toaster/>
         </div>
     );
 };

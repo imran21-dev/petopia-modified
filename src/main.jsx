@@ -15,6 +15,7 @@ import HomePage from './layout/HomePage';
 import Home from './pages/Home';
 import PetListing from './pages/PetListing';
 import SignUp from './pages/SignUp';
+import ContextApi from './auth/ContextApi';
 
 const queryClient = new QueryClient()
 const router = createBrowserRouter([
@@ -40,8 +41,11 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
+    <ContextApi>
       <QueryClientProvider client={queryClient}>
     <RouterProvider router={router} />
     </QueryClientProvider>
+
+    </ContextApi>
   </StrictMode>,
 )
