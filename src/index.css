@@ -101,3 +101,8 @@ animation: animate-image 10s infinite ease-in-out ;
     border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
   }
 }
+
+.swipperCard:hover .swipperText {
+opacity: 100;
+
+}
