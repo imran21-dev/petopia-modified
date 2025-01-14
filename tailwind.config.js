@@ -54,7 +54,10 @@ export default {
   				'4': 'hsl(var(--chart-4))',
   				'5': 'hsl(var(--chart-5))'
   			}
-  		}
+  		},
+		backgroundImage: {
+			 'banner-image': "url('/src/assets/bannerpet.jpg')"
+		}
   	}
   },
   plugins: [require("tailwindcss-animate")],

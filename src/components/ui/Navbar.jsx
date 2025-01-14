@@ -18,23 +18,11 @@ import ThemeToggler from "./ThemeToggler";
 import Headroom from "react-headroom";
 
 const Navbar = () => {
-    const [scrollPosition, setScrollPosition] = useState(0);
-
-
-    useEffect(() => {
-      const handleScroll = () => {
-        setScrollPosition(window.scrollY);
-      };
-      window.addEventListener("scroll", handleScroll);
   
-      return () => {
-        window.removeEventListener("scroll", handleScroll);
-      };
-    }, []);
   return (
     <Headroom>
 
-    <div className={` duration-300 z-50 relative ${scrollPosition === 0 ? 'bg-primary/10' : 'bg-background'}`}>
+    <div className={` duration-300 z-50 relative bg-background`}>
       <div className="w-11/12 mx-auto gap-10 flex items-center">
         <Link to="/" className="text-lg font-bold flex items-center gap-1">
           <img className="w-10" src={logo} alt="" />
