@@ -42,10 +42,10 @@ const Navbar = () => {
         </div>
 
         <div className="flex items-center flex-1 justify-end gap-2">
-          <Link>
+          <Link to='/login'>
             <Button>Login</Button>
           </Link>
-          <Link>
+          <Link to='/registration'>
             {" "}
             <Button variant="secondary">Sign up</Button>
           </Link>
