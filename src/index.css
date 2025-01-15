@@ -94,3 +94,17 @@ opacity: 100;
 .swiper-pagination {
   display: none;
 }
+
+.dashboard-list{
+@apply hover:bg-secondary-foreground/40 relative font-medium flex items-center gap-2 hover:text-popover duration-150  w-full py-2 px-5
+}
+
+#dashboard .active::before{
+content: '';
+width: 4px;
+height: 100%;
+@apply bg-primary absolute left-0 top-0
+}
+#dashboard .active{
+@apply text-primary hover:bg-transparent hover:text-primary
+}

@@ -13,7 +13,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useContext, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import googlePng from "../assets/google.png";
 import facebookPng from "../assets/facebook.png";
 import { useForm } from "react-hook-form";
@@ -38,7 +38,8 @@ const Login = () => {
   const handleCheckbox = (checked) => {
     setIsChecked(checked);
   };
-
+ const {state} = useLocation()
+ console.log(state)
   const {login,googleLogin,facebookLogin} = useContext(AssetContext)
   const { toast } = useToast()
   const [spin, setSpin] = useState(false)
@@ -55,7 +56,12 @@ const Login = () => {
        })
         setSpin(false)
         reset()
-        navigate('/')
+        if (state) {
+          navigate(state.from)
+        }else{
+
+          navigate('/')
+        }
     })
     .catch((error) => {
         setSpin(false)
@@ -78,7 +84,12 @@ const Login = () => {
           title: 'Successfully Logged In!',
            description: "Welcome back! You're now signed in and ready to explore.",
          })
-        navigate("/");
+         if (state) {
+          navigate(state.from)
+        }else{
+
+          navigate('/')
+        }
       })
       .catch((error) => {
         toast({
@@ -97,7 +108,12 @@ const Login = () => {
         title: 'Successfully Logged In!',
          description: "Welcome back! You're now signed in and ready to explore.",
        })
-      navigate('/')
+       if (state) {
+        navigate(state.from)
+      }else{
+
+        navigate('/')
+      }
     })
     .catch((error) => {
       toast({

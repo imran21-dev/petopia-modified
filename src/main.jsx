@@ -17,6 +17,13 @@ import PetListing from './pages/PetListing';
 import SignUp from './pages/SignUp';
 import ContextApi from './auth/ContextApi';
 import Login from './pages/Login';
+import PetDetails from './pages/PetDetails';
+import Dashboard from './layout/Dashboard';
+import AddPet from './pages/AddPet';
+import MyPets from './pages/MyPets';
+import DashboardHome from './pages/DashboardHome';
+import PrivateRoute from './private/PrivateRoute';
+import DashboardRedirect from './components/ui/DashboardRedirect';
 
 const queryClient = new QueryClient()
 const router = createBrowserRouter([
@@ -39,7 +46,33 @@ const router = createBrowserRouter([
       {
         path: '/login',
         element: <Login></Login>
-      }
+      },
+      {
+        path: '/pet-details/:id',
+        element: <PetDetails></PetDetails>
+      },
+      {
+        path: '/dashboard',
+        element: <Dashboard></Dashboard>,
+        children: [
+          {
+            path: '/dashboard',
+            element: <DashboardRedirect></DashboardRedirect>
+          },
+          {
+            path: '/dashboard/home',
+            element: <DashboardHome></DashboardHome>
+          },
+          {
+            path: '/dashboard/add-pet',
+            element:<PrivateRoute> <AddPet></AddPet></PrivateRoute>
+          },
+          {
+            path: '/dashboard/my-pets',
+            element: <PrivateRoute><MyPets></MyPets></PrivateRoute>
+          },
+        ]
+      },
     ]
   },
 ]);

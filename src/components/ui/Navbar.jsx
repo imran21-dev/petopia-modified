@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import logo from "../../assets/logo.png";
-import { Link, NavLink } from "react-router-dom";
+import { Link, Navigate, NavLink, useNavigate } from "react-router-dom";
 import fakeUser from "../../assets/fakeuser.webp";
 import { RxDashboard } from "react-icons/rx";
 import { MdLogout } from "react-icons/md";
@@ -34,8 +34,7 @@ import Headroom from "react-headroom";
 import { AssetContext } from "@/auth/ContextApi";
 import { Skeleton } from "./skeleton";
 import { ImSpinner3 } from "react-icons/im";
-import { signOut } from "firebase/auth";
-import { auth } from "@/auth/firebase.config";
+
 const Navbar = () => {
   const { user, loading, logOut } = useContext(AssetContext);
   const [isOpen, setIsOpen] = useState(false);
@@ -56,6 +55,7 @@ const Navbar = () => {
          })
       })
       .catch((error) => {
+        setSpin(false);
         toast({
           variant: "destructive",
           title: "Uh oh! Something went wrong.",
@@ -64,6 +64,7 @@ const Navbar = () => {
         });
       });
   };
+
 
   const handleImage = (e) => {
     e.target.src = fakeUser;
@@ -83,7 +84,7 @@ const Navbar = () => {
   };
   return (
     <Headroom>
-      <div className={` duration-300 z-50 relative bg-background`}>
+      <div className={` duration-300 z-50 relative bg-background shadow-sm`}>
         <div className="w-11/12 mx-auto gap-10 flex items-center">
           <Link to="/" className="text-lg font-bold flex items-center gap-1">
             <img className="w-10" src={logo} alt="" />
@@ -147,8 +148,8 @@ const Navbar = () => {
                       </div>
                     </DropdownMenuLabel>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem>
-                      <Link className="flex gap-1 items-center">
+                    <DropdownMenuItem >
+                      <Link to='/dashboard/home' className="flex gap-1 items-center">
                         <RxDashboard className="text-lg" />
                         Dashboard
                       </Link>
