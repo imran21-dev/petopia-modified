@@ -29,7 +29,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "./button";
-import ThemeToggler from "./ThemeToggler";
+
 import Headroom from "react-headroom";
 import { AssetContext } from "@/auth/ContextApi";
 import { Skeleton } from "./skeleton";
@@ -40,6 +40,7 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [spin, setSpin] = useState(false);
   const { toast } = useToast()
+  const [isOpenMenu, setIsOpenMenu] = useState(false) 
   const handleLogOut = () => {
     setIsOpen(true);
   };
@@ -125,8 +126,8 @@ const Navbar = () => {
                   </>
                 )}
                 {user && 
-                <DropdownMenu>
-                  <DropdownMenuTrigger>
+                <DropdownMenu open={isOpenMenu} onOpenChange={setIsOpenMenu}>
+                  <DropdownMenuTrigger onClick={() =>setIsOpenMenu(true)}>
                     <img
                       onError={handleImage}
                       src={user?.photoURL}
@@ -148,7 +149,7 @@ const Navbar = () => {
                       </div>
                     </DropdownMenuLabel>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem >
+                    <DropdownMenuItem onClick={() => setIsOpenMenu(false)}>
                       <Link to='/dashboard/home' className="flex gap-1 items-center">
                         <RxDashboard className="text-lg" />
                         Dashboard

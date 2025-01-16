@@ -4,6 +4,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 *{
 outline: none;
 }
@@ -108,3 +109,11 @@ height: 100%;
 #dashboard .active{
 @apply text-primary hover:bg-transparent hover:text-primary
 }
+
+.text-container .ql-toolbar:first-of-type{
+display: none;
+}
+.text-container .ql-toolbar{
+@apply rounded-tl-2xl rounded-tr-2xl !border-secondary
+}
+

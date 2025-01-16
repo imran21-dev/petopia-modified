@@ -11,6 +11,7 @@ const ContextApi = ({ children }) => {
   const [user, setUser] = useState(null);
   const axiosPublic = useAxiosPublic()
   const { toast } = useToast()
+  const [editorContent, setEditorContent] = useState('');
   useEffect(() => {
     if (!user) {
         return
@@ -79,7 +80,9 @@ const ContextApi = ({ children }) => {
     loading,
     googleLogin,
     facebookLogin,
-    logOut
+    logOut,
+    editorContent,
+    setEditorContent
   };
   console.log(user)
   return (

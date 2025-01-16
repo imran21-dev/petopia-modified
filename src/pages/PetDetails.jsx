@@ -1,6 +1,6 @@
 import useAxiosPublic from "@/hooks/useAxiosPublic";
 import { useQuery } from "@tanstack/react-query";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { FaLocationDot } from "react-icons/fa6";
 import { Button } from "@/components/ui/button";
 import { useContext, useState } from "react";
@@ -31,10 +31,11 @@ import { Input } from "@/components/ui/input";
 import useAxiosSecure from "@/hooks/useAxiosSecure";
 import { useToast } from "@/hooks/use-toast";
 import { Skeleton } from "@/components/ui/skeleton";
+import moment from "moment";
 const PetDetails = () => {
   const { id } = useParams();
   const axiosPublic = useAxiosPublic();
-  const { user } = useContext(AssetContext);
+  const { user, loading } = useContext(AssetContext);
   const navigate = useNavigate();
   const axiosSecure = useAxiosSecure();
   const { toast } = useToast();
@@ -53,13 +54,11 @@ const PetDetails = () => {
   } = useQuery({
     queryKey: ["isRequested"],
     queryFn: async () => {
-      const res = await axiosSecure.get(
-        `/isRequested?petId=${id}`
-      );
+      const res = await axiosSecure.get(`/isRequested?petId=${id}`);
       return res.data;
     },
   });
-  console.log(isRequested)
+
 
   const {
     register,
@@ -79,7 +78,7 @@ const PetDetails = () => {
       requesterNumber: number,
       petId: id,
       author: pet?.author,
-      status: 'pending'
+      status: "pending",
     };
     const res = await axiosSecure.post(
       `/request?email=${email}`,
@@ -150,15 +149,39 @@ const PetDetails = () => {
                 {pet?.pet_location}
               </p>
               <p className="font-medium">{pet?.short_description}</p>
-              <p className="py-3">{pet?.long_description}</p>
+              <div
+                className="py-3"
+                dangerouslySetInnerHTML={{ __html: pet?.long_description }}
+              ></div>
+
               <p className=" py-2 font-medium">Age: {pet?.pet_age}</p>
-              <p className="font-medium pb-5">Category: {pet?.pet_category}</p>
+              <p className="font-medium ">Category: {pet?.pet_category}</p>
+              <p className=" pb-5 pt-2 font-medium">
+                Added on: {moment(pet?.added_date).format("MMM Do YY")}
+              </p>
             </div>
           )}
 
+    
+          {
+          pet?.author === user?.email ? <Link to='/dashboard/my-pets'><Button>Manage</Button></Link>: 
+          
 
-          {isLoading? <Skeleton className='w-28 h-8'></Skeleton> : isRequested.status === 'pending' ?<Button disabled>Requested</Button> :<Button onClick={handlePetApotion}>Adopt</Button>
-          }
+          isLoading  ? (
+            <Skeleton className="w-28 h-8"></Skeleton>
+          ) : isRequested.status === "pending" ? (
+            <Button disabled>Requested</Button>
+          ) : 
+            <Button onClick={handlePetApotion}>Adopt</Button>
+        }
+          {/* {isLoading  ? (
+            <Skeleton className="w-28 h-8"></Skeleton>
+          ) : isRequested.status === "pending" ? (
+            <Button disabled>Requested</Button>
+          ) : 
+            <Button onClick={handlePetApotion}>Adopt</Button>
+          } */}
+
 
         </div>
       </div>
@@ -182,7 +205,7 @@ const PetDetails = () => {
         </AlertDialogContent>
       </AlertDialog>
 
-      <Dialog open={isOpenForm} onOpenChange={setIsOpenForm}>
+      <Dialog  open={isOpenForm} onOpenChange={setIsOpenForm}>
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Adoption Request</DialogTitle>
@@ -191,9 +214,9 @@ const PetDetails = () => {
               friendship.
             </DialogDescription>
           </DialogHeader>
-          <div className="flex text-sm gap-6">
+          <div className="flex  text-sm gap-6">
             <img
-              className="w-2/4 object-cover max:h-52 rounded-3xl"
+              className="w-2/5 object-cover h-52 rounded-3xl"
               src={pet?.pet_image}
               alt=""
             />
@@ -208,7 +231,7 @@ const PetDetails = () => {
                 <span>Category:</span> {pet?.pet_category}
               </h1>
               <h1 className="font-medium pb-1">
-                <span>Pet ID:</span> {pet?._id}
+                <span>Pet ID:</span> <span className="text-xs">{pet?._id}</span>
               </h1>
             </div>
           </div>

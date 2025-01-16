@@ -24,6 +24,7 @@ import MyPets from './pages/MyPets';
 import DashboardHome from './pages/DashboardHome';
 import PrivateRoute from './private/PrivateRoute';
 import DashboardRedirect from './components/ui/DashboardRedirect';
+import UpdatePet from './pages/UpdatePet';
 
 const queryClient = new QueryClient()
 const router = createBrowserRouter([
@@ -70,6 +71,10 @@ const router = createBrowserRouter([
           {
             path: '/dashboard/my-pets',
             element: <PrivateRoute><MyPets></MyPets></PrivateRoute>
+          },
+          {
+            path: '/dashboard/update-pet/:id',
+            element: <PrivateRoute><UpdatePet></UpdatePet></PrivateRoute>
           },
         ]
       },
