@@ -30,6 +30,7 @@ import CreateCampaign from './pages/CreateCampaign';
 import MyCampaigns from './pages/MyCampaigns';
 import Updatecampaign from './pages/Updatecampaign';
 import DonationCampaigns from './pages/DonationCampaigns';
+import DonationDetails from './pages/DonationDetails';
 
 const queryClient = new QueryClient()
 const router = createBrowserRouter([
@@ -60,6 +61,10 @@ const router = createBrowserRouter([
       {
         path: '/pet-details/:id',
         element: <PetDetails></PetDetails>
+      },
+      {
+        path: '/donation-details/:id',
+        element: <DonationDetails></DonationDetails>
       },
       {
         path: '/dashboard',

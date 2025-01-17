@@ -17,6 +17,8 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { IoMdArrowDropright } from "react-icons/io";
+
 import {
   Dialog,
   DialogContent,
@@ -24,7 +26,6 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -58,7 +59,6 @@ const PetDetails = () => {
       return res.data;
     },
   });
-
 
   const {
     register,
@@ -114,34 +114,39 @@ const PetDetails = () => {
   const handleContinue = () => {
     navigate("/login");
   };
-  console.log(isRequested);
+ 
   return (
     <div className="w-11/12 mx-auto pt-5">
-      <div className="flex gap-10">
-        {petLoading ? (
-          <Skeleton className="w-2/4 h-[500px] rounded-3xl"></Skeleton>
-        ) : (
+      <h1 className="text-2xl font-bold pb-10 ">Pet Details</h1>
+      <div>
+        {
+        petLoading ? 
+        <div>
+            <div className="grid  grid-cols-2 gap-10">
+                <Skeleton className='w-full h-[500px] rounded-3xl bg-secondary'></Skeleton>
+                <div className="space-y-3">
+                    <Skeleton className='w-4/12 h-8 bg-secondary'></Skeleton>
+                    <Skeleton className='w-full h-14 bg-secondary'></Skeleton>
+                    <Skeleton className='w-3/12 h-8 bg-secondary'></Skeleton>
+                    <Skeleton className='w-3/12 h-8 bg-secondary'></Skeleton>
+                    <Skeleton className='w-3/12 h-8 bg-secondary'></Skeleton>
+                    <Skeleton className='w-2/12 h-8 bg-secondary'></Skeleton>
+                    <Skeleton className='w-5/12 h-5 bg-secondary'></Skeleton>
+                    <Skeleton className='w-2/12 h-10 bg-secondary'></Skeleton>
+                </div>
+            </div>
+            <Skeleton className='w-full h-32 mt-5 bg-secondary'></Skeleton>
+        </div>
+        : 
+       <div>
+        <div className="grid grid-cols-2 gap-10">
           <img
-            className="w-2/4 h-[500px] object-cover rounded-3xl"
+            className="w-full h-[500px] object-cover rounded-3xl"
             src={pet?.pet_image}
             alt="pet image"
           />
-        )}
 
-        <div className="flex-1">
-          {petLoading ? (
-            <div className="w-full space-y-3 pb-5">
-              <Skeleton className="w-52 h-8"></Skeleton>
-              <Skeleton className="w-36 h-5"></Skeleton>
-              <Skeleton className="w-64 h-4"></Skeleton>
-              <Skeleton className="w-72 h-3"></Skeleton>
-              <Skeleton className="w-72 h-3"></Skeleton>
-              <Skeleton className="w-72 h-3"></Skeleton>
-              <Skeleton className="w-72 h-3"></Skeleton>
-              <Skeleton className="w-24 h-5"></Skeleton>
-              <Skeleton className="w-24 h-5 "></Skeleton>
-            </div>
-          ) : (
+          <div className="flex-1">
             <div>
               <h1 className="text-2xl font-bold">
                 My name is {pet?.pet_name}!
@@ -151,36 +156,44 @@ const PetDetails = () => {
                 {pet?.pet_location}
               </p>
               <p className="font-medium">{pet?.short_description}</p>
-              <div
-                className="py-3"
-                dangerouslySetInnerHTML={{ __html: pet?.long_description }}
-              ></div>
 
-              <p className=" py-2 font-medium">Age: {pet?.pet_age}</p>
-              <p className="font-medium ">Category: {pet?.pet_category}</p>
-              <p className=" pb-5 pt-2 font-medium">
-                Added on: {moment(pet?.added_date).format("MMM Do YY")}
+              <p className=" py-2 font-medium flex items-center gap-1">
+                Age <IoMdArrowDropright /> {pet?.pet_age} years
+              </p>
+              <p className="font-medium flex items-center gap-1">
+                Category <IoMdArrowDropright /> {pet?.pet_category}
+              </p>
+              <p className=" pb-5 pt-2 font-medium flex items-center gap-1">
+                Added on <IoMdArrowDropright />{" "}
+                {moment(pet?.added_date).format("MMM Do YY")}
               </p>
             </div>
-          )}
 
-    
-          {
-          pet?.author === user?.email ? <Link to='/dashboard/my-pets'><Button>Manage</Button></Link>: 
-          
-
-          isLoading  ? (
-            <Skeleton className="w-28 h-8"></Skeleton>
-          ) : isRequested.status === false ? (
-            <Button disabled>Requested</Button>
-          ) : 
-            <Button onClick={handlePetApotion}>Adopt</Button>
-        }
-          
-
-
+            {pet?.author === user?.email ? (
+              <Link to="/dashboard/my-pets">
+                <Button>Manage</Button>
+              </Link>
+            ) : isLoading ? (
+              <Skeleton className="w-28 h-8"></Skeleton>
+            ) : isRequested.status === false ? (
+              <Button disabled>Requested</Button>
+            ) : (
+              <Button onClick={handlePetApotion}>Adopt</Button>
+            )}
+          </div>
         </div>
+
+        <h2 className="font-semibold pt-5">Description</h2>
+        <div
+          className="py-3 text-sm"
+          dangerouslySetInnerHTML={{ __html: pet?.long_description }}
+        ></div>
       </div>
+        }
+      </div>
+
+
+
       <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
@@ -201,7 +214,7 @@ const PetDetails = () => {
         </AlertDialogContent>
       </AlertDialog>
 
-      <Dialog  open={isOpenForm} onOpenChange={setIsOpenForm}>
+      <Dialog open={isOpenForm} onOpenChange={setIsOpenForm}>
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Adoption Request</DialogTitle>

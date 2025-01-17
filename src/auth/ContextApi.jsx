@@ -10,7 +10,8 @@ const ContextApi = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
   const axiosPublic = useAxiosPublic()
-  const { toast } = useToast()
+  const [isOpenPayment, setIsOpenPayment] = useState(false);
+  const [demoLoad, setDemoLoad] = useState(0)
   const [editorContent, setEditorContent] = useState('');
   useEffect(() => {
     if (!user) {
@@ -82,7 +83,11 @@ const ContextApi = ({ children }) => {
     facebookLogin,
     logOut,
     editorContent,
-    setEditorContent
+    setEditorContent,
+    isOpenPayment,
+    setIsOpenPayment,
+    demoLoad,
+    setDemoLoad
   };
   console.log(user)
   return (

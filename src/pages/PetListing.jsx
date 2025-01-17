@@ -110,7 +110,7 @@ const PetListing = () => {
             {skeleton.map((skeleton, idx) => (
               <Skeleton
                 key={idx}
-                className="w-full rounded-[50px] h-96"
+                className="w-full rounded-[50px] h-96 bg-secondary"
               ></Skeleton>
             ))}
           </>
