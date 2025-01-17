@@ -201,7 +201,7 @@ const Navbar = () => {
               <AlertDialogCancel onClick={() => setIsOpen(false)}>
                 Cancel
               </AlertDialogCancel>
-              <AlertDialogAction disabled={spin} onClick={handleContinue}>
+              <AlertDialogAction className='bg-red-600 hover:bg-red-500' disabled={spin} onClick={handleContinue}>
                 {spin && <ImSpinner3 className="animate-spin" />}Yes, Log Out
               </AlertDialogAction>
             </AlertDialogFooter>

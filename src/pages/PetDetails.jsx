@@ -73,12 +73,14 @@ const PetDetails = () => {
     const { email, location, name, number } = data;
     const requestModule = {
       requesterEmail: email,
+      requesterImage: user.photoURL,
       requesterLocation: location,
       requesterName: name,
       requesterNumber: number,
       petId: id,
+      petImage: pet.pet_image,
       author: pet?.author,
-      status: "pending",
+      status: false,
     };
     const res = await axiosSecure.post(
       `/request?email=${email}`,
@@ -169,18 +171,12 @@ const PetDetails = () => {
 
           isLoading  ? (
             <Skeleton className="w-28 h-8"></Skeleton>
-          ) : isRequested.status === "pending" ? (
+          ) : isRequested.status === false ? (
             <Button disabled>Requested</Button>
           ) : 
             <Button onClick={handlePetApotion}>Adopt</Button>
         }
-          {/* {isLoading  ? (
-            <Skeleton className="w-28 h-8"></Skeleton>
-          ) : isRequested.status === "pending" ? (
-            <Button disabled>Requested</Button>
-          ) : 
-            <Button onClick={handlePetApotion}>Adopt</Button>
-          } */}
+          
 
 
         </div>

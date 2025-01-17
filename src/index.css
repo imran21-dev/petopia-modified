@@ -107,7 +107,7 @@ height: 100%;
 @apply bg-primary absolute left-0 top-0
 }
 #dashboard .active{
-@apply text-primary hover:bg-transparent hover:text-primary
+@apply text-primary bg-primary/10 hover:bg-primary/10 hover:text-primary
 }
 
 .text-container .ql-toolbar:first-of-type{

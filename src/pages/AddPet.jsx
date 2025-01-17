@@ -213,7 +213,7 @@ const AddPet = () => {
                 </div>
 
                 <div className="flex flex-col space-y-1.5 w-2/4">
-                  <Label htmlFor="picture">Profile Picture</Label>
+                  <Label htmlFor="picture">Pet Image</Label>
                   <Input
                     {...register("image", {
                       required: "Image file is required",

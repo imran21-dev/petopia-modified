@@ -27,6 +27,7 @@ import { Pagination } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import Lottie from "lottie-react";
+import { Skeleton } from "@/components/ui/skeleton";
 const MyPets = () => {
   const axiosSecure = useAxiosSecure();
   const { user } = useContext(AssetContext);
@@ -50,7 +51,7 @@ const MyPets = () => {
   const handleUpdate = async (pet) => {
     const id = await pet._id;
     navigate(`/dashboard/update-pet/${id}`);
-    console.log(pet);
+ 
   };
 
   const [isOpen, setIsOpen] = useState(false);
@@ -104,6 +105,8 @@ const MyPets = () => {
         accessorKey: "serial",
         header: "Serial",
         cell: (info) => (currentPage - 1) * pageSize + info.row.index + 1,
+        enableSorting: true,
+        sortingFn: (rowA, rowB) => rowA.index - rowB.index,
       },
       {
         accessorKey: "pet_name",
@@ -120,7 +123,7 @@ const MyPets = () => {
           <img
             src={info.getValue()}
             alt="Pet"
-            className="w-12 h-12 object-cover mx-auto rounded"
+            className="w-12 h-12 object-cover mx-auto rounded-full"
           />
         ),
       },
@@ -130,8 +133,8 @@ const MyPets = () => {
         cell: (info) => (
           <div className=" flex justify-center">
             <span
-              className={`px-3 py-1 rounded-full font-medium text-sm  text-white ${
-                info.getValue() ? "bg-green-500" : "bg-primary/50"
+              className={`px-3 py-1 rounded-full font-medium text-sm  ${
+                info.getValue() ? "bg-green-500/20 text-green-500" : "bg-primary/20 text-primary"
               }`}
             >
               {info.getValue() ? "Adopted" : "Not Adopted"}
@@ -142,28 +145,30 @@ const MyPets = () => {
       {
         accessorKey: "actions",
         header: "Actions",
+        enableSorting: true,
+        sortingFn: (rowA, rowB) => rowA.index - rowB.index,
         cell: (info) => (
-          <div className="flex gap-2 justify-center">
+          <div className="grid grid-cols-3 justify-items-center">
             {!info.row.original.adopted ? (
-              <Button
+              <Button className='w-2/3'
                 variant="secondary"
                 onClick={() => handleUpdate(info.row.original)}
               >
                 Update
               </Button>
             ) : (
-              <Button variant="secondary" disabled>
+              <Button className='w-2/3'  variant="secondary" disabled>
                 Update
               </Button>
             )}
 
             {!info.row.original.adopted ? (
-              <Button onClick={() => handleAdopt(info.row.original)}>Adopt</Button>
+              <Button className='w-2/3' onClick={() => handleAdopt(info.row.original)}>Adopt</Button>
             ) : (
-              <Button disabled>Adopted</Button>
+              <Button className='w-2/3' disabled>Adopted</Button>
             )}
 
-            <Button
+            <Button className='w-2/3'
               variant="destructive"
               onClick={() => handleDelete(info.row.original)}
             >
@@ -187,6 +192,7 @@ const MyPets = () => {
         pageIndex: 0,
         pageSize: 10,
       },
+     
     },
   });
 
@@ -196,8 +202,23 @@ const MyPets = () => {
 
   return (
     <div className="pt-2">
-      <h1 className="text-2xl font-bold mb-4">My Pets</h1>
+      <h1 className="text-2xl font-bold ">My Pets</h1>
+      <p className='mb-4 text-sm opacity-70 pt-1'>View and Manage All Your Added Pets in One Place.</p>
       {
+      isLoading ? <div className="flex flex-col w-full gap-3">
+        <Skeleton className='w-full h-14'></Skeleton>
+        <Skeleton className='w-full h-14'></Skeleton>
+        <Skeleton className='w-full h-14'></Skeleton>
+        <Skeleton className='w-full h-14'></Skeleton>
+        <Skeleton className='w-full h-14'></Skeleton>
+        <Skeleton className='w-full h-14'></Skeleton>
+        <Skeleton className='w-full h-14'></Skeleton>
+        <Skeleton className='w-full h-14'></Skeleton>
+        <Skeleton className='w-full h-14'></Skeleton>
+        <Skeleton className='w-full h-14'></Skeleton>
+        
+        </div> : 
+     
       myPets.length < 1 ? <div className="w-full justify-center flex items-center pt-10"><Lottie className="w-96" animationData={noResule}></Lottie></div> :
       <div className="overflow-x-auto">
         {!isLoading && (
@@ -271,7 +292,7 @@ const MyPets = () => {
             <AlertDialogCancel onClick={() => setIsOpenAdopt(false)}>
               Cancel
             </AlertDialogCancel>
-            <AlertDialogAction className='bg-green-600' disabled={spinAdopt} onClick={handleContinueAdopt}>
+            <AlertDialogAction className='bg-green-600 hover:bg-green-500' disabled={spinAdopt} onClick={handleContinueAdopt}>
               {spinAdopt && <ImSpinner3 className="animate-spin" />}Yes, Adopt it
             </AlertDialogAction>
           </AlertDialogFooter>
@@ -290,7 +311,7 @@ const MyPets = () => {
             <AlertDialogCancel onClick={() => setIsOpen(false)}>
               Cancel
             </AlertDialogCancel>
-            <AlertDialogAction className='bg-red-600' disabled={spin} onClick={handleContinue}>
+            <AlertDialogAction className='bg-red-600 hover:bg-red-500' disabled={spin} onClick={handleContinue}>
               {spin && <ImSpinner3 className="animate-spin" />}Yes, Delete it
             </AlertDialogAction>
           </AlertDialogFooter>

@@ -25,6 +25,9 @@ import DashboardHome from './pages/DashboardHome';
 import PrivateRoute from './private/PrivateRoute';
 import DashboardRedirect from './components/ui/DashboardRedirect';
 import UpdatePet from './pages/UpdatePet';
+import AdoptionRequest from './pages/AdoptionRequest';
+import CreateCampaign from './pages/CreateCampaign';
+import MyCampaigns from './pages/MyCampaigns';
 
 const queryClient = new QueryClient()
 const router = createBrowserRouter([
@@ -62,7 +65,7 @@ const router = createBrowserRouter([
           },
           {
             path: '/dashboard/home',
-            element: <DashboardHome></DashboardHome>
+            element: <PrivateRoute><DashboardHome></DashboardHome></PrivateRoute>
           },
           {
             path: '/dashboard/add-pet',
@@ -75,6 +78,18 @@ const router = createBrowserRouter([
           {
             path: '/dashboard/update-pet/:id',
             element: <PrivateRoute><UpdatePet></UpdatePet></PrivateRoute>
+          },
+          {
+            path: '/dashboard/adoption-requests',
+            element: <PrivateRoute><AdoptionRequest></AdoptionRequest></PrivateRoute>
+          },
+          {
+            path: '/dashboard/create-campaign',
+            element: <PrivateRoute><CreateCampaign></CreateCampaign></PrivateRoute>
+          },
+          {
+            path: '/dashboard/my-campaign',
+            element: <PrivateRoute><MyCampaigns></MyCampaigns></PrivateRoute>
           },
         ]
       },

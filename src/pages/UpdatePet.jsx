@@ -37,7 +37,7 @@ const UpdatePet = () => {
     const [imagePreview, setImagePreview] = useState(""); 
     const axioxSecure = useAxiosSecure();
     const { id: petId } = useParams();
-    const { data: pet, isLoading } = useQuery({
+    const { data: pet, isLoading, refetch } = useQuery({
       queryKey: ["pet", user],
       queryFn: async () => {
         const res = await axioxSecure.get(`/single-pet?id=${petId}&email=${user?.email}`);
@@ -85,46 +85,80 @@ const UpdatePet = () => {
       const imageFile = data.image[0];
       const formData = new FormData();
       formData.append("image", imageFile);
-  
-      try {
-        const res = await axios.post(imageHostingAPI, formData);
-        const pet_image = res.data.data.display_url;
-  
+      if (!imageFile) {
         const petData = {
-          pet_image,
-          pet_name: data.name,
-          pet_age: data.age,
-          pet_category: selectedCategory,
-          pet_location: data.location,
-          short_description: data.shortDescription,
-          long_description: editorContent,
-          author: user.email,
-          added_date: pet.added_date,
-          adopted: false,
-        };
+            pet_image : pet.pet_image,
+            pet_name: data.name,
+            pet_age: data.age,
+            pet_category: selectedCategory,
+            pet_location: data.location,
+            short_description: data.shortDescription,
+            long_description: editorContent,
+            author: user.email,
+            added_date: pet.added_date,
+            adopted: false,
+          };
+          axioxSecure.patch(`/update-pet?email=${user.email}&petId=${petId}`, petData).then((res) => {
+            if (res.data.modifiedCount) {
+              setSpin(false);
+              reset();
+              refetch()
+              toast({
+                title: "Pet Updated Successfully!",
+                description:
+                  "Your pet is successfully uploaded. Now you can manage it from My Pets page.",
+              });
+              navigate("/dashboard/my-pets");
+            }
+          });
+
+          return
+
+
+      }
   
-        axioxSecure.patch(`/update-pet?email=${user.email}&petId=${petId}`, petData).then((res) => {
-          if (res.data.modifiedCount) {
+      else{
+        try {
+            const res = await axios.post(imageHostingAPI, formData);
+            const pet_image = res.data.data.display_url;
+      
+            const petData = {
+              pet_image,
+              pet_name: data.name,
+              pet_age: data.age,
+              pet_category: selectedCategory,
+              pet_location: data.location,
+              short_description: data.shortDescription,
+              long_description: editorContent,
+              author: user.email,
+              added_date: pet.added_date,
+              adopted: false,
+            };
+      
+            axioxSecure.patch(`/update-pet?email=${user.email}&petId=${petId}`, petData).then((res) => {
+              if (res.data.modifiedCount) {
+                setSpin(false);
+                reset();
+                refetch()
+                toast({
+                  title: "Pet Updated Successfully!",
+                  description:
+                    "Your pet is successfully uploaded. Now you can manage it from My Pets page.",
+                });
+                navigate("/dashboard/my-pets");
+              }
+            });
+          }
+           catch (error) {
             setSpin(false);
             reset();
             toast({
-              title: "Pet Updated Successfully!",
-              description:
-                "Your pet is successfully uploaded. Now you can manage it from My Pets page.",
+              variant: "destructive",
+              title: "Please select your pet Image to update",
+              description: ``,
+              action: <ToastAction altText="Try again">Try again</ToastAction>,
             });
-            navigate("/dashboard/my-pets");
           }
-        });
-      }
-       catch (error) {
-        setSpin(false);
-        reset();
-        toast({
-          variant: "destructive",
-          title: "Please select your pet Image to update",
-          description: ``,
-          action: <ToastAction altText="Try again">Try again</ToastAction>,
-        });
       }
     };
   
@@ -230,7 +264,7 @@ const UpdatePet = () => {
                     </div>
   
                     <div className="flex flex-col space-y-1.5 w-2/4">
-                      <Label htmlFor="picture">Profile Picture</Label>
+                      <Label htmlFor="picture">Pet Image</Label>
                       <div className="flex items-center gap-1">
                      
                       <Input
