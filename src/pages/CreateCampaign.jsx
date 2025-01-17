@@ -66,7 +66,7 @@ const CreateCampaign = () => {
         petImage: pet_image,
         petName: data.name,
         maxAmount: data.amount,
-        lsatDate: data.date,
+        lastDate: data.date,
         longDescription: data.longDescription,
         shortDescription: data.shortDescription,
         donatedAmount: 0,

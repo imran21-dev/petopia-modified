@@ -298,6 +298,7 @@ const MyPets = () => {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+      
       <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>

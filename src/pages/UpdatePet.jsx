@@ -110,6 +110,15 @@ const UpdatePet = () => {
               });
               navigate("/dashboard/my-pets");
             }
+            else{
+              setSpin(false)
+              toast({
+                  variant: "destructive",
+                  title: "Uh oh! Something went wrong.",
+                  description: `Change something for update`,
+                  action: <ToastAction altText="Try again">Try again</ToastAction>,
+                });
+            }
           });
 
           return

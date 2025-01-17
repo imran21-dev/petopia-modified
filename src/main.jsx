@@ -28,6 +28,8 @@ import UpdatePet from './pages/UpdatePet';
 import AdoptionRequest from './pages/AdoptionRequest';
 import CreateCampaign from './pages/CreateCampaign';
 import MyCampaigns from './pages/MyCampaigns';
+import Updatecampaign from './pages/Updatecampaign';
+import DonationCampaigns from './pages/DonationCampaigns';
 
 const queryClient = new QueryClient()
 const router = createBrowserRouter([
@@ -42,6 +44,10 @@ const router = createBrowserRouter([
       {
         path: '/pet-listing',
         element: <PetListing></PetListing>
+      },
+      {
+        path: '/donation-campaigns',
+        element: <DonationCampaigns></DonationCampaigns>
       },
       {
         path: '/registration',
@@ -90,6 +96,10 @@ const router = createBrowserRouter([
           {
             path: '/dashboard/my-campaign',
             element: <PrivateRoute><MyCampaigns></MyCampaigns></PrivateRoute>
+          },
+          {
+            path: '/dashboard/update-campaign/:id',
+            element: <PrivateRoute><Updatecampaign></Updatecampaign></PrivateRoute>
           },
         ]
       },
