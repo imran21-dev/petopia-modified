@@ -145,7 +145,7 @@ const AllUsers = () => {
 
   return (
     <div className="pt-2">
-      <h1 className="text-2xl font-bold ">All Users</h1>
+      <h1 className="text-2xl font-bold ">All Users - {allUser?.length}</h1>
       <p className="mb-4 text-sm opacity-70 pt-1">
         You can manage all the users from this page.
       </p>

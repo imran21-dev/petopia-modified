@@ -31,7 +31,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 const imageHostingKey = import.meta.env.VITE_API_KEY;
 const imageHostingAPI = `https://api.imgbb.com/1/upload?key=${imageHostingKey}`;
 
-const UpdatePet = () => {
+const UpdatePetAdmin = () => {
     const { user, editorContent, setEditorContent } = useContext(AssetContext);
     const [selectedCategory, setSelectedCategory] = useState("");
     const [imagePreview, setImagePreview] = useState(""); 
@@ -109,7 +109,7 @@ const UpdatePet = () => {
                 description:
                   "Your pet is successfully uploaded. Now you can manage it from My Pets page.",
               });
-              navigate("/dashboard/my-pets");
+              navigate("/dashboard/all-pets");
             }
             else{
               setSpin(false)
@@ -327,5 +327,5 @@ const UpdatePet = () => {
     );
   };
   
-  export default UpdatePet;
+  export default UpdatePetAdmin;
   

@@ -135,6 +135,7 @@ if (data.amount > donationLimit) {
         .then(() => {
             
         })
+        const date = new Date().toISOString();
         const payment = {
             userName: user?.displayName,
             userEmail: user?.email,
@@ -144,6 +145,7 @@ if (data.amount > donationLimit) {
             donatedAmount: paymentIntent.amount,
             petImage: camp.petImage,
             petName: camp.petName,
+            date: date,
             refund: false
         }
         axiosSecure.post(`/payment?email=${user?.email}`, payment)

@@ -24,25 +24,26 @@ import {
 import noResule from "../assets/noresult.json";
 import { Button } from "@/components/ui/button";
 import { Pagination } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import Lottie from "lottie-react";
 import { Skeleton } from "@/components/ui/skeleton";
-const MyPets = () => {
+const AllPets = () => {
   const axiosSecure = useAxiosSecure();
   const { user } = useContext(AssetContext);
   const { toast } = useToast();
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 10;
+  
 
   const {
-    data: myPets = [],
+    data: allPets = [],
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: ["myPets", user],
+    queryKey: ["allPets", user],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/my-pets?email=${user.email}`);
+      const res = await axiosSecure.get(`/all-pets?email=${user.email}`);
       return res.data;
     },
   });
@@ -50,8 +51,8 @@ const MyPets = () => {
   const navigate = useNavigate();
   const handleUpdate = async (pet) => {
     const id = await pet._id;
-    navigate(`/dashboard/update-pet/${id}`);
- 
+    navigate(`/dashboard/update-pet-admin/${id}`);
+    
   };
 
   const [isOpen, setIsOpen] = useState(false);
@@ -77,11 +78,32 @@ const MyPets = () => {
       });
   };
   const [isOpenAdopt, setIsOpenAdopt] = useState(false);
+  const [isOpenUnadopt, setIsOpenUnadopt] = useState(false);
   const [spinAdopt, setSpinAdopt] = useState(false);
   const handleAdopt = (pet) => {
     setIsOpenAdopt(true);
     setPetId(pet._id);
   };
+
+  const handleUnadopt = (pet) => {
+    setIsOpenUnadopt(true)
+    setPetId(pet._id)
+  }
+
+  const handleContinueUnadopt = () => {
+    setSpinAdopt(true)
+    axiosSecure.patch(`/update-unadopt?petId=${petId}&email=${user.email}`)
+    .then(res => {
+      if (res.data.modifiedCount) {
+        setSpinAdopt(false)
+        refetch()
+        toast({
+          title: "Pet Unadopted!",
+          description: "Your pet is successfully unadopted.",
+        });
+      }
+    })
+  }
 
   const handleContinueAdopt = () => {
     setSpinAdopt(true)
@@ -134,7 +156,7 @@ const MyPets = () => {
           <div className=" flex justify-center">
             <span
               className={`px-3 py-1 rounded-full font-medium text-sm  ${
-                info.getValue() ? "bg-green-100 text-green-500" : "bg-primary/20 text-primary"
+                info.getValue() ? "bg-green-500/20 text-green-500" : "bg-primary/20 text-primary"
               }`}
             >
               {info.getValue() ? "Adopted" : "Not Adopted"}
@@ -163,13 +185,13 @@ const MyPets = () => {
             )}
 
             {!info.row.original.adopted ? (
-              <Button className='w-2/3' onClick={() => handleAdopt(info.row.original)}>Adopt</Button>
+              <Button className='w-2/3 ' onClick={() => handleAdopt(info.row.original)}>Adopt</Button>
             ) : (
-              <Button className='w-2/3' variant='secondary' disabled>Adopted</Button>
+              <Button className='w-2/3' variant='secondary' onClick={() => handleUnadopt(info.row.original)}>Unadopt</Button>
             )}
 
             <Button className='w-2/3'
-              variant="secondary"
+              variant='secondary'
               onClick={() => handleDelete(info.row.original)}
             >
               Delete
@@ -182,7 +204,7 @@ const MyPets = () => {
   );
 
   const table = useReactTable({
-    data: myPets,
+    data: allPets,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
@@ -202,24 +224,24 @@ const MyPets = () => {
 
   return (
     <div className="pt-2">
-      <h1 className="text-2xl font-bold ">My Pets - {myPets?.length}</h1>
-      <p className='mb-4 text-sm opacity-70 pt-1'>View and Manage All Your Added Pets in One Place.</p>
+      <h1 className="text-2xl font-bold ">All Pets - {allPets?.length}</h1>
+      <p className='mb-4 text-sm opacity-70 pt-1'>View and Manage All Pets in One Place.</p>
       {
       isLoading ? <div className="flex flex-col w-full gap-3">
-        <Skeleton className='w-full h-14'></Skeleton>
-        <Skeleton className='w-full h-14'></Skeleton>
-        <Skeleton className='w-full h-14'></Skeleton>
-        <Skeleton className='w-full h-14'></Skeleton>
-        <Skeleton className='w-full h-14'></Skeleton>
-        <Skeleton className='w-full h-14'></Skeleton>
-        <Skeleton className='w-full h-14'></Skeleton>
-        <Skeleton className='w-full h-14'></Skeleton>
-        <Skeleton className='w-full h-14'></Skeleton>
-        <Skeleton className='w-full h-14'></Skeleton>
+        <Skeleton className='w-full h-14 bg-secondary'></Skeleton>
+        <Skeleton className='w-full h-14 bg-secondary'></Skeleton>
+        <Skeleton className='w-full h-14 bg-secondary'></Skeleton>
+        <Skeleton className='w-full h-14 bg-secondary'></Skeleton>
+        <Skeleton className='w-full h-14 bg-secondary'></Skeleton>
+        <Skeleton className='w-full h-14 bg-secondary'></Skeleton>
+        <Skeleton className='w-full h-14 bg-secondary'></Skeleton>
+        <Skeleton className='w-full h-14 bg-secondary'></Skeleton>
+        <Skeleton className='w-full h-14 bg-secondary'></Skeleton>
+        <Skeleton className='w-full h-14 bg-secondary'></Skeleton>
         
         </div> : 
      
-      myPets.length < 1 ? <div className="w-full justify-center flex items-center pt-10"><Lottie className="w-96" animationData={noResule}></Lottie></div> :
+      allPets.length < 1 ? <div className="w-full justify-center flex items-center pt-10"><Lottie className="w-96" animationData={noResule}></Lottie></div> :
       <div className="overflow-x-auto">
         {!isLoading && (
           <table className="w-full border-collapse ">
@@ -268,7 +290,7 @@ const MyPets = () => {
 
       {isLoading ? (
         ""
-      ) : myPets.length < 11 ? (
+      ) : allPets.length < 11 ? (
         ""
       ) : (
         <div className="py-3 flex  justify-center bg-primary-foreground/50">
@@ -279,6 +301,26 @@ const MyPets = () => {
           />
         </div>
       )}
+
+<AlertDialog open={isOpenUnadopt} onOpenChange={setIsOpenUnadopt}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to Unadopt this pet?
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel onClick={() => setIsOpenUnadopt(false)}>
+              Cancel
+            </AlertDialogCancel>
+            <AlertDialogAction  disabled={spinAdopt} onClick={handleContinueUnadopt}>
+              {spinAdopt && <ImSpinner3 className="animate-spin" />}Yes, Unadopt it
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
 
       <AlertDialog open={isOpenAdopt} onOpenChange={setIsOpenAdopt}>
         <AlertDialogContent>
@@ -322,4 +364,4 @@ const MyPets = () => {
   );
 };
 
-export default MyPets;
+export default AllPets;

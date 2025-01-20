@@ -34,6 +34,8 @@ import DonationDetails from './pages/DonationDetails';
 import MyDonations from './pages/MyDonations';
 import AllUsers from './pages/AllUsers';
 import AdminRoute from './private/AdminRoute';
+import AllPets from './pages/AllPets';
+import UpdatePetAdmin from './pages/UpdatePetAdmin';
 
 const queryClient = new QueryClient()
 const router = createBrowserRouter([
@@ -116,6 +118,14 @@ const router = createBrowserRouter([
           {
             path: '/dashboard/users',
             element: <AdminRoute><AllUsers></AllUsers></AdminRoute>
+          },
+          {
+            path: '/dashboard/all-pets',
+            element: <AdminRoute><AllPets></AllPets></AdminRoute>
+          },
+          {
+            path: '/dashboard/update-pet-admin/:id',
+            element: <AdminRoute><UpdatePetAdmin></UpdatePetAdmin></AdminRoute>
           },
         ]
       },

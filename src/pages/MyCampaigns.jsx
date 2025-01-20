@@ -175,6 +175,15 @@ const MyCampaigns = () => {
         },
       },
       {
+        accessorKey: "active",
+        header: "Status",
+        cell: (info) => {
+          return <div className="text-sm">
+            {info.row.original.active ? <h2 className="text-green-500  font-medium py-[1px] bg-green-100 rounded-full">Active</h2> : <h2 className="text-red-500  font-medium py-[1px] bg-red-100 rounded-full">Paused</h2>}
+          </div>;
+        },
+      },
+      {
         accessorKey: "actions",
         header: "Actions",
         enableSorting: true,
@@ -209,9 +218,9 @@ const MyCampaigns = () => {
                 setDonateCampId(info.row.original._id), setIsOpenDonators(true);
               }}
               variant="secondary"
-              className="w-2/3"
+              className="w-2/3 px-5"
             >
-              View Donators
+              Donators
             </Button>
           </div>
         ),
@@ -240,7 +249,7 @@ const MyCampaigns = () => {
 
   return (
     <div className="pt-2">
-      <h1 className="text-2xl font-bold ">My Campaigns</h1>
+      <h1 className="text-2xl font-bold ">My Campaigns - {campaigns?.length}</h1>
       <p className="mb-4 text-sm opacity-70 pt-1">
         Effortlessly manage all your campaigns in one place.
       </p>

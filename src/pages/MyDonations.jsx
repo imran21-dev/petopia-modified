@@ -27,6 +27,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Skeleton } from "@/components/ui/skeleton";
 import Lottie from "lottie-react";
+import moment from "moment";
 
 const MyDonations = () => {
   const axiosSecure = useAxiosSecure();
@@ -113,6 +114,13 @@ const MyDonations = () => {
         header: "Transaction ID",
       },
       {
+        accessorKey: "date",
+        header: "Date",
+        cell : (info) => {
+         return <h2>{moment(info.row.original.date).format("LLL")}</h2>
+        }
+      },
+      {
         accessorKey: "actions",
         header: "Actions",
         enableSorting: true,
@@ -125,6 +133,7 @@ const MyDonations = () => {
               </Button>
             ) : (
               <Button
+              variant="secondary"
                 onClick={() => handleRefund(info.row.original)}
                 className="w-2/3"
               >
@@ -157,7 +166,7 @@ const MyDonations = () => {
 
   return (
     <div className="pt-2">
-      <h1 className="text-2xl font-bold ">My Donations</h1>
+      <h1 className="text-2xl font-bold ">My Donations - {donations?.length}</h1>
       <p className="mb-4 text-sm opacity-70 pt-1">
         Your Giving Journey at a Glance.
       </p>

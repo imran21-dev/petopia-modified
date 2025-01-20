@@ -102,17 +102,7 @@ console.log(listingPetId, petId)
           />
         ),
       },
-      {
-        accessorKey: "petImage",
-        header: "Pet",
-        cell: (info) => (
-          <img
-            src={info.getValue()}
-            alt="Pet"
-            className="w-12 h-12 object-cover mx-auto rounded-full"
-          />
-        ),
-      },
+     
       {
         accessorKey: "requesterName",
         header: "Name",
@@ -129,7 +119,17 @@ console.log(listingPetId, petId)
         accessorKey: "requesterLocation",
         header: "Location",
       },
-
+      {
+        accessorKey: "petImage",
+        header: "Pet",
+        cell: (info) => (
+          <img
+            src={info.getValue()}
+            alt="Pet"
+            className="w-12 h-12 object-cover mx-auto rounded-full"
+          />
+        ),
+      },
       {
         accessorKey: "actions",
         header: "Actions",
@@ -169,7 +169,7 @@ console.log(listingPetId, petId)
 
   return (
     <div className="pt-2">
-      <h1 className="text-2xl font-bold ">Adoptions Requests</h1>
+      <h1 className="text-2xl font-bold ">Adoptions Requests - {requests?.length}</h1>
       <p className="mb-4 text-sm opacity-70 pt-1">
         Manage All Pet Adoption Requests with Ease – Accept or Reject
         Seamlessly.
