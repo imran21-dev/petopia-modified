@@ -28,7 +28,7 @@ const DonationCampaigns = () => {
                 <Skeleton className='w-full h-96 rounded-[50px] bg-secondary'></Skeleton>
                 <Skeleton className='w-full h-96 rounded-[50px] bg-secondary'></Skeleton>
             </div> :
-              allCampaigns.length < 1 ? <div className="w-full flex justify-center flex-col items-center h-screen">
+              allCampaigns?.length < 1 ? <div className="w-full flex justify-center flex-col items-center h-screen">
               <Lottie className="w-96" animationData={noResule}></Lottie>
               <h1 className="text-lg font-medium">No Result</h1>
             </div> :

@@ -13,7 +13,7 @@ import { MdCampaign } from "react-icons/md";
 const Dashboard = () => {
     return (
         <div id='dashboard' className='flex h-screen absolute w-full top-0'>
-            <div className='w-2/12 h-full pt-16 bg-secondary'>
+            <div className='w-2/12 h-full pt-16 bg-secondary/50'>
             <h1 className='text-xl px-5 font-semibold'>Dashboard</h1>
              <div className='pt-5 w-full flex gap-1 flex-col'>
              <NavLink to='/dashboard/home' className='dashboard-list'><GoHomeFill className='text-lg'/>Home</NavLink>

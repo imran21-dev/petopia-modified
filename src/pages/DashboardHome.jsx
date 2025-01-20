@@ -4,13 +4,17 @@ import { useContext } from 'react';
 import { AssetContext } from '@/auth/ContextApi';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-
+import fakeUser from '../assets/fakeuser.webp'
 const DashboardHome = () => {
+
     const {user} = useContext(AssetContext)
-    return (
+    const handleImage = (e) => {
+        e.target.src = fakeUser
+    }
+    return ( 
         <div className='flex justify-center flex-col items-center pt-3'>
            <div className='flex items-center gap-10 w-full'>
-           <img className='w-32 h-32 rounded-full object-cover' src={user?.photoURL} alt="" />
+           <img onError={handleImage} className='w-32 h-32 rounded-full object-cover' src={user?.photoURL} alt="" />
             <div>
             <h1 className=' text-3xl font-medium'>Welcome to Dashboard <span className='font-bold bg-gradient-to-br from-red-600 to-primary text-transparent bg-clip-text'>{user?.displayName.split(' ')[0]}</span></h1>
             <p>Add and Manage Your Pets and Campaigns with Ease!</p>

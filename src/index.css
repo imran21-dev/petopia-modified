@@ -117,3 +117,15 @@ display: none;
 @apply rounded-tl-2xl rounded-tr-2xl !border-secondary
 }
 
+
+.donation-container::-webkit-scrollbar-track {
+  @apply bg-primary/5
+}
+
+/* Scrollbar thumb */
+.donation-container::-webkit-scrollbar-thumb {
+ @apply bg-primary/20
+}
+.donation-container::-webkit-scrollbar{
+width: 5px;
+}

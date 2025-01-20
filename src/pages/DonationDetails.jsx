@@ -35,13 +35,18 @@ const DonationDetails = () => {
   const { user, isOpenPayment, setIsOpenPayment , demoLoad} = useContext(AssetContext);
   const axiosPublic = useAxiosPublic();
 
-  const { data: campaign, isLoading } = useQuery({
+  const [forRefetch, setForRefetch] = useState(demoLoad)
+  const { data: campaign, isLoading, refetch } = useQuery({
     queryKey: ["campaign", id, demoLoad],
     queryFn: async () => {
       const res = await axiosPublic.get(`/campaign-details?id=${id}`);
       return res.data;
     },
   });
+if (forRefetch !== demoLoad) {
+  refetch()
+}
+
 
   const {data: recommendedCampaigns, isLoading: recommendedLoading} = useQuery({
     queryKey:['recommendedCampaigns', id],
@@ -51,7 +56,7 @@ const DonationDetails = () => {
     }
   })
 
-console.log(recommendedCampaigns)
+
 
 
 
