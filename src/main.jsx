@@ -32,6 +32,8 @@ import Updatecampaign from './pages/Updatecampaign';
 import DonationCampaigns from './pages/DonationCampaigns';
 import DonationDetails from './pages/DonationDetails';
 import MyDonations from './pages/MyDonations';
+import AllUsers from './pages/AllUsers';
+import AdminRoute from './private/AdminRoute';
 
 const queryClient = new QueryClient()
 const router = createBrowserRouter([
@@ -110,6 +112,10 @@ const router = createBrowserRouter([
           {
             path: '/dashboard/my-donations',
             element: <PrivateRoute><MyDonations></MyDonations></PrivateRoute>
+          },
+          {
+            path: '/dashboard/users',
+            element: <AdminRoute><AllUsers></AllUsers></AdminRoute>
           },
         ]
       },
