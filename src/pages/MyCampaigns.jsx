@@ -1,13 +1,15 @@
 import { AssetContext } from "@/auth/ContextApi";
 import useAxiosSecure from "@/hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
-import { useContext, useMemo, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import Lottie from "lottie-react";
 import { IoArrowUp, IoArrowDown } from "react-icons/io5";
 import { Button } from "@/components/ui/button";
 import { Pagination } from "@mui/material";
 import { ImSpinner3 } from "react-icons/im";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+
 import {
   Dialog,
   DialogContent,
@@ -38,11 +40,36 @@ import noResule from "../assets/noresult.json";
 import { BarLoader } from "react-spinners";
 
 const MyCampaigns = () => {
-  const { user } = useContext(AssetContext);
+  
+  const { user,demoLoadTheme } = useContext(AssetContext);
   const { toast } = useToast();
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 10;
   const axiosSecure = useAxiosSecure();
+
+  const [themeMode, setThemeMode] = useState("light");
+  const theme = createTheme({
+    palette: {
+      mode: themeMode,
+      primary: { main: "#3490dc" },
+      secondary: { main: "#f9802c" },
+      text: {
+        light: "#1a202c", 
+        dark: "#ffffff", 
+      },
+    },
+  });
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme) {
+      setThemeMode(savedTheme);
+    }
+  }, [demoLoadTheme]);
+
+
+
+
+
   const {
     data: campaigns,
     isLoading,
@@ -84,8 +111,8 @@ const MyCampaigns = () => {
             description:
               "Your campaign is successfully paused. You can resume it anytime.",
           });
-        }else{
-          setSpin(false)
+        } else {
+          setSpin(false);
         }
       });
   };
@@ -178,9 +205,19 @@ const MyCampaigns = () => {
         accessorKey: "active",
         header: "Status",
         cell: (info) => {
-          return <div className="text-sm">
-            {info.row.original.active ? <h2 className="text-green-500  font-medium py-[1px] bg-green-100 rounded-full">Active</h2> : <h2 className="text-red-500  font-medium py-[1px] bg-red-100 rounded-full">Paused</h2>}
-          </div>;
+          return (
+            <div className="text-sm">
+              {info.row.original.active ? (
+                <h2 className="text-green-500  font-medium py-[1px] bg-green-100 rounded-full">
+                  Active
+                </h2>
+              ) : (
+                <h2 className="text-red-500  font-medium py-[1px] bg-red-100 rounded-full">
+                  Paused
+                </h2>
+              )}
+            </div>
+          );
         },
       },
       {
@@ -249,7 +286,9 @@ const MyCampaigns = () => {
 
   return (
     <div className="pt-2">
-      <h1 className="text-2xl font-bold ">My Campaigns - {campaigns?.length}</h1>
+      <h1 className="text-2xl font-bold ">
+        My Campaigns - {campaigns?.length}
+      </h1>
       <p className="mb-4 text-sm opacity-70 pt-1">
         Effortlessly manage all your campaigns in one place.
       </p>
@@ -323,12 +362,25 @@ const MyCampaigns = () => {
       ) : campaigns.length < 11 ? (
         ""
       ) : (
-        <div className="py-3 flex  justify-center bg-primary-foreground/50">
-          <Pagination
-            count={table.getPageCount()}
-            page={table.getState().pagination.pageIndex + 1}
-            onChange={handlePageChange}
-          />
+        <div className="py-3 flex justify-center ">
+          <ThemeProvider theme={theme}>
+            <Pagination
+              count={table.getPageCount()}
+              page={table.getState().pagination.pageIndex + 1}
+              onChange={handlePageChange}
+              sx={{
+                "& .MuiPaginationItem-root": {
+                  color: themeMode === "light"
+                    ? theme.palette.text.light
+                    : theme.palette.text.dark, 
+                },
+                "& .MuiPaginationItem-root:hover": {
+                  backgroundColor: "secondary.main",
+                  color: "white", 
+                },
+              }}
+            />
+          </ThemeProvider>
         </div>
       )}
       <AlertDialog open={isOpenResume} onOpenChange={setIsOpenResume}>
@@ -411,22 +463,19 @@ const MyCampaigns = () => {
                       <h2 className="text-sm font-medium">
                         {payUser.userName}
                       </h2>
-                      {
-                      !payUser.refund && 
-                      <h2 className="text-sm text-primary font-medium">
-                        ${payUser.donatedAmount / 100}
-                      </h2>
-                      }
-                      {
-                      payUser.refund && 
-                      <h2 className="text-sm text-primary font-medium line-through">
-                       ${payUser.donatedAmount / 100}
-                      </h2>
-                      }
+                      {!payUser.refund && (
+                        <h2 className="text-sm text-primary font-medium">
+                          ${payUser.donatedAmount / 100}
+                        </h2>
+                      )}
+                      {payUser.refund && (
+                        <h2 className="text-sm text-primary font-medium line-through">
+                          ${payUser.donatedAmount / 100}
+                        </h2>
+                      )}
                     </div>
                   ))}
                 </div>
-                
               </div>
             )}
           </div>

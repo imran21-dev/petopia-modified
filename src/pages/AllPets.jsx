@@ -13,7 +13,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import React, { useContext, useMemo, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import {
   useReactTable,
   getCoreRowModel,
@@ -28,9 +28,11 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import Lottie from "lottie-react";
 import { Skeleton } from "@/components/ui/skeleton";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+
 const AllPets = () => {
   const axiosSecure = useAxiosSecure();
-  const { user } = useContext(AssetContext);
+  const { user, demoLoadTheme } = useContext(AssetContext);
   const { toast } = useToast();
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 10;
@@ -47,6 +49,25 @@ const AllPets = () => {
       return res.data;
     },
   });
+
+   const [themeMode, setThemeMode] = useState("light");
+    const theme = createTheme({
+      palette: {
+        mode: themeMode,
+        primary: { main: "#3490dc" },
+        secondary: { main: "#f9802c" },
+        text: {
+          light: "#1a202c",
+          dark: "#ffffff",
+        },
+      },
+    });
+    useEffect(() => {
+      const savedTheme = localStorage.getItem("theme");
+      if (savedTheme) {
+        setThemeMode(savedTheme);
+      }
+    }, [demoLoadTheme]);
 
   const navigate = useNavigate();
   const handleUpdate = async (pet) => {
@@ -293,13 +314,27 @@ const AllPets = () => {
       ) : allPets.length < 11 ? (
         ""
       ) : (
-        <div className="py-3 flex  justify-center bg-primary-foreground/50">
+        <div className="py-3 flex  justify-center">
+        <ThemeProvider theme={theme}>
           <Pagination
             count={table.getPageCount()}
             page={table.getState().pagination.pageIndex + 1}
             onChange={handlePageChange}
+            sx={{
+              "& .MuiPaginationItem-root": {
+                color:
+                  themeMode === "light"
+                    ? theme.palette.text.light
+                    : theme.palette.text.dark,
+              },
+              "& .MuiPaginationItem-root:hover": {
+                backgroundColor: "secondary.main",
+                color: "white",
+              },
+            }}
           />
-        </div>
+        </ThemeProvider>
+      </div>
       )}
 
 <AlertDialog open={isOpenUnadopt} onOpenChange={setIsOpenUnadopt}>

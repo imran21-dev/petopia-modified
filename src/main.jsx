@@ -39,6 +39,7 @@ import UpdatePetAdmin from './pages/UpdatePetAdmin';
 import AllDonations from './pages/AllDonations';
 import UpdateAllCampaign from './pages/UpdateAllCampaign';
 
+
 const queryClient = new QueryClient()
 const router = createBrowserRouter([
   {
@@ -145,11 +146,13 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
+
     <ContextApi>
       <QueryClientProvider client={queryClient}>
     <RouterProvider router={router} />
     </QueryClientProvider>
 
     </ContextApi>
+
   </StrictMode>,
 )

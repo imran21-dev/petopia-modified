@@ -2,6 +2,7 @@ import Title from "./Title";
 import aboutUs from '../../assets/aboutus.jpg'
 import { Button } from "./button";
 import { GoArrowRight } from "react-icons/go";
+import { Link } from "react-router-dom";
 
 const AboutUs = () => {
     return (
@@ -21,7 +22,7 @@ const AboutUs = () => {
                 <li>Contact us or visit the adoption center to meet your future pet.</li>
             </ul>
             <p className="pb-3 ">Join us in creating a world where every pet has a loving home. Start your journey today!</p>
-            <Button>Start Exploring Pets <GoArrowRight /></Button>
+            <Link to='/pet-listing'><Button>Start Exploring Pets <GoArrowRight /></Button></Link>
 
             <img src={aboutUs} alt="" className="h-[600px] mt-10 rounded-3xl w-full object-cover"/>
         </div>

@@ -36,7 +36,7 @@ import { Skeleton } from "./skeleton";
 import { ImSpinner3 } from "react-icons/im";
 
 const Navbar = () => {
-  const { user, loading, logOut } = useContext(AssetContext);
+  const { user, loading, logOut,demoLoadTheme, setDemoLoadTheme } = useContext(AssetContext);
   const [isOpen, setIsOpen] = useState(false);
   const [spin, setSpin] = useState(false);
   const { toast } = useToast()
@@ -82,6 +82,7 @@ const Navbar = () => {
     setTheme(newTheme);
     document.documentElement.setAttribute("data-theme", newTheme);
     localStorage.setItem('theme', newTheme)
+    setDemoLoadTheme(demoLoadTheme + 1)
   };
   return (
     <Headroom>

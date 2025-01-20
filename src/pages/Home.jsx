@@ -1,4 +1,4 @@
-import { AssetContext } from "@/auth/ContextApi";
+
 import AboutUs from "@/components/ui/AboutUs";
 import Banner from "@/components/ui/Banner";
 import CallToAction from "@/components/ui/CallToAction";
@@ -6,12 +6,16 @@ import CategoryPets from "@/components/ui/CategoryPets";
 import PetCare from "@/components/ui/PetCare";
 
 import SuccessStory from "@/components/ui/SuccessStory";
+import { useEffect, useState } from "react";
+
 
 
 const Home = () => {
- 
+useEffect(() => {
+  window.scrollTo(0,0)
+},[])
   return (
-    <div>
+    <div >
       <div className="bg-primary/10">
         <Banner></Banner>
       </div>

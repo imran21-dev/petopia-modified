@@ -3,7 +3,7 @@ import useAxiosSecure from "@/hooks/useAxiosSecure";
 import { Pagination } from "@mui/material";
 import { useToast } from "@/hooks/use-toast";
 import { useQuery } from "@tanstack/react-query";
-import React, { useContext, useMemo, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import { IoArrowUp, IoArrowDown } from "react-icons/io5";
 import { ImSpinner3 } from "react-icons/im";
 import noResule from "../assets/noresult.json";
@@ -27,9 +27,9 @@ import {
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import Lottie from "lottie-react";
-
+import { ThemeProvider, createTheme } from "@mui/material/styles";
 const AdoptionRequest = () => {
-  const { user } = useContext(AssetContext);
+  const { user, demoLoadTheme } = useContext(AssetContext);
   const axiosSecure = useAxiosSecure();
   const { data: requests, isLoading, refetch } = useQuery({
     queryKey: ["requests", user],
@@ -38,6 +38,25 @@ const AdoptionRequest = () => {
       return res.data;
     },
   });
+
+   const [themeMode, setThemeMode] = useState("light");
+      const theme = createTheme({
+        palette: {
+          mode: themeMode,
+          primary: { main: "#3490dc" },
+          secondary: { main: "#f9802c" },
+          text: {
+            light: "#1a202c", 
+            dark: "#ffffff", 
+          },
+        },
+      });
+      useEffect(() => {
+        const savedTheme = localStorage.getItem("theme");
+        if (savedTheme) {
+          setThemeMode(savedTheme);
+        }
+      }, [demoLoadTheme]);
 
   const { toast } = useToast();
   const [isOpen, setIsOpen] = useState(false)
@@ -243,12 +262,26 @@ requests.length < 1 ? <div className="w-full justify-center flex items-center pt
         ) : requests.length < 11 ? (
           ""
         ) : (
-          <div className="py-3 flex  justify-center bg-primary-foreground/50">
-            <Pagination
-              count={table.getPageCount()}
-              page={table.getState().pagination.pageIndex + 1}
-              onChange={handlePageChange}
-            />
+          <div className="py-3 flex  justify-center">
+            <ThemeProvider theme={theme}>
+                       <Pagination
+                         count={table.getPageCount()}
+                         page={table.getState().pagination.pageIndex + 1}
+                         onChange={handlePageChange}
+                         sx={{
+                           "& .MuiPaginationItem-root": {
+                             color:
+                               themeMode === "light"
+                                 ? theme.palette.text.light
+                                 : theme.palette.text.dark,
+                           },
+                           "& .MuiPaginationItem-root:hover": {
+                             backgroundColor: "secondary.main",
+                             color: "white",
+                           },
+                         }}
+                       />
+                     </ThemeProvider>
           </div>
         )}
 

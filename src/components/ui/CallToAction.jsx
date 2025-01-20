@@ -25,7 +25,7 @@ const CallToAction = () => {
                     <SwiperImage></SwiperImage>
 
 
-                    <Link><Button>View Available Pets</Button></Link>
+                    <Link to='/pet-listing'><Button>View Available Pets</Button></Link>
                 </div>
             </div>
         </div>

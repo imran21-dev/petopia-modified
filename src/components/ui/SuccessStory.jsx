@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { Button } from "./button";
 import SwipperStory from "./SwipperStory";
 import Title from "./Title";
@@ -10,7 +11,7 @@ const SuccessStory = () => {
             <SwipperStory></SwipperStory>
             <div className="flex justify-center pt-10">
 
-            <Button>Adopt a Pet</Button>
+           <Link to='/pet-listing'> <Button>Adopt a Pet</Button></Link>
             </div>
         </div>
     );

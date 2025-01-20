@@ -12,7 +12,12 @@ const ContextApi = ({ children }) => {
   const axiosPublic = useAxiosPublic()
   const [isOpenPayment, setIsOpenPayment] = useState(false);
   const [demoLoad, setDemoLoad] = useState(0)
+  const [demoLoadTheme, setDemoLoadTheme] = useState(0)
   const [editorContent, setEditorContent] = useState('');
+
+
+
+
   useEffect(() => {
     if (!user) {
         return
@@ -87,7 +92,9 @@ const ContextApi = ({ children }) => {
     isOpenPayment,
     setIsOpenPayment,
     demoLoad,
-    setDemoLoad
+    setDemoLoad,
+    demoLoadTheme, setDemoLoadTheme
+  
   };
   console.log(user)
   return (

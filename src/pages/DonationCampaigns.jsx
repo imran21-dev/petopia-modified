@@ -7,6 +7,7 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import Lottie from "lottie-react";
 import { useInView } from "react-intersection-observer";
 import noResule from "../assets/noresult.json";
+import { useEffect } from "react";
 
 const DonationCampaigns = () => {
   const axiosPublic = useAxiosPublic();
@@ -34,7 +35,9 @@ const DonationCampaigns = () => {
   if (inView && hasNextPage && !isFetchingNextPage) {
     fetchNextPage();
   }
-
+  useEffect(() => {
+    window.scrollTo(0,0)
+  },[])
   return (
     <div className="w-11/12 mx-auto pt-5">
       <h1 className="text-xl font-bold">Donation Campaigns</h1>

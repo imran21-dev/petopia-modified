@@ -13,19 +13,27 @@ import CategorySelector from "@/components/ui/CategorySelector";
 import noResule from "../assets/noresult.json";
 import Lottie from "lottie-react";
 import { CgClose } from "react-icons/cg";
+import { useLocation } from "react-router-dom";
+
 
 const PetListing = () => {
   const skeleton = [1, 1, 1, 1, 1, 1, 1, 1];
   const axiosPublic = useAxiosPublic();
+
+  const {state} = useLocation()
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
+  
+  useEffect(() => {
+    window.scrollTo(0,0)
+  },[])
 
   const [demoLoad, setDemoLoad] = useState(0);
-  const [keyword, setKeyword] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("");
+  const [keyword, setKeyword] = useState(state?.keyword ? state.keyword : "");
+  const [selectedCategory, setSelectedCategory] = useState(state?.category ? state.category : "");
 
   const { ref, inView } = useInView();
 
@@ -42,6 +50,7 @@ const PetListing = () => {
       const res = await axiosPublic.get(
         `/pets?keyword=${keyword}&category=${selectedCategory}&page=${pageParam}&limit=8`
       );
+
       return res.data;
     },
     getNextPageParam: (lastPage, pages) =>
@@ -53,9 +62,11 @@ const PetListing = () => {
       setKeyword("");
       return;
     }
+  
     setKeyword(data.keyword);
     refetch();
     setSelectedCategory("");
+    
   };
 
   useEffect(() => {
@@ -72,10 +83,11 @@ const PetListing = () => {
     setKeyword("");
   };
 
-  console.log(isLoading);
+
+
 
   return (
-    <div className="w-11/12 mx-auto pt-5">
+    <div  className="w-11/12 mx-auto pt-5">
       <div className="grid grid-cols-3 items-center pb-5">
         <h1 className="text-xl font-bold">All Pets</h1>
         <div className="flex justify-center items-center gap-2 w-full">

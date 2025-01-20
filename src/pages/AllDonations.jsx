@@ -1,7 +1,7 @@
 import { AssetContext } from "@/auth/ContextApi";
 import useAxiosSecure from "@/hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
-import { useContext, useMemo, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import Lottie from "lottie-react";
 import { IoArrowUp, IoArrowDown } from "react-icons/io5";
@@ -36,9 +36,10 @@ import { useNavigate } from "react-router-dom";
 import { Skeleton } from "@/components/ui/skeleton";
 import noResule from "../assets/noresult.json";
 import { BarLoader } from "react-spinners";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
 
 const AllDonations = () => {
-  const { user } = useContext(AssetContext);
+  const { user, demoLoadTheme } = useContext(AssetContext);
   const { toast } = useToast();
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 10;
@@ -54,6 +55,25 @@ const AllDonations = () => {
       return res.data;
     },
   });
+
+  const [themeMode, setThemeMode] = useState("light");
+      const theme = createTheme({
+        palette: {
+          mode: themeMode,
+          primary: { main: "#3490dc" },
+          secondary: { main: "#f9802c" },
+          text: {
+            light: "#1a202c",
+            dark: "#ffffff",
+          },
+        },
+      });
+      useEffect(() => {
+        const savedTheme = localStorage.getItem("theme");
+        if (savedTheme) {
+          setThemeMode(savedTheme);
+        }
+      }, [demoLoadTheme]);
 
   const [campId, setcampId] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -356,13 +376,27 @@ const AllDonations = () => {
       ) : campaigns.length < 11 ? (
         ""
       ) : (
-        <div className="py-3 flex  justify-center bg-primary-foreground/50">
-          <Pagination
-            count={table.getPageCount()}
-            page={table.getState().pagination.pageIndex + 1}
-            onChange={handlePageChange}
-          />
-        </div>
+         <div className="py-3 flex  justify-center">
+                <ThemeProvider theme={theme}>
+                  <Pagination
+                    count={table.getPageCount()}
+                    page={table.getState().pagination.pageIndex + 1}
+                    onChange={handlePageChange}
+                    sx={{
+                      "& .MuiPaginationItem-root": {
+                        color:
+                          themeMode === "light"
+                            ? theme.palette.text.light
+                            : theme.palette.text.dark,
+                      },
+                      "& .MuiPaginationItem-root:hover": {
+                        backgroundColor: "secondary.main",
+                        color: "white",
+                      },
+                    }}
+                  />
+                </ThemeProvider>
+              </div>
       )}
        <AlertDialog open={isOpenDelete} onOpenChange={setIsOpenDelete}>
         <AlertDialogContent>
