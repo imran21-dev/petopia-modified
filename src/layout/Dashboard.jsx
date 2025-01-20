@@ -45,11 +45,11 @@ const Dashboard = () => {
 
              <div className='h-[1px] w-11/12 mx-auto bg-accent-foreground/10'></div>
 
-             <NavLink to='/dashboard/users' className='dashboard-list'><HiMiniUsers className='text-lg'/>Manage Users</NavLink>
+             <NavLink to='/dashboard/users' className='dashboard-list'><HiMiniUsers className='text-lg'/>All Users</NavLink>
 
-             <NavLink to='/dashboard/all-pets' className='dashboard-list'><MdPets className='text-lg'/>Manage Pets</NavLink>
+             <NavLink to='/dashboard/all-pets' className='dashboard-list'><MdPets className='text-lg'/>All Pets</NavLink>
 
-             <NavLink to='/dashboard/all-donation' className='dashboard-list'><FaHandHoldingDollar className='text-lg'/>Manage Donations</NavLink>
+             <NavLink to='/dashboard/all-donation' className='dashboard-list'><FaHandHoldingDollar className='text-lg'/>All Donations</NavLink>
              </div> :
 
               <div className='pt-5 w-full flex gap-1 flex-col'>

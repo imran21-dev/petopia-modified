@@ -155,7 +155,7 @@ const UpdatePetAdmin = () => {
                   description:
                     "Your pet is successfully uploaded. Now you can manage it from My Pets page.",
                 });
-                navigate("/dashboard/my-pets");
+                navigate("/dashboard/all-pets");
               }
             });
           }

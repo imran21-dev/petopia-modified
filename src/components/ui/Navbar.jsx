@@ -132,7 +132,7 @@ const Navbar = () => {
                       onError={handleImage}
                       src={user?.photoURL}
                       alt=""
-                      className="w-8 h-8 rounded-full object-cover"
+                      className="w-8 h-8 rounded-full object-cover border-primary border-2"
                     />
                   </DropdownMenuTrigger>
 
