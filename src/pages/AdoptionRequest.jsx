@@ -196,16 +196,16 @@ console.log(listingPetId, petId)
 
 {
 isLoading ? <div className="flex flex-col w-full gap-3">
-<Skeleton className='w-full h-14'></Skeleton>
-<Skeleton className='w-full h-14'></Skeleton>
-<Skeleton className='w-full h-14'></Skeleton>
-<Skeleton className='w-full h-14'></Skeleton>
-<Skeleton className='w-full h-14'></Skeleton>
-<Skeleton className='w-full h-14'></Skeleton>
-<Skeleton className='w-full h-14'></Skeleton>
-<Skeleton className='w-full h-14'></Skeleton>
-<Skeleton className='w-full h-14'></Skeleton>
-<Skeleton className='w-full h-14'></Skeleton>
+<Skeleton className='w-full h-14 bg-secondary'></Skeleton>
+<Skeleton className='w-full h-14 bg-secondary'></Skeleton>
+<Skeleton className='w-full h-14 bg-secondary'></Skeleton>
+<Skeleton className='w-full h-14 bg-secondary'></Skeleton>
+<Skeleton className='w-full h-14 bg-secondary'></Skeleton>
+<Skeleton className='w-full h-14 bg-secondary'></Skeleton>
+<Skeleton className='w-full h-14 bg-secondary'></Skeleton>
+<Skeleton className='w-full h-14 bg-secondary'></Skeleton>
+<Skeleton className='w-full h-14 bg-secondary'></Skeleton>
+<Skeleton className='w-full h-14 bg-secondary'></Skeleton>
 
 </div> :
 requests.length < 1 ? <div className="w-full justify-center flex items-center pt-10"><Lottie className="w-96" animationData={noResule}></Lottie></div> :

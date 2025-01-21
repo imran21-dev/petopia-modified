@@ -38,6 +38,8 @@ import AllPets from './pages/AllPets';
 import UpdatePetAdmin from './pages/UpdatePetAdmin';
 import AllDonations from './pages/AllDonations';
 import UpdateAllCampaign from './pages/UpdateAllCampaign';
+import ResetPassword from './pages/ResetPassword';
+import ErrorPage from './pages/ErrorPage';
 
 
 const queryClient = new QueryClient()
@@ -45,6 +47,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <HomePage></HomePage>,
+    errorElement: <ErrorPage></ErrorPage>,
     children:[
       {
         path: '/',
@@ -65,6 +68,10 @@ const router = createBrowserRouter([
       {
         path: '/login',
         element: <Login></Login>
+      },
+      {
+        path: '/reset-password',
+        element: <ResetPassword></ResetPassword>
       },
       {
         path: '/pet-details/:id',

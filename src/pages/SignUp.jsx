@@ -16,13 +16,14 @@ import { Link, useNavigate } from "react-router-dom";
 import googlePng from "../assets/google.png";
 import facebookPng from "../assets/facebook.png";
 import { useForm } from "react-hook-form";
-import useAxiosPublic from "@/hooks/useAxiosPublic";
 import axios from "axios";
 import { AssetContext } from "@/auth/ContextApi";
 import { signOut, updateProfile } from "firebase/auth";
 import { auth } from "@/auth/firebase.config";
 import { useToast } from "@/hooks/use-toast";
 import { ToastAction } from "@/components/ui/toast";
+import signUp from '../assets/Animation - 1737429852609.json'
+import Lottie from "lottie-react";
 
 const imageHostingKey = import.meta.env.VITE_API_KEY;
 const imageHostingAPI = `https://api.imgbb.com/1/upload?key=${imageHostingKey}`;
@@ -31,7 +32,6 @@ const SignUp = () => {
   const {
     register,
     handleSubmit,
-    watch,
     reset,
     formState: { errors },
   } = useForm();
@@ -39,7 +39,7 @@ const SignUp = () => {
   const handleCheckbox = (checked) => {
     setIsChecked(checked);
   };
-  const axiosPublic = useAxiosPublic();
+
   const { registration, googleLogin, facebookLogin } = useContext(AssetContext);
   const { toast } = useToast();
   const [spin, setSpin] = useState(false);
@@ -158,6 +158,9 @@ const SignUp = () => {
 
   return (
     <div className="w-11/12 mx-auto flex-col flex justify-center items-center pt-10">
+      <div className="absolute left-0 bottom-0 w-96">
+        <Lottie animationData={signUp}></Lottie>
+      </div>
       <Card className="w-2/5  shadow-none border-none">
         <CardHeader className="text-center">
           <CardTitle className="text-2xl font-bold ">

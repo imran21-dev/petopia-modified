@@ -237,16 +237,16 @@ const MyPets = () => {
       </p>
       {isLoading ? (
         <div className="flex flex-col w-full gap-3">
-          <Skeleton className="w-full h-14"></Skeleton>
-          <Skeleton className="w-full h-14"></Skeleton>
-          <Skeleton className="w-full h-14"></Skeleton>
-          <Skeleton className="w-full h-14"></Skeleton>
-          <Skeleton className="w-full h-14"></Skeleton>
-          <Skeleton className="w-full h-14"></Skeleton>
-          <Skeleton className="w-full h-14"></Skeleton>
-          <Skeleton className="w-full h-14"></Skeleton>
-          <Skeleton className="w-full h-14"></Skeleton>
-          <Skeleton className="w-full h-14"></Skeleton>
+          <Skeleton className="w-full h-14 bg-secondary"></Skeleton>
+          <Skeleton className="w-full h-14 bg-secondary"></Skeleton>
+          <Skeleton className="w-full h-14 bg-secondary"></Skeleton>
+          <Skeleton className="w-full h-14 bg-secondary"></Skeleton>
+          <Skeleton className="w-full h-14 bg-secondary"></Skeleton>
+          <Skeleton className="w-full h-14 bg-secondary"></Skeleton>
+          <Skeleton className="w-full h-14 bg-secondary"></Skeleton>
+          <Skeleton className="w-full h-14 bg-secondary"></Skeleton>
+          <Skeleton className="w-full h-14 bg-secondary"></Skeleton>
+          <Skeleton className="w-full h-14 bg-secondary"></Skeleton>
         </div>
       ) : myPets.length < 1 ? (
         <div className="w-full justify-center flex items-center pt-10">
