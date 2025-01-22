@@ -42,6 +42,7 @@ import ResetPassword from './pages/ResetPassword';
 import ErrorPage from './pages/ErrorPage';
 
 
+
 const queryClient = new QueryClient()
 const router = createBrowserRouter([
   {

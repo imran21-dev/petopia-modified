@@ -3,10 +3,12 @@ import AboutUs from "@/components/ui/AboutUs";
 import Banner from "@/components/ui/Banner";
 import CallToAction from "@/components/ui/CallToAction";
 import CategoryPets from "@/components/ui/CategoryPets";
+import Footer from "@/components/ui/Footer";
 import PetCare from "@/components/ui/PetCare";
 
 import SuccessStory from "@/components/ui/SuccessStory";
 import { useEffect, useState } from "react";
+
 
 
 
@@ -27,6 +29,7 @@ useEffect(() => {
       <SuccessStory></SuccessStory>
       <PetCare></PetCare>
       </div>
+      <Footer></Footer>
     </div>
   );
 };

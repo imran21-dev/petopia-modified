@@ -9,7 +9,7 @@ const HomePage = () => {
     return (
         <div className="max-w-[1920px] mx-auto">
            <Navbar></Navbar>
-           <div className=" ">
+           <div className="w-full relative">
             <Outlet></Outlet>
            </div>
            <Toaster/>

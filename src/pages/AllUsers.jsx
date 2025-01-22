@@ -107,7 +107,7 @@ const AllUsers = () => {
           <img
             src={info.getValue()}
             alt="Pet"
-            className="w-12 h-12 object-cover mx-auto rounded-full"
+            className="lg:w-12 w-8 lg:h-12 h-8 object-cover mx-auto rounded-full"
           />
         ),
       },
@@ -128,14 +128,14 @@ const AllUsers = () => {
         cell: (info) => (
           <div className="">
             {info.row.original.role === "admin" ? (
-              <Button disabled variant="secondary" className="w-2/3">
+              <Button disabled variant="secondary" className='md:text-sm text-xs h-max'>
                 Admin
               </Button>
             ) : (
               <Button
                 variant="secondary"
                 onClick={() => handleAdmin(info.row.original)}
-                className="w-2/3"
+                className='md:text-sm text-xs h-max'
               >
                 Make Admin
               </Button>
@@ -165,11 +165,13 @@ const AllUsers = () => {
   };
 
   return (
-    <div className="pt-2">
-      <h1 className="text-2xl font-bold ">All Users - {allUser?.length}</h1>
-      <p className="mb-4 text-sm opacity-70 pt-1">
+    <div className="w-full text-center lg:text-left">
+      <h1 className="text-lg md:text-2xl font-bold">All Users - {allUser?.length}</h1>
+      <p className="mb-4 text-xs md:text-sm opacity-70 pt-1">
         You can manage all the users from this page.
       </p>
+
+      <section className="w-full ">
       <div>
         {isLoading ? (
           <div className="flex flex-col w-full gap-3">
@@ -189,9 +191,9 @@ const AllUsers = () => {
             <Lottie className="w-96" animationData={noResule}></Lottie>
           </div>
         ) : (
-          <div className="overflow-x-auto">
+          <div className="my-table overflow-x-auto mx-auto">
             {!isLoading && (
-              <table className="w-full border-collapse ">
+              <table className="w-max xl:w-full border-collapse">
                 <thead className="bg-primary/20">
                   {table.getHeaderGroups().map((headerGroup) => (
                     <tr key={headerGroup.id}>
@@ -199,7 +201,7 @@ const AllUsers = () => {
                         <th
                           key={header.id}
                           onClick={header.column.getToggleSortingHandler()}
-                          className="border text-center px-4 py-2 cursor-pointer hover:bg-primary/20"
+                          className="border text-sm md:text-base text-center px-2 md:px-4 py-1 md:py-2 cursor-pointer hover:bg-primary/20"
                         >
                           {flexRender(
                             header.column.columnDef.header,
@@ -218,9 +220,9 @@ const AllUsers = () => {
                 </thead>
                 <tbody>
                   {table.getRowModel().rows.map((row) => (
-                    <tr key={row.id} className="hover:bg-primary/5 text-center">
+                    <tr key={row.id} className="hover:bg-primary/5 text-xs md:text-base text-center">
                       {row.getVisibleCells().map((cell) => (
-                        <td key={cell.id} className="border px-4 py-2">
+                        <td key={cell.id} className="border px-2 md:px-4 py-2">
                           {flexRender(
                             cell.column.columnDef.cell,
                             cell.getContext()
@@ -263,6 +265,8 @@ const AllUsers = () => {
           </ThemeProvider>
         </div>
       )}
+      </section>
+     
       <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>

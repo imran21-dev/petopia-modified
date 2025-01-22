@@ -4,7 +4,7 @@ import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:5000",
+  baseURL: "https://petopia-server-indol.vercel.app",
   withCredentials: true,
 });
 

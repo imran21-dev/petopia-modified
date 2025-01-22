@@ -3,7 +3,7 @@ import { createContext, useEffect, useState } from "react";
 import { auth } from "./firebase.config";
 import { createUserWithEmailAndPassword, FacebookAuthProvider, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
 import useAxiosPublic from "@/hooks/useAxiosPublic";
-
+import 'quill/dist/quill.snow.css';
 export const AssetContext = createContext(null);
 
 const ContextApi = ({ children }) => {
@@ -96,7 +96,7 @@ const ContextApi = ({ children }) => {
     demoLoadTheme, setDemoLoadTheme
   
   };
-  console.log(user)
+
   return (
     <AssetContext.Provider value={value}>{children}</AssetContext.Provider>
   );

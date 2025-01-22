@@ -166,7 +166,7 @@ const AllPets = () => {
           <img
             src={info.getValue()}
             alt="Pet"
-            className="w-12 h-12 object-cover mx-auto rounded-full"
+            className="lg:w-12 w-8 lg:h-12 h-8 object-cover mx-auto rounded-full"
           />
         ),
       },
@@ -176,7 +176,7 @@ const AllPets = () => {
         cell: (info) => (
           <div className=" flex justify-center">
             <span
-              className={`px-3 py-1 rounded-full font-medium text-sm  ${
+              className={`px-3 py-1 rounded-full font-medium  md:text-sm  ${
                 info.getValue() ? "bg-green-500/20 text-green-500" : "bg-primary/20 text-primary"
               }`}
             >
@@ -193,25 +193,25 @@ const AllPets = () => {
         cell: (info) => (
           <div className="grid grid-cols-3 justify-items-center">
             {!info.row.original.adopted ? (
-              <Button className='w-2/3'
+              <Button className='md:text-sm text-xs h-max'
                 variant="secondary"
                 onClick={() => handleUpdate(info.row.original)}
               >
                 Update
               </Button>
             ) : (
-              <Button className='w-2/3'  variant="secondary" disabled>
+              <Button className='md:text-sm text-xs h-max'  variant="secondary" disabled>
                 Update
               </Button>
             )}
 
             {!info.row.original.adopted ? (
-              <Button className='w-2/3 ' onClick={() => handleAdopt(info.row.original)}>Adopt</Button>
+              <Button className='md:text-sm text-xs h-max' onClick={() => handleAdopt(info.row.original)}>Adopt</Button>
             ) : (
-              <Button className='w-2/3' variant='secondary' onClick={() => handleUnadopt(info.row.original)}>Unadopt</Button>
+              <Button className='md:text-sm text-xs h-max' variant='secondary' onClick={() => handleUnadopt(info.row.original)}>Unadopt</Button>
             )}
 
-            <Button className='w-2/3'
+            <Button className='md:text-sm text-xs h-max'
               variant='secondary'
               onClick={() => handleDelete(info.row.original)}
             >
@@ -244,9 +244,11 @@ const AllPets = () => {
   };
 
   return (
-    <div className="pt-2">
-      <h1 className="text-2xl font-bold ">All Pets - {allPets?.length}</h1>
-      <p className='mb-4 text-sm opacity-70 pt-1'>View and Manage All Pets in One Place.</p>
+    <div className="w-full text-center lg:text-left">
+      <h1 className="text-lg md:text-2xl font-bold">All Pets - {allPets?.length}</h1>
+      <p className='mb-4 text-xs md:text-sm opacity-70 pt-1'>View and Manage All Pets in One Place.</p>
+      
+      <section className="w-full ">
       {
       isLoading ? <div className="flex flex-col w-full gap-3">
         <Skeleton className='w-full h-14 bg-secondary'></Skeleton>
@@ -263,9 +265,9 @@ const AllPets = () => {
         </div> : 
      
       allPets.length < 1 ? <div className="w-full justify-center flex items-center pt-10"><Lottie className="w-96" animationData={noResule}></Lottie></div> :
-      <div className="overflow-x-auto">
+      <div className="my-table overflow-x-auto mx-auto">
         {!isLoading && (
-          <table className="w-full border-collapse ">
+          <table className="w-max xl:w-full border-collapse ">
             <thead className="bg-primary/20">
               {table.getHeaderGroups().map((headerGroup) => (
                 <tr key={headerGroup.id}>
@@ -273,7 +275,7 @@ const AllPets = () => {
                     <th
                       key={header.id}
                       onClick={header.column.getToggleSortingHandler()}
-                      className="border text-center px-4 py-2 cursor-pointer hover:bg-primary/20"
+                      className="border text-sm md:text-base text-center px-2 md:px-4 py-1 md:py-2 cursor-pointer hover:bg-primary/20"
                     >
                       {flexRender(
                         header.column.columnDef.header,
@@ -292,9 +294,9 @@ const AllPets = () => {
             </thead>
             <tbody>
               {table.getRowModel().rows.map((row) => (
-                <tr key={row.id} className="hover:bg-primary/5 text-center">
+                <tr key={row.id} className="hover:bg-primary/5 text-xs md:text-base text-center">
                   {row.getVisibleCells().map((cell) => (
-                    <td key={cell.id} className="border px-4 py-2">
+                    <td key={cell.id} className="border px-2 md:px-4 py-2">
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()
@@ -336,6 +338,7 @@ const AllPets = () => {
         </ThemeProvider>
       </div>
       )}
+      </section>
 
 <AlertDialog open={isOpenUnadopt} onOpenChange={setIsOpenUnadopt}>
         <AlertDialogContent>

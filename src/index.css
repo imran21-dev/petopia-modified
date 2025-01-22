@@ -106,10 +106,10 @@ width: 4px;
 height: 100%;
 @apply bg-primary absolute left-0 top-0
 }
-#dashboard .active{
+#dashboard .active, #mobile-dashboard .active{
 @apply text-primary bg-primary/10 hover:bg-primary/10 hover:text-primary
 }
-
+ 
 .text-container .ql-toolbar:first-of-type{
 display: none;
 }
@@ -122,7 +122,6 @@ display: none;
   @apply bg-primary/5
 }
 
-/* Scrollbar thumb */
 .donation-container::-webkit-scrollbar-thumb {
  @apply bg-primary/20
 }
@@ -130,4 +129,18 @@ display: none;
 width: 5px;
 }
 
+.my-table::-webkit-scrollbar-track {
+  @apply bg-primary/5
+}
 
+.my-table::-webkit-scrollbar-thumb {
+ @apply bg-primary/20
+}
+.my-table::-webkit-scrollbar{
+width: 5px;
+}
+
+
+#mobile-nav .active{
+@apply text-primary
+}

@@ -103,22 +103,22 @@ const CreateCampaign = () => {
   };
   return (
     <div className="w-11/12 mx-auto flex-col flex justify-center items-center pt-2">
-      <Card className="w-3/5  shadow-none border-none">
-        <CardHeader className="text-center">
-          <CardTitle className="text-2xl font-bold ">
+      <Card className="lg:w-3/5  shadow-none border-none">
+        <CardHeader className="text-center pt-0 lg:pt-6">
+          <CardTitle className="text-xl md:text-2xl font-bold">
             Create a Campaign
           </CardTitle>
-          <CardDescription>
+          <CardDescription className='md:text-sm text-xs'>
             Launch Your Mission, Inspire Change.
           </CardDescription>
         </CardHeader>
 
-        <CardContent>
+        <CardContent className='p-0 pb-10 lg:pb-0'>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="grid pb-5  items-center gap-4">
-            <section className="flex gap-6 ">
+            <section className="flex gap-2 md:gap-6 ">
               <div className="flex flex-col w-2/4 space-y-1.5">
-                <Label htmlFor="name">Name</Label>
+                <Label htmlFor="name" className='text-xs md:text-sm'>Name</Label>
                 <Input
                   {...register("name", {
                     required: "Name is required",
@@ -135,16 +135,16 @@ const CreateCampaign = () => {
                       message: "Name can only contain letters and spaces",
                     },
                   })}
-                  className={errors.name && "border-red-600"}
+                  className={errors.name ? "border-red-600 text-sm h-max md:text-base" : "text-sm h-max md:text-base"}
                   type="text"
                   placeholder="Enter pet name"
                 />
                 {errors.name && (
-                  <p className="text-red-600 text-sm">{errors.name.message}</p>
+                  <p className="text-red-600 text-xs md:text-sm">{errors.name.message}</p>
                 )}
               </div>
                 <div className="flex flex-col space-y-1.5 w-2/4">
-                  <Label htmlFor="image">Pet Image</Label>
+                  <Label htmlFor="image" className='text-xs md:text-sm'>Pet Image</Label>
                   <Input
                     {...register("image", {
                       required: "Image file is required",
@@ -154,19 +154,19 @@ const CreateCampaign = () => {
                           "Only image files are allowed",
                       },
                     })}
-                    className={errors.image && "border-red-600"}
+                    className={errors.image ? "border-red-600 text-sm h-max md:text-base" : "text-sm h-max md:text-base"}
                     type="file"
                   />
                   {errors.image && (
-                    <p className="text-red-600 text-sm">
+                    <p className="text-red-600 text-xs md:text-sm">
                       {errors.image.message}
                     </p>
                   )}
                 </div>
               </section>
-              <section className="flex gap-6 ">
+              <section className="flex gap-2 md:gap-6 ">
                 <div className="flex w-2/4 flex-col space-y-1.5">
-                  <Label htmlFor="amount">Maximum Amount</Label>
+                  <Label htmlFor="amount" className='text-xs md:text-sm'>Maximum Amount</Label>
                   <Input
                     {...register("amount", {
                       required: "Amount is required",
@@ -175,18 +175,20 @@ const CreateCampaign = () => {
                         message: "Amount must be at least 1",
                       },
                     })}
+                    className={errors.amount ? "border-red-600 text-sm h-max md:text-base" : "text-sm h-max md:text-base"}
                     type="number"
                     placeholder="Enter maximum amount"
                   />
                   {errors.amount && (
-                    <p className="text-red-600 text-sm">
+                    <p className="text-red-600 text-xs md:text-sm">
                       {errors.amount.message}
                     </p>
                   )}
                 </div>
                 <div className="flex flex-col w-2/4 space-y-1.5 ">
-                  <Label htmlFor="date">Select Last Donation Date</Label>
+                  <Label htmlFor="date" className='text-xs md:text-sm'>Last Donation Date</Label>
                   <Controller
+                    
                     name="date"
                     control={control}
                     rules={{
@@ -205,11 +207,11 @@ const CreateCampaign = () => {
                           <Button
                             variant={"outline"}
                             className={cn(
-                              "justify-start text-left font-normal",
+                              "justify-start text-xs overflow-hidden h-max md:text-sm text-left font-normal",
                               !value && "text-muted-foreground"
                             )}
                           >
-                            <CalendarIcon className="mr-2 h-4 w-4" />
+                            <CalendarIcon className="md:mr-2 -ml-2 h-4 w-4" />
                             {value ? (
                               format(value, "PPP")
                             ) : (
@@ -230,7 +232,7 @@ const CreateCampaign = () => {
                     )}
                   />
                   {errors.date && (
-                    <p className="text-red-600 text-sm">
+                    <p className="text-red-600 text-xs md:text-sm">
                       {errors.date.message}
                     </p>
                   )}
@@ -242,7 +244,7 @@ const CreateCampaign = () => {
              
 
               <div>
-                <Label htmlFor="short-desc">Short Description</Label>
+                <Label htmlFor="short-desc" className='text-xs md:text-sm'>Short Description</Label>
                 <Textarea
                   {...register("shortDescription", {
                     required: "Description is required",
@@ -256,19 +258,20 @@ const CreateCampaign = () => {
                       message: "Description must be under 200 characters",
                     },
                   })}
+                  className={errors.shortDescription ? "border-red-600 text-sm h-max md:text-base" : "text-sm h-max md:text-base"}
                   placeholder="Type something about the pet."
                 />
                 {errors.shortDescription && (
-                  <p className="text-red-600 text-sm">
+                  <p className="text-red-600 text-xs md:text-sm">
                     {errors.shortDescription.message}
                   </p>
                 )}
               </div>
 
               <div>
-                <Label htmlFor="long-desc">Long Description</Label>
+                <Label htmlFor="long-desc" className='text-xs md:text-sm'>Long Description</Label>
                 <Textarea
-                  className="h-44"
+                 
                   {...register("longDescription", {
                     required: "Description is required",
                     minLength: {
@@ -281,16 +284,17 @@ const CreateCampaign = () => {
                       message: "Description must be under 2000 characters",
                     },
                   })}
+                  className={errors.longDescription ? "border-red-600 h-44 text-sm md:text-base" : "text-sm md:text-base h-44"}
                   placeholder="Type the details about the campaign."
                 />
                 {errors.longDescription && (
-                  <p className="text-red-600 text-sm">
+                  <p className="text-red-600 text-xs md:text-sm">
                     {errors.longDescription.message}
                   </p>
                 )}
               </div>
             </div>
-            <Button disabled={spin} className="w-full">
+            <Button disabled={spin} className='md:text-sm text-xs h-max w-full'>
               {spin && <ImSpinner3 className="animate-spin" />}Create
             </Button>
           </form>

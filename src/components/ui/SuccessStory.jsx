@@ -11,7 +11,7 @@ const SuccessStory = () => {
             <SwipperStory></SwipperStory>
             <div className="flex justify-center pt-10">
 
-           <Link to='/pet-listing'> <Button>Adopt a Pet</Button></Link>
+           <Link to='/pet-listing'> <Button className='md:text-sm text-xs h-max'>Adopt a Pet</Button></Link>
             </div>
         </div>
     );

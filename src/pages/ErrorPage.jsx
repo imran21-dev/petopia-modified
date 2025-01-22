@@ -8,13 +8,13 @@ const ErrorPage = () => {
  
     return (
         <div className='flex flex-col justify-center items-center h-screen'>
-            <div className='w-1/6 h-max'>
+            <div className='w-2/4 md:w-1/6 h-max'>
                 <Lottie animationData={errorLottie}></Lottie>
             </div>
             <h1 className='text-4xl font-semibold text-red-500'>{status}</h1>
             <p className='font-semibold'>{statusText}</p>
             <p className='pb-5'>{error?.message}</p>
-            <Link to='/'><Button>Go to Home</Button></Link>
+            <Link to='/'><Button className='md:text-sm text-xs h-max'>Go to Home</Button></Link>
         </div>
     );
 };

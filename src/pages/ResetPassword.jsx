@@ -53,22 +53,22 @@ const ResetPassword = () => {
     <div>
       <div className="w-11/12 mx-auto flex-col flex justify-center items-center pt-44">
   
-        <Card className="w-2/5  shadow-none border-none">
+        <Card className="xl:w-2/5  shadow-none border-none">
           <CardHeader className="text-center">
-            <CardTitle className="text-2xl font-bold ">
+            <CardTitle className="text-lg md:text-2xl font-bold">
               Reset Your Password
             </CardTitle>
-            <CardDescription>
+            <CardDescription className='md:text-base text-xs'>
               Enter your email address below and we'll send you a link to reset
               your password.
             </CardDescription>
           </CardHeader>
 
-          <CardContent>
+          <CardContent  className='p-0'>
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="grid pb-5 w-full items-center gap-4">
                 <div className="flex flex-col space-y-1.5">
-                  <Label htmlFor="email">Email</Label>
+                  <Label htmlFor="email" className='text-xs md:text-sm'>Email</Label>
                   <Input
                     {...register("email", {
                       required: "Email is required",
@@ -79,22 +79,22 @@ const ResetPassword = () => {
                       },
                     })}
                     defaultValue={state?.email}
-                    className={errors.email && "border-red-600"}
+                    className={errors.email ? "border-red-600 text-sm h-max md:text-base" : "text-sm h-max md:text-base"}
                     type="email"
                     placeholder="Enter your email"
                   />
                   {errors.email && (
-                    <p className="text-red-600 text-sm">
+                    <p className="text-red-600 text-xs md:text-sm">
                       {errors.email.message}
                     </p>
                   )}
                 </div>
               </div>
-              <Button disabled={spin} className="w-full">
+              <Button disabled={spin} className='md:text-sm text-xs h-max w-full'>
                 {spin && <ImSpinner3 className="animate-spin" />}send
               </Button>
             </form>
-            <h1 className="text-xs text-center py-2 font-medium">
+            <h1 className="text-[10px] md:text-xs text-center py-2 font-medium">
               Go back to
               <Link
                 to="/login"

@@ -38,29 +38,18 @@ const SwipperStory = () => {
         modules={[Pagination, Autoplay]}
         className="mySwiper"
       >
-        { isLoading ? <div className='flex gap-20'>
-            <Skeleton className='w-2/4 h-96'></Skeleton>
-            <div className='w-2/4 space-y-2'>
-            <Skeleton className='w-32 h-8'></Skeleton>
-            <Skeleton className='w-full h-3'></Skeleton>
-            <Skeleton className='w-full h-3'></Skeleton>
-            <Skeleton className='w-2/3 h-3'></Skeleton>
-            <Skeleton className='w-full h-3'></Skeleton>
-            <Skeleton className='w-full h-3'></Skeleton>
-            <Skeleton className='w-2/3 h-3'></Skeleton>
-            <Skeleton className='w-32 h-3'></Skeleton>
-            <Skeleton className='w-32 h-3'></Skeleton>
-            </div>
+        { isLoading ? <div className='flex items-center justify-center h-20'>
+            loading...
         </div> :
-        story.map((story, idx) =>   <SwiperSlide className='pl-2 w-full' key={idx}><div className='flex gap-20 '> 
-            <figure className='w-2/4'>
-            <img src={story.image} alt="" className='w-full object-cover rounded-3xl h-96' />
+        story.map((story, idx) =>   <SwiperSlide className='pl-2 w-full' key={idx}><div className='flex md:flex-row flex-col gap-4 md:gap-6 lg:gap-20 '> 
+            <figure className='md:w-2/4'>
+            <img src={story.image} alt="" className='w-full object-cover rounded-3xl md:h-96 h-44' />
             </figure>
-            <div className='w-2/4'>
-            <h2 className='text-2xl font-bold pb-2'>{story.pet_name}</h2>
-            <p>{story.story}</p>
-            <h2 className='pt-5 text-sm flex items-center gap-1'><IoCalendar />{story.adopted_date}</h2>
-            <h2 className='pt-2 text-sm flex items-center gap-1'><FaLocationDot /> {story.location}</h2>
+            <div className='md:w-2/4'>
+            <h2 className='md:text-2xl font-bold pb-2'>{story.pet_name}</h2>
+            <p className='text-xs md:text-base'>{story.story}</p>
+            <h2 className='pt-3 md:pt-5 text-xs md:text-sm flex items-center gap-1'><IoCalendar />{story.adopted_date}</h2>
+            <h2 className='pt-2 text-xs md:text-sm flex items-center gap-1'><FaLocationDot /> {story.location}</h2>
             </div>
         </div></SwiperSlide>
     )

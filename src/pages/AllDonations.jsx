@@ -189,7 +189,7 @@ const AllDonations = () => {
           <img
             src={info.getValue()}
             alt="Pet"
-            className="w-12 h-12 object-cover mx-auto rounded-full"
+            className="lg:w-12 w-8 lg:h-12 h-8 object-cover mx-auto rounded-full"
           />
         ),
       },
@@ -209,7 +209,7 @@ const AllDonations = () => {
           const progress = (donatedAmount / maxAmount) * 100;
           return (
             <div className="flex items-center justify-center w-full">
-              <div className="w-3/4 bg-secondary rounded-full h-4 overflow-hidden">
+              <div className="w-3/4 bg-secondary rounded-full h-2 md:h-4 overflow-hidden">
                 <div
                   className="h-full rounded-full bg-primary transition-all"
                   style={{ width: `${progress}%` }}
@@ -224,8 +224,8 @@ const AllDonations = () => {
         accessorKey: "active",
         header: "Status",
         cell: (info) => {
-          return <div className="text-sm">
-            {info.row.original.active ? <h2 className="text-green-500  font-medium py-[1px] bg-green-100 rounded-full">Active</h2> : <h2 className="text-red-500  font-medium py-[1px] bg-red-100 rounded-full">Paused</h2>}
+          return <div className="md:text-sm">
+            {info.row.original.active ? <h2 className="text-green-500  font-medium px-1 py-[1px] bg-green-100 rounded-full">Active</h2> : <h2 className="text-red-500  font-medium px-1 py-[1px] bg-red-100 rounded-full">Paused</h2>}
           </div>;
         },
       },
@@ -240,14 +240,14 @@ const AllDonations = () => {
               <Button
                 onClick={() => handlePause(info.row.original)}
                 variant="secondary"
-                className="w-2/3"
+                className='md:text-sm text-xs h-max'
               >
                 Pause
               </Button>
             ) : (
               <Button
                 onClick={() => handleResume(info.row.original)}
-                className="w-2/3"
+                className='md:text-sm text-xs h-max'
               >
                 Resume
               </Button>
@@ -255,7 +255,7 @@ const AllDonations = () => {
             <Button
               onClick={() => handleEdit(info.row.original)}
               variant="secondary"
-              className="w-2/3"
+              className='md:text-sm text-xs h-max'
             >
               Edit
             </Button>
@@ -264,14 +264,14 @@ const AllDonations = () => {
                 setDonateCampId(info.row.original._id), setIsOpenDonators(true);
               }}
               variant="secondary"
-              className="w-2/3 px-5"
+             className='md:text-sm text-xs h-max'
             >
               Donators
             </Button>
             <Button
               onClick={() => handleDelete(info.row.original)}
               variant="secondary"
-              className="w-2/3"
+              className='md:text-sm text-xs h-max'
             >
               Delete
             </Button>
@@ -301,12 +301,14 @@ const AllDonations = () => {
   };
 
   return (
-    <div className="pt-2">
-      <h1 className="text-2xl font-bold ">All Donation Campaigns - {campaigns?.length}</h1>
-      <p className="mb-4 text-sm opacity-70 pt-1">
+    <div className="w-full text-center lg:text-left">
+      <h1 className="text-lg md:text-2xl font-bold">All Donation Campaigns - {campaigns?.length}</h1>
+      <p className="mb-4 text-xs md:text-sm opacity-70 pt-1">
         Effortlessly manage all campaigns in one place.
       </p>
-      <div>
+
+    <section className="w-full ">
+    <div>
         {isLoading ? (
           <div className="flex flex-col w-full gap-3">
             <Skeleton className="w-full h-14 bg-secondary"></Skeleton>
@@ -325,9 +327,9 @@ const AllDonations = () => {
             <Lottie className="w-96" animationData={noResule}></Lottie>
           </div>
         ) : (
-          <div className="overflow-x-auto">
+          <div className="my-table overflow-x-auto mx-auto">
             {!isLoading && (
-              <table className="w-full border-collapse ">
+              <table className="w-max xl:w-full border-collapse ">
                 <thead className="bg-primary/20">
                   {table.getHeaderGroups().map((headerGroup) => (
                     <tr key={headerGroup.id}>
@@ -335,7 +337,7 @@ const AllDonations = () => {
                         <th
                           key={header.id}
                           onClick={header.column.getToggleSortingHandler()}
-                          className="border text-center px-4 py-2 cursor-pointer hover:bg-primary/20"
+                          className="border text-sm md:text-base text-center px-2 md:px-4 py-1 md:py-2 cursor-pointer hover:bg-primary/20"
                         >
                           {flexRender(
                             header.column.columnDef.header,
@@ -354,9 +356,9 @@ const AllDonations = () => {
                 </thead>
                 <tbody>
                   {table.getRowModel().rows.map((row) => (
-                    <tr key={row.id} className="hover:bg-primary/5 text-center">
+                    <tr key={row.id} className="hover:bg-primary/5 text-xs md:text-base text-center">
                       {row.getVisibleCells().map((cell) => (
-                        <td key={cell.id} className="border px-4 py-2">
+                        <td key={cell.id} className="border px-2 md:px-4 py-2">
                           {flexRender(
                             cell.column.columnDef.cell,
                             cell.getContext()
@@ -398,6 +400,8 @@ const AllDonations = () => {
                 </ThemeProvider>
               </div>
       )}
+    </section>
+      
        <AlertDialog open={isOpenDelete} onOpenChange={setIsOpenDelete}>
         <AlertDialogContent>
           <AlertDialogHeader>

@@ -40,8 +40,7 @@ import noResule from "../assets/noresult.json";
 import { BarLoader } from "react-spinners";
 
 const MyCampaigns = () => {
-  
-  const { user,demoLoadTheme } = useContext(AssetContext);
+  const { user, demoLoadTheme } = useContext(AssetContext);
   const { toast } = useToast();
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 10;
@@ -54,8 +53,8 @@ const MyCampaigns = () => {
       primary: { main: "#3490dc" },
       secondary: { main: "#f9802c" },
       text: {
-        light: "#1a202c", 
-        dark: "#ffffff", 
+        light: "#1a202c",
+        dark: "#ffffff",
       },
     },
   });
@@ -65,10 +64,6 @@ const MyCampaigns = () => {
       setThemeMode(savedTheme);
     }
   }, [demoLoadTheme]);
-
-
-
-
 
   const {
     data: campaigns,
@@ -170,7 +165,7 @@ const MyCampaigns = () => {
           <img
             src={info.getValue()}
             alt="Pet"
-            className="w-12 h-12 object-cover mx-auto rounded-full"
+            className="lg:w-12 w-8 lg:h-12 h-8  object-cover mx-auto rounded-full"
           />
         ),
       },
@@ -190,7 +185,7 @@ const MyCampaigns = () => {
           const progress = (donatedAmount / maxAmount) * 100;
           return (
             <div className="flex items-center justify-center w-full">
-              <div className="w-3/4 bg-secondary rounded-full h-4 overflow-hidden">
+              <div className="w-3/4 bg-secondary rounded-full h-2 md:h-4 overflow-hidden">
                 <div
                   className="h-full rounded-full bg-primary transition-all"
                   style={{ width: `${progress}%` }}
@@ -208,11 +203,11 @@ const MyCampaigns = () => {
           return (
             <div className="text-sm">
               {info.row.original.active ? (
-                <h2 className="text-green-500  font-medium py-[1px] bg-green-100 rounded-full">
+                <h2 className="text-green-500 text-xs px-1 md:text-sm font-medium py-[1px] bg-green-100 rounded-full">
                   Active
                 </h2>
               ) : (
-                <h2 className="text-red-500  font-medium py-[1px] bg-red-100 rounded-full">
+                <h2 className="text-red-500 text-xs px-1 md:text-sm font-medium py-[1px] bg-red-100 rounded-full">
                   Paused
                 </h2>
               )}
@@ -231,14 +226,14 @@ const MyCampaigns = () => {
               <Button
                 onClick={() => handlePause(info.row.original)}
                 variant="secondary"
-                className="w-2/3"
+                className='md:text-sm text-xs h-max'
               >
                 Pause
               </Button>
             ) : (
               <Button
                 onClick={() => handleResume(info.row.original)}
-                className="w-2/3"
+                className='md:text-sm text-xs h-max'
               >
                 Resume
               </Button>
@@ -246,7 +241,7 @@ const MyCampaigns = () => {
             <Button
               onClick={() => handleEdit(info.row.original)}
               variant="secondary"
-              className="w-2/3"
+             className='md:text-sm text-xs h-max'
             >
               Edit
             </Button>
@@ -255,7 +250,7 @@ const MyCampaigns = () => {
                 setDonateCampId(info.row.original._id), setIsOpenDonators(true);
               }}
               variant="secondary"
-              className="w-2/3 px-5"
+              className='md:text-sm text-xs h-max'
             >
               Donators
             </Button>
@@ -285,104 +280,111 @@ const MyCampaigns = () => {
   };
 
   return (
-    <div className="pt-2">
-      <h1 className="text-2xl font-bold ">
+    <div className=" w-full text-center lg:text-left">
+      <h1 className="text-lg md:text-2xl font-bold  ">
         My Campaigns - {campaigns?.length}
       </h1>
-      <p className="mb-4 text-sm opacity-70 pt-1">
+      <p className="mb-4 text-xs md:text-sm opacity-70 pt-1">
         Effortlessly manage all your campaigns in one place.
       </p>
-      <div>
+
+      <section className="w-full ">
+        <div>
+          {isLoading ? (
+            <div className="flex flex-col w-full gap-3">
+              <Skeleton className="w-full h-14 bg-secondary"></Skeleton>
+              <Skeleton className="w-full h-14 bg-secondary"></Skeleton>
+              <Skeleton className="w-full h-14 bg-secondary"></Skeleton>
+              <Skeleton className="w-full h-14 bg-secondary"></Skeleton>
+              <Skeleton className="w-full h-14 bg-secondary"></Skeleton>
+              <Skeleton className="w-full h-14 bg-secondary"></Skeleton>
+              <Skeleton className="w-full h-14 bg-secondary"></Skeleton>
+              <Skeleton className="w-full h-14 bg-secondary"></Skeleton>
+              <Skeleton className="w-full h-14 bg-secondary"></Skeleton>
+              <Skeleton className="w-full h-14 bg-secondary"></Skeleton>
+            </div>
+          ) : campaigns.length < 1 ? (
+            <div className="w-full justify-center flex items-center pt-10">
+              <Lottie className="w-96" animationData={noResule}></Lottie>
+            </div>
+          ) : (
+            <div className="my-table overflow-x-auto mx-auto">
+              {!isLoading && (
+                <table className="w-max xl:w-full border-collapse ">
+                  <thead className="bg-primary/20">
+                    {table.getHeaderGroups().map((headerGroup) => (
+                      <tr key={headerGroup.id}>
+                        {headerGroup.headers.map((header) => (
+                          <th
+                            key={header.id}
+                            onClick={header.column.getToggleSortingHandler()}
+                            className="border text-sm md:text-base text-center px-2 md:px-4 py-1 md:py-2 cursor-pointer hover:bg-primary/20"
+                          >
+                            {flexRender(
+                              header.column.columnDef.header,
+                              header.getContext()
+                            )}
+                            {header.column.getIsSorted() === "asc" && (
+                              <IoArrowUp className="inline ml-2" />
+                            )}
+                            {header.column.getIsSorted() === "desc" && (
+                              <IoArrowDown className="inline ml-2" />
+                            )}
+                          </th>
+                        ))}
+                      </tr>
+                    ))}
+                  </thead>
+                  <tbody>
+                    {table.getRowModel().rows.map((row) => (
+                      <tr
+                        key={row.id}
+                        className="hover:bg-primary/5 text-xs md:text-base text-center"
+                      >
+                        {row.getVisibleCells().map((cell) => (
+                          <td key={cell.id} className="border px-2 md:px-4 py-2">
+                            {flexRender(
+                              cell.column.columnDef.cell,
+                              cell.getContext()
+                            )}
+                          </td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              )}
+            </div>
+          )}
+        </div>
         {isLoading ? (
-          <div className="flex flex-col w-full gap-3">
-            <Skeleton className="w-full h-14 bg-secondary"></Skeleton>
-            <Skeleton className="w-full h-14 bg-secondary"></Skeleton>
-            <Skeleton className="w-full h-14 bg-secondary"></Skeleton>
-            <Skeleton className="w-full h-14 bg-secondary"></Skeleton>
-            <Skeleton className="w-full h-14 bg-secondary"></Skeleton>
-            <Skeleton className="w-full h-14 bg-secondary"></Skeleton>
-            <Skeleton className="w-full h-14 bg-secondary"></Skeleton>
-            <Skeleton className="w-full h-14 bg-secondary"></Skeleton>
-            <Skeleton className="w-full h-14 bg-secondary"></Skeleton>
-            <Skeleton className="w-full h-14 bg-secondary"></Skeleton>
-          </div>
-        ) : campaigns.length < 1 ? (
-          <div className="w-full justify-center flex items-center pt-10">
-            <Lottie className="w-96" animationData={noResule}></Lottie>
-          </div>
+          ""
+        ) : campaigns.length < 11 ? (
+          ""
         ) : (
-          <div className="overflow-x-auto">
-            {!isLoading && (
-              <table className="w-full border-collapse ">
-                <thead className="bg-primary/20">
-                  {table.getHeaderGroups().map((headerGroup) => (
-                    <tr key={headerGroup.id}>
-                      {headerGroup.headers.map((header) => (
-                        <th
-                          key={header.id}
-                          onClick={header.column.getToggleSortingHandler()}
-                          className="border text-center px-4 py-2 cursor-pointer hover:bg-primary/20"
-                        >
-                          {flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                          {header.column.getIsSorted() === "asc" && (
-                            <IoArrowUp className="inline ml-2" />
-                          )}
-                          {header.column.getIsSorted() === "desc" && (
-                            <IoArrowDown className="inline ml-2" />
-                          )}
-                        </th>
-                      ))}
-                    </tr>
-                  ))}
-                </thead>
-                <tbody>
-                  {table.getRowModel().rows.map((row) => (
-                    <tr key={row.id} className="hover:bg-primary/5 text-center">
-                      {row.getVisibleCells().map((cell) => (
-                        <td key={cell.id} className="border px-4 py-2">
-                          {flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext()
-                          )}
-                        </td>
-                      ))}
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            )}
+          <div className="py-3 flex justify-center ">
+            <ThemeProvider theme={theme}>
+              <Pagination
+                count={table.getPageCount()}
+                page={table.getState().pagination.pageIndex + 1}
+                onChange={handlePageChange}
+                sx={{
+                  "& .MuiPaginationItem-root": {
+                    color:
+                      themeMode === "light"
+                        ? theme.palette.text.light
+                        : theme.palette.text.dark,
+                  },
+                  "& .MuiPaginationItem-root:hover": {
+                    backgroundColor: "secondary.main",
+                    color: "white",
+                  },
+                }}
+              />
+            </ThemeProvider>
           </div>
         )}
-      </div>
-      {isLoading ? (
-        ""
-      ) : campaigns.length < 11 ? (
-        ""
-      ) : (
-        <div className="py-3 flex justify-center ">
-          <ThemeProvider theme={theme}>
-            <Pagination
-              count={table.getPageCount()}
-              page={table.getState().pagination.pageIndex + 1}
-              onChange={handlePageChange}
-              sx={{
-                "& .MuiPaginationItem-root": {
-                  color: themeMode === "light"
-                    ? theme.palette.text.light
-                    : theme.palette.text.dark, 
-                },
-                "& .MuiPaginationItem-root:hover": {
-                  backgroundColor: "secondary.main",
-                  color: "white", 
-                },
-              }}
-            />
-          </ThemeProvider>
-        </div>
-      )}
+      </section>
       <AlertDialog open={isOpenResume} onOpenChange={setIsOpenResume}>
         <AlertDialogContent>
           <AlertDialogHeader>

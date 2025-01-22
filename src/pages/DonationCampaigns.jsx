@@ -39,23 +39,23 @@ const DonationCampaigns = () => {
     window.scrollTo(0,0)
   },[])
   return (
-    <div className="w-11/12 mx-auto pt-5">
-      <h1 className="text-xl font-bold">Donation Campaigns</h1>
+    <div className="w-11/12 mx-auto pt-3 md:pt-5">
+      <h1 className="text-lg md:text-xl font-bold">Donation Campaigns</h1>
 
 
       {isLoading && (
-        <div className="grid grid-cols-3 gap-6 pt-5">
+        <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-3 md:gap-6 pt-3 md:pt-5">
           {Array.from({ length: 6 }).map((_, idx) => (
             <Skeleton
               key={idx}
-              className="w-full h-96 rounded-[50px] bg-secondary"
+              className="w-full h-56 md:h-80 rounded-md md:rounded-[50px] bg-secondary"
             />
           ))}
         </div>
       )}
 
     
-      <div className="grid grid-cols-3 gap-6 pt-5">
+      <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-3 md:gap-6 pt-3 md:pt-5">
         {data?.pages.map((page) =>
           page.map((camp) => <CampaignCart key={camp._id} camp={camp} />)
         )}

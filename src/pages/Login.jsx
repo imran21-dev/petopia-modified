@@ -17,13 +17,13 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import googlePng from "../assets/google.png";
 import facebookPng from "../assets/facebook.png";
 import { useForm } from "react-hook-form";
-import signUp from '../assets/Animation - 1737429852609.json'
+
 
 import { AssetContext } from "@/auth/ContextApi";
 
 import { useToast } from "@/hooks/use-toast";
 import { ToastAction } from "@/components/ui/toast";
-import Lottie from "lottie-react";
+
 
 
 
@@ -40,7 +40,7 @@ const Login = () => {
     setIsChecked(checked);
   };
  const {state} = useLocation()
- console.log(state)
+
   const {login,googleLogin,facebookLogin} = useContext(AssetContext)
   const { toast } = useToast()
   const [spin, setSpin] = useState(false)
@@ -134,41 +134,39 @@ const handleEmail = (e) => {
 
   return (
     <div className="w-11/12 mx-auto flex-col flex  justify-center items-center pt-10">
-     <div className="absolute left-0 bottom-0 w-96">
-        <Lottie animationData={signUp}></Lottie>
-      </div>
-      <Card className="w-2/5  shadow-none border-none">
+ 
+      <Card className="xl:w-2/5  shadow-none border-none">
         <CardHeader className="text-center">
-          <CardTitle className="text-2xl font-bold ">
+          <CardTitle className="text-lg md:text-2xl font-bold ">
             Welcome back!
           </CardTitle>
-          <CardDescription>
+          <CardDescription className='md:text-base text-xs'>
           Log in to continue your journey with us.
           </CardDescription>
         </CardHeader>
         <section className="w-full flex flex-col items-center">
-          <div className="space-x-4 pb-5">
-            <Button onClick={handleGoogleLogin} variant="outline">
-              <img className="w-4" src={googlePng} alt="" />
+          <div className="pb-3 md:pb-5 flex justify-center flex-wrap gap-2">
+            <Button className='md:text-sm text-xs h-max' onClick={handleGoogleLogin} variant="outline">
+              <img className="w-3 md:w-4" src={googlePng} alt="" />
               Continue with Google
             </Button>
-            <Button onClick={handleFacebookLogin} variant="outline">
-              <img className="w-4" src={facebookPng} alt="" />
+            <Button className='md:text-sm text-xs h-max' onClick={handleFacebookLogin} variant="outline">
+              <img className="w-3 md:w-4" src={facebookPng} alt="" />
               Continue with Facebook
             </Button>
           </div>
-          <div className="flex items-center gap-2 pb-5 text-sm opacity-70">
-            <div className="w-32 h-[1px] bg-secondary-foreground/20" />
+          <div className="flex items-center gap-2 pb-3 md:pb-5 md:text-sm text-xs opacity-70">
+            <div className="w-20  md:w-32 h-[1px] bg-secondary-foreground/20" />
             or
-            <div className="w-32 h-[1px] bg-secondary-foreground/20" />
+            <div className="w-20  md:w-32 h-[1px] bg-secondary-foreground/20" />
           </div>
         </section>
-        <CardContent>
+        <CardContent className='p-0'>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="grid pb-5 w-full items-center gap-4">
+            <div className="grid pb-5 w-full items-center gap-3 md:gap-4">
              
               <div className="flex flex-col space-y-1.5">
-                <Label htmlFor="email">Email</Label>
+                <Label htmlFor="email" className='text-xs md:text-sm'>Email</Label>
                 <Input
                   {...register("email", {
                     required: "Email is required",
@@ -177,18 +175,18 @@ const handleEmail = (e) => {
                       message: "Please enter a valid email address",
                     },
                   })}
-                  className={errors.email && "border-red-600"}
+                  className={errors.email ? "border-red-600 text-sm h-max md:text-base" : "text-sm h-max md:text-base"}
                   type="email"
                   onKeyUp={handleEmail}
                   placeholder="Enter your email"
                 />
                 {errors.email && (
-                  <p className="text-red-600 text-sm">{errors.email.message}</p>
+                  <p className="text-red-600 text-xs md:text-sm">{errors.email.message}</p>
                 )}
               </div>
 
               <div className="flex flex-col space-y-1.5">
-                <Label htmlFor="password">
+                <Label htmlFor="password" className='text-xs md:text-sm'>
                   Password 
                 </Label>
                 <Input
@@ -199,10 +197,10 @@ const handleEmail = (e) => {
                   })}
                   type={isChecked ? "text" : "password"}
                   placeholder="Password"
-                  className={errors.password && "border-red-600"}
+                  className={errors.password ? "border-red-600 text-sm h-max md:text-base" : "text-sm h-max md:text-base"}
                 />
                 {errors.password && (
-                  <p className="text-red-600 text-sm">
+                  <p className="text-red-600 text-xs md:text-sm">
                     {errors.password.message}
                   </p>
                 )}
@@ -215,17 +213,17 @@ const handleEmail = (e) => {
                 />
                 <label
                   htmlFor="password-show"
-                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  className="text-xs md:text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                 >
                   Show password
                 </label>
-                <Link state={{email: emailValue}} to='/reset-password' className="text-xs flex-1 text-right text-primary hover:underline">Forgot password?</Link>
+                <Link state={{email: emailValue}} to='/reset-password' className="text-[10px] md:text-xs flex-1 text-right text-primary hover:underline">Forgot password?</Link>
               </div>
               
             </div>
-            <Button disabled={spin} className="w-full">{spin && <ImSpinner3 className="animate-spin"/>}Login</Button>
+            <Button disabled={spin} className='md:text-sm text-xs h-max w-full'>{spin && <ImSpinner3 className="animate-spin"/>}Login</Button>
           </form>
-          <h1 className="text-xs text-center py-2 font-medium">
+          <h1 className="text-[10px] md:text-xs text-center py-2 font-medium">
             Do not have an account?{" "}
             <Link
               to="/registration"

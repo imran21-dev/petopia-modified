@@ -176,25 +176,25 @@ const UpdatePet = () => {
       <div className="w-11/12 mx-auto flex-col flex justify-center items-center pt-2">
         {isLoading ? (
           <div className="w-full pt-10 flex gap-3 flex-col items-center">
-            <Skeleton className="w-1/5 h-10"></Skeleton>
-            <Skeleton className="w-3/5 h-10"></Skeleton>
-            <Skeleton className="w-3/5 h-10"></Skeleton>
-            <Skeleton className="w-3/5 h-10"></Skeleton>
-            <Skeleton className="w-3/5 h-24"></Skeleton>
-            <Skeleton className="w-3/5 h-60"></Skeleton>
+            <Skeleton className="w-full bg-secondary md:w-1/5 h-10"></Skeleton>
+            <Skeleton className="w-full bg-secondary md:w-3/5 h-10"></Skeleton>
+            <Skeleton className="w-full bg-secondary md:w-3/5 h-10"></Skeleton>
+            <Skeleton className="w-full bg-secondary md:w-3/5 h-10"></Skeleton>
+            <Skeleton className="w-full bg-secondary md:w-3/5 h-24"></Skeleton>
+            <Skeleton className="w-full bg-secondary md:w-3/5 h-60"></Skeleton>
           </div>
         ) : (
-          <Card className="w-3/5  shadow-none border-none">
-            <CardHeader className="text-center">
-              <CardTitle className="text-2xl font-bold">Update your Pet</CardTitle>
-              <CardDescription>Keep your pet's story alive and thriving.</CardDescription>
+          <Card className="lg:w-3/5  shadow-none border-none">
+            <CardHeader className="text-center pt-0 lg:pt-6">
+              <CardTitle className="text-xl md:text-2xl font-bold">Update your Pet</CardTitle>
+              <CardDescription className='md:text-sm text-xs'>Keep your pet's story alive and thriving.</CardDescription>
             </CardHeader>
   
-            <CardContent>
+            <CardContent className='p-0 pb-10 lg:pb-0'>
               <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="grid pb-5 w-full items-center gap-4">
                   <div className="flex flex-col space-y-1.5">
-                    <Label htmlFor="name">Name</Label>
+                    <Label htmlFor="name" className='text-xs md:text-sm'>Name</Label>
                     <Input
                       defaultValue={pet.pet_name}
                       {...register("name", {
@@ -212,16 +212,16 @@ const UpdatePet = () => {
                           message: "Name can only contain letters and spaces",
                         },
                       })}
-                      className={errors.name && "border-red-600"}
+                      className={errors.name ? "border-red-600 text-sm h-max md:text-base" : "text-sm h-max md:text-base"}
                       type="text"
                       placeholder="Enter pet name"
                     />
-                    {errors.name && <p className="text-red-600 text-sm">{errors.name.message}</p>}
+                    {errors.name && <p className="text-red-600 text-xs md:text-sm">{errors.name.message}</p>}
                   </div>
   
-                  <section className="flex w-full justify-between gap-6">
+                  <section className="flex w-full justify-between gap-2 md:gap-6">
                     <div className="flex flex-col space-y-1.5 w-2/4">
-                      <Label htmlFor="age">Age</Label>
+                      <Label htmlFor="age" className='text-xs md:text-sm'>Age</Label>
                       <Input
                         defaultValue={pet.pet_age}
                         {...register("age", {
@@ -231,14 +231,17 @@ const UpdatePet = () => {
                             message: "Age must be under 100",
                           },
                         })}
+                        className={errors.age ? "border-red-600 text-sm h-max md:text-base" : "text-sm h-max md:text-base"}
                         type="number"
                         placeholder="Enter pet age"
                       />
-                      {errors.age && <p className="text-red-600 text-sm">{errors.age.message}</p>}
+                       {errors.age && (
+                    <p className="text-red-600 text-xs md:text-sm">{errors.age.message}</p>
+                  )}
                     </div>
   
                     <div className="flex flex-col space-y-1.5 w-2/4">
-                      <Label htmlFor="location">Location</Label>
+                      <Label htmlFor="location" className='text-xs md:text-sm'>Location</Label>
                       <Input
                         defaultValue={pet.pet_location}
                         {...register("location", {
@@ -256,32 +259,41 @@ const UpdatePet = () => {
                             message: "Location can only contain letters and spaces",
                           },
                         })}
+                        className={errors.location ? "border-red-600 text-sm h-max md:text-base" : "text-sm h-max md:text-base"}
                         type="text"
                         placeholder="Your location"
                       />
-                      {errors.location && <p className="text-red-600 text-sm">{errors.location.message}</p>}
+                      {errors.location && (
+                    <p className="text-red-600 text-xs md:text-sm">
+                      {errors.location.message}
+                    </p>
+                  )}
                     </div>
                   </section>
   
-                  <section className="flex justify-between gap-6 ">
+                  <section className="flex items-center justify-between gap-2 md:gap-6  ">
                     <div className="w-2/4">
-                      <Label htmlFor="picture">Pet Category</Label>
+                      <Label htmlFor="picture" className='text-xs md:text-sm'>Pet Category</Label>
                       <AddPetCategory
                         selectedCategory={selectedCategory}
                         setSelectedCategory={setSelectedCategory}
                       />
-                      {selectError && <p className="text-sm text-red-600 pt-1">Please select a category</p>}
+                     {selectError && (
+                    <p className="text-xs md:text-sm text-red-600 pt-1">
+                      Please select a category
+                    </p>
+                  )}
                     </div>
   
                     <div className="flex flex-col space-y-1.5 w-2/4">
-                      <Label htmlFor="picture">Pet Image</Label>
+                      <Label htmlFor="picture" className='text-xs md:text-sm'>Pet Image</Label>
                       <div className="flex items-center gap-1">
                      
                       <Input
                         {...register("image", {
                          
                         })}
-                    
+                        className={errors.image ? "border-red-600 text-sm h-max md:text-base" : "text-sm h-max md:text-base"}
                         type="file"
                         onChange={handleFileChange}
                       />
@@ -291,7 +303,7 @@ const UpdatePet = () => {
                   </section>
   
                   <div>
-                    <Label htmlFor="short-desc">Short Description</Label>
+                    <Label htmlFor="short-desc" className='text-xs md:text-sm'>Short Description</Label>
                     <Textarea
                       defaultValue={pet.short_description}
                       {...register("shortDescription", {
@@ -305,18 +317,23 @@ const UpdatePet = () => {
                           message: "Description must be under 200 characters",
                         },
                       })}
+                      className={errors.shortDescription ? "border-red-600 text-sm h-max md:text-base" : "text-sm h-max md:text-base"}
                       placeholder="Type something about the pet."
                     />
-                    {errors.shortDescription && <p className="text-red-600 text-sm">{errors.shortDescription.message}</p>}
+                     {errors.shortDescription && (
+                  <p className="text-red-600 text-sm">
+                    {errors.shortDescription.message}
+                  </p>
+                )}
                   </div>
   
                   <div className="text-container">
-                    <Label htmlFor="short-desc">Long Description (optional)</Label>
+                    <Label htmlFor="short-desc" className='text-xs md:text-sm'>Long Description (optional)</Label>
                     <p className="text-xs pb-1 opacity-50">Write something if you want to change.</p>
                     <QuillEditor value={editorContent} onChange={setEditorContent} />
                   </div>
                 </div>
-                <Button disabled={spin} className="w-full">
+                <Button disabled={spin} className='md:text-sm text-xs h-max w-full'>
                   {spin && <ImSpinner3 className="animate-spin" />}Update
                 </Button>
               </form>

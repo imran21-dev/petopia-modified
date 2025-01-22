@@ -33,7 +33,7 @@ const SwiperImage = () => {
             <img
               src={pet1}
               alt=""
-              className="w-full h-60 object-cover rounded-2xl "
+              className="w-full h-20 md:h-60 object-cover rounded-2xl "
             />
             <p className="absolute flex opacity-0 duration-300 swipperText bg-gradient-to-t from-background/50 to-transparent h-full  w-full items-end p-5 font-semibold backdrop-blur-sm bottom-0 rounded-2xl">
               Adopt. Love. Transform Lives.
@@ -45,7 +45,7 @@ const SwiperImage = () => {
             <img
               src={pet5}
               alt=""
-              className="w-full h-60 object-cover rounded-2xl "
+              className="w-full h-20 md:h-60 object-cover rounded-2xl "
             />
             <p className="absolute flex opacity-0 duration-300 swipperText bg-gradient-to-t from-background/50 to-transparent h-full  w-full items-end p-5 font-semibold backdrop-blur-sm bottom-0 rounded-2xl">
               Adopt. Love. Transform Lives.
@@ -57,7 +57,7 @@ const SwiperImage = () => {
             <img
               src={pet6}
               alt=""
-              className="w-full h-60 object-cover rounded-2xl "
+              className="w-full h-20 md:h-60 object-cover rounded-2xl "
             />
             <p className="absolute flex opacity-0 duration-300 swipperText bg-gradient-to-t from-background/50 to-transparent h-full  w-full items-end p-5 font-semibold backdrop-blur-sm bottom-0 rounded-2xl">
               Adopt. Love. Transform Lives.
@@ -69,7 +69,7 @@ const SwiperImage = () => {
             <img
               src={pet3}
               alt=""
-              className="w-full h-60 object-cover rounded-2xl "
+              className="w-full h-20 md:h-60 object-cover rounded-2xl "
             />
             <p className="absolute flex opacity-0 duration-300 swipperText bg-gradient-to-t from-background/50 to-transparent h-full  w-full items-end p-5 font-semibold backdrop-blur-sm bottom-0 rounded-2xl">
               Adopt. Love. Transform Lives.
@@ -81,7 +81,7 @@ const SwiperImage = () => {
             <img
               src={pet4}
               alt=""
-              className="w-full h-60 object-cover rounded-2xl "
+              className="w-full h-20 md:h-60 object-cover rounded-2xl "
             />
             <p className="absolute flex opacity-0 duration-300 swipperText bg-gradient-to-t from-background/50 to-transparent h-full  w-full items-end p-5 font-semibold backdrop-blur-sm bottom-0 rounded-2xl">
               Adopt. Love. Transform Lives.
@@ -93,7 +93,7 @@ const SwiperImage = () => {
             <img
               src={pet2}
               alt=""
-              className="w-full h-60 object-cover rounded-2xl "
+              className="w-full h-20 md:h-60 object-cover rounded-2xl "
             />
             <p className="absolute flex opacity-0 duration-300 swipperText bg-gradient-to-t from-background/50 to-transparent h-full  w-full items-end p-5 font-semibold backdrop-blur-sm bottom-0 rounded-2xl">
               Adopt. Love. Transform Lives.

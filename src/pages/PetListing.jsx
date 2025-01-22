@@ -81,16 +81,17 @@ const PetListing = () => {
 
   const handleReset = () => {
     setKeyword("");
+    document.getElementById("Form").reset();
   };
 
 
 
 
   return (
-    <div  className="w-11/12 mx-auto pt-5">
-      <div className="grid grid-cols-3 items-center pb-5">
-        <h1 className="text-xl font-bold">All Pets</h1>
-        <div className="flex justify-center items-center gap-2 w-full">
+    <div  className="w-11/12 mx-auto pt-3 md:pt-5">
+      <div className="grid gap-2 lg:grid-cols-3 items-center pb-5">
+        <h1 className="text-lg md:text-xl font-bold">All Pets</h1>
+        <div className="flex justify-center  items-center gap-2 w-full">
           <button
             className={`opacity-0 duration-150 hover:bg-secondary p-2 rounded-full ${
               keyword && "opacity-100"
@@ -102,19 +103,20 @@ const PetListing = () => {
           <form
             id="Form"
             onSubmit={handleSubmit(onSubmit)}
-            className="border w-full flex items-center pl-2 rounded-full overflow-hidden"
+            className="border text-sm md:text-base  flex items-center pl-2 rounded-full overflow-hidden"
           >
             <CiSearch className="text-xl opacity-50" />
             <input
+              
               type="text"
               {...register("keyword")}
               placeholder="Search..."
-              className="bg-transparent pl-1 pr-3 flex-1"
+              className="bg-transparent pl-1 pr-3 w-full"
             />
-            <Button className="rounded-full">Search</Button>
+            <Button className='md:text-sm text-xs h-max'>Search</Button>
           </form>
         </div>
-        <div className="flex justify-end">
+        <div className="flex  justify-end">
           <CategorySelector
             setSelectedCategory={setSelectedCategory}
             setKeyword={setKeyword}
@@ -127,22 +129,22 @@ const PetListing = () => {
       <div>
         {allPets?.pages[0].pets.length === 0 && !isFetchingNextPage && (
           <div className="w-full flex justify-center flex-col items-center h-screen">
-            <Lottie className="w-96" animationData={noResule}></Lottie>
+            <Lottie className="w-44 md:w-96" animationData={noResule}></Lottie>
             <h1 className="text-lg font-medium">No Results</h1>
           </div>
         )}
       </div>
       {isLoading ? (
-        <div className="grid grid-cols-4 gap-6 pt-5">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 md:gap-6 md:pt-5">
           {skeleton.map((skeleton, idx) => (
             <Skeleton
               key={idx}
-              className="w-full rounded-[50px] h-96 bg-secondary"
+              className="w-full rounded-md md:rounded-[50px] h-72 md:h-96 bg-secondary"
             ></Skeleton>
           ))}
         </div>
       ) : (
-        <div className="grid grid-cols-4 gap-6 pt-5">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 md:gap-6 md:pt-5">
           {allPets?.pages.map((page) =>
             page.pets.map((pet) => <PetCard key={pet._id} pet={pet}></PetCard>)
           )}

@@ -8,22 +8,16 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Checkbox } from "@/components/ui/checkbox";
+
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useContext, useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import googlePng from "../assets/google.png";
-import facebookPng from "../assets/facebook.png";
+import {  useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import useAxiosPublic from "@/hooks/useAxiosPublic";
 import axios from "axios";
 import { AssetContext } from "@/auth/ContextApi";
-import { signOut, updateProfile } from "firebase/auth";
-import { auth } from "@/auth/firebase.config";
 import { useToast } from "@/hooks/use-toast";
 import { ToastAction } from "@/components/ui/toast";
-import CategorySelector from "@/components/ui/CategorySelector";
 import AddPetCategory from "@/components/ui/AddPetCategory";
 import { Textarea } from "@/components/ui/textarea";
 import QuillEditor from "@/components/ui/QuillEditor";
@@ -111,20 +105,20 @@ const AddPet = () => {
 
   return (
     <div className="w-11/12 mx-auto flex-col flex justify-center items-center pt-2">
-      <Card className="w-3/5  shadow-none border-none">
-        <CardHeader className="text-center">
-          <CardTitle className="text-2xl font-bold ">Add a Pet</CardTitle>
-          <CardDescription>
+      <Card className="lg:w-3/5  shadow-none border-none">
+        <CardHeader className="text-center pt-0 lg:pt-6">
+          <CardTitle className="text-xl md:text-2xl font-bold ">Add a Pet</CardTitle>
+          <CardDescription className='md:text-sm text-xs'>
             Share the Joy – Upload a Pet and Find Them a Loving Home!
           </CardDescription>
           
         </CardHeader>
 
-        <CardContent>
+        <CardContent className='p-0 pb-10 lg:pb-0'>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="grid pb-5 w-full items-center gap-4">
-              <div className="flex flex-col space-y-1.5">
-                <Label htmlFor="name">Name</Label>
+              <div className="flex  flex-col space-y-1.5">
+                <Label htmlFor="name" className='text-xs md:text-sm'>Name</Label>
                 <Input
                   {...register("name", {
                     required: "Name is required",
@@ -141,18 +135,19 @@ const AddPet = () => {
                       message: "Name can only contain letters and spaces",
                     },
                   })}
-                  className={errors.name && "border-red-600"}
+                  className={errors.name ? "border-red-600 text-sm h-max md:text-base" : "text-sm h-max md:text-base"}
+                
                   type="text"
                   placeholder="Enter pet name"
                 />
                 {errors.name && (
-                  <p className="text-red-600 text-sm">{errors.name.message}</p>
+                  <p className="text-red-600 text-xs md:text-sm">{errors.name.message}</p>
                 )}
               </div>
 
-              <section className="flex w-full justify-between gap-6">
+              <section className="flex w-full justify-between gap-2 md:gap-6">
                 <div className="flex flex-col space-y-1.5 w-2/4">
-                  <Label htmlFor="age">Age</Label>
+                  <Label htmlFor="age" className='text-xs md:text-sm'>Age</Label>
                   <Input
                     {...register("age", {
                       required: "Age is required",
@@ -163,15 +158,16 @@ const AddPet = () => {
                       },
                     })}
                     type="number"
+                    className={errors.age ? "border-red-600 text-sm h-max md:text-base" : "text-sm h-max md:text-base"}
                     placeholder="Enter pet age"
                   />
                   {errors.age && (
-                    <p className="text-red-600 text-sm">{errors.age.message}</p>
+                    <p className="text-red-600 text-xs md:text-sm">{errors.age.message}</p>
                   )}
                 </div>
 
                 <div className="flex flex-col space-y-1.5 w-2/4">
-                  <Label htmlFor="location">Location</Label>
+                  <Label htmlFor="location" className='text-xs md:text-sm'>Location</Label>
                   <Input
                     {...register("location", {
                       required: "Location is required",
@@ -188,32 +184,33 @@ const AddPet = () => {
                         message: "Location can only contain letters and spaces",
                       },
                     })}
+                    className={errors.location ? "border-red-600 text-sm h-max md:text-base" : "text-sm h-max md:text-base"}
                     type="text"
                     placeholder="Your location"
                   />
                   {errors.location && (
-                    <p className="text-red-600 text-sm">
+                    <p className="text-red-600 text-xs md:text-sm">
                       {errors.location.message}
                     </p>
                   )}
                 </div>
               </section>
-              <section className="flex justify-between gap-6 ">
+              <section className="flex items-center justify-between gap-2 md:gap-6 ">
                 <div className="w-2/4">
-                  <Label htmlFor="picture">Pet Category</Label>
+                  <Label htmlFor="category" className='text-xs md:text-sm '>Pet Category</Label>
                   <AddPetCategory
                     selectedCategory={selectedCategory}
                     setSelectedCategory={setSelectedCategory}
                   ></AddPetCategory>
                   {selectError && (
-                    <p className="text-sm text-red-600 pt-1">
+                    <p className="text-xs md:text-sm text-red-600 pt-1">
                       Please select a category
                     </p>
                   )}
                 </div>
 
                 <div className="flex flex-col space-y-1.5 w-2/4">
-                  <Label htmlFor="picture">Pet Image</Label>
+                  <Label htmlFor="picture" className='text-xs md:text-sm'>Pet Image</Label>
                   <Input
                     {...register("image", {
                       required: "Image file is required",
@@ -223,18 +220,18 @@ const AddPet = () => {
                           "Only image files are allowed",
                       },
                     })}
-                    className={errors.image && "border-red-600"}
+                    className={errors.image ? "border-red-600 text-sm h-max md:text-base" : "text-sm h-max md:text-base"}
                     type="file"
                   />
                   {errors.image && (
-                    <p className="text-red-600 text-sm">
+                    <p className="text-red-600 text-xs md:text-sm">
                       {errors.image.message}
                     </p>
                   )}
                 </div>
               </section>
               <div>
-                <Label htmlFor="short-desc">Short Description</Label>
+                <Label htmlFor="short-desc" className='text-xs md:text-sm'>Short Description</Label>
                 <Textarea
                   {...register("shortDescription", {
                     required: "Description is required",
@@ -248,6 +245,7 @@ const AddPet = () => {
                       message: "Description must be under 200 characters",
                     },
                   })}
+                  className={errors.shortDescription ? "border-red-600 text-sm h-max md:text-base" : "text-sm h-max md:text-base"}
                   placeholder="Type something about the pet."
                 />
                 {errors.shortDescription && (
@@ -258,7 +256,7 @@ const AddPet = () => {
               </div>
 
               <div className="text-container">
-                <Label htmlFor="short-desc">Long Description (optional)</Label>
+                <Label htmlFor="short-desc" className='text-xs md:text-sm'>Long Description (optional)</Label>
                 <QuillEditor
                   value={editorContent}
                   onChange={setEditorContent}
@@ -266,7 +264,7 @@ const AddPet = () => {
               </div>
               
             </div>
-            <Button disabled={spin} className="w-full">
+            <Button disabled={spin} className='md:text-sm w-full text-xs h-max'>
               {spin && <ImSpinner3 className="animate-spin" />}Add
             </Button>
           </form>
