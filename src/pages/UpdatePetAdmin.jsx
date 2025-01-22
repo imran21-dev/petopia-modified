@@ -23,27 +23,29 @@ import { ToastAction } from "@/components/ui/toast";
 
 import AddPetCategory from "@/components/ui/AddPetCategory";
 import { Textarea } from "@/components/ui/textarea";
-import QuillEditor from "@/components/ui/QuillEditor";
 import useAxiosSecure from "@/hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import { Skeleton } from "@/components/ui/skeleton";
+import TinyMCEEditor from "@/components/ui/TinyMCEEditor";
+import { Helmet } from "react-helmet-async";
 
 const imageHostingKey = import.meta.env.VITE_API_KEY;
 const imageHostingAPI = `https://api.imgbb.com/1/upload?key=${imageHostingKey}`;
 
 const UpdatePetAdmin = () => {
-    const { user, editorContent, setEditorContent } = useContext(AssetContext);
+    const { user } = useContext(AssetContext);
     const [selectedCategory, setSelectedCategory] = useState("");
     const [imagePreview, setImagePreview] = useState(""); 
     const axioxSecure = useAxiosSecure();
     const { id: petId } = useParams();
-
+    const [content, setContent] = useState('<p>Type something here...</p>');
+    const [error, setError] = useState(false)
     const { data: pet, isLoading, refetch } = useQuery({
       queryKey: ["pet", user],
       queryFn: async () => {
         const res = await axioxSecure.get(`/single-pet?id=${petId}&email=${user?.email}`);
         setSelectedCategory(res.data.pet_category);
-        setEditorContent(res.data.long_description);
+        setContent(res.data.long_description);
         setImagePreview(res.data.pet_image); 
         return res.data;
       },
@@ -82,7 +84,13 @@ const UpdatePetAdmin = () => {
         setSelectError(true);
         return;
       }
-  
+      if (!content.trim() || content === '<p>Type something here...</p>') {
+        setError(true)
+        setSpin(false);
+        return
+      }else{
+        setError(false)
+      }
       const imageFile = data.image[0];
       const formData = new FormData();
       formData.append("image", imageFile);
@@ -94,7 +102,7 @@ const UpdatePetAdmin = () => {
             pet_category: selectedCategory,
             pet_location: data.location,
             short_description: data.shortDescription,
-            long_description: editorContent,
+            long_description: content,
             author: user.email,
             added_date: pet.added_date,
             adopted: false,
@@ -139,7 +147,7 @@ const UpdatePetAdmin = () => {
               pet_category: selectedCategory,
               pet_location: data.location,
               short_description: data.shortDescription,
-              long_description: editorContent,
+              long_description: content,
               author: user.email,
               added_date: pet.added_date,
               adopted: false,
@@ -173,7 +181,10 @@ const UpdatePetAdmin = () => {
     };
   
     return (
-      <div className="w-11/12 mx-auto flex-col flex justify-center items-center pt-2">
+      <div className="w-11/12 mx-auto flex-col flex justify-center items-center md:pt-0 pt-2">
+         <Helmet>
+        <title>Update Pet | Petopia</title>
+      </Helmet>
         {isLoading ? (
           <div className="w-full pt-10 flex gap-3 flex-col items-center">
              <Skeleton className="w-full bg-secondary md:w-1/5 h-10"></Skeleton>
@@ -185,7 +196,7 @@ const UpdatePetAdmin = () => {
           </div>
         ) : (
           <Card className="lg:w-3/5 shadow-none border-none">
-            <CardHeader className="text-center pt-0 lg:pt-6">
+            <CardHeader className="text-center pt-0 ">
               <CardTitle className="text-xl md:text-2xl font-bold">Update your Pet</CardTitle>
               <CardDescription className='md:text-sm text-xs'>Keep your pet's story alive and thriving.</CardDescription>
             </CardHeader>
@@ -196,7 +207,7 @@ const UpdatePetAdmin = () => {
                   <div className="flex flex-col space-y-1.5">
                     <Label htmlFor="name" className='text-xs md:text-sm'>Name</Label>
                     <Input
-                      defaultValue={pet.pet_name}
+                      defaultValue={pet?.pet_name}
                       {...register("name", {
                         required: "Name is required",
                         minLength: {
@@ -316,7 +327,7 @@ const UpdatePetAdmin = () => {
                   <div className="text-container">
                     <Label htmlFor="short-desc" className='text-xs md:text-sm'>Long Description (optional)</Label>
                     <p className="text-xs pb-1 opacity-50">Write something if you want to change.</p>
-                    <QuillEditor value={editorContent} onChange={setEditorContent} />
+                   <TinyMCEEditor value={content} onChange={(newContent) => setContent(newContent)} error={error}></TinyMCEEditor>
                   </div>
                 </div>
                 <Button disabled={spin} className='md:text-sm text-xs h-max w-full'>

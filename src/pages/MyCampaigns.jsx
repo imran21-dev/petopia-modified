@@ -38,6 +38,7 @@ import { useNavigate } from "react-router-dom";
 import { Skeleton } from "@/components/ui/skeleton";
 import noResule from "../assets/noresult.json";
 import { BarLoader } from "react-spinners";
+import { Helmet } from "react-helmet-async";
 
 const MyCampaigns = () => {
   const { user, demoLoadTheme } = useContext(AssetContext);
@@ -281,6 +282,9 @@ const MyCampaigns = () => {
 
   return (
     <div className=" w-full text-center lg:text-left">
+       <Helmet>
+        <title>My Campaigns | Petopia</title>
+      </Helmet>
       <h1 className="text-lg md:text-2xl font-bold  ">
         My Campaigns - {campaigns?.length}
       </h1>

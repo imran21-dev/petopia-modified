@@ -33,6 +33,7 @@ import useAxiosSecure from "@/hooks/useAxiosSecure";
 import { cn } from "@/lib/utils";
 import { CalendarIcon } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
+import { Helmet } from "react-helmet-async";
 
 const imageHostingKey = import.meta.env.VITE_API_KEY;
 const imageHostingAPI = `https://api.imgbb.com/1/upload?key=${imageHostingKey}`;
@@ -49,7 +50,7 @@ const CreateCampaign = () => {
   const { user } = useContext(AssetContext);
   const { toast } = useToast();
   const [spin, setSpin] = useState(false);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const onSubmit = async (data) => {
     setSpin(true);
 
@@ -73,19 +74,20 @@ const CreateCampaign = () => {
         active: true,
         author: user.email,
       };
-      axioxSecure.post(`/campaign?email=${user.email}`, campaign)
-      .then(res => {
-        if (res.data.insertedId) {
-           reset()
-           setSpin(false) 
-           toast({
-            title: "Campaign Created Successfully!",
-            description:
-              "Your campaign is successfully uploaded. Now you can manage it from My Campaigns page.",
-          });
-          navigate('/dashboard/my-campaign')
-        }
-      })
+      axioxSecure
+        .post(`/campaign?email=${user.email}`, campaign)
+        .then((res) => {
+          if (res.data.insertedId) {
+            reset();
+            setSpin(false);
+            toast({
+              title: "Campaign Created Successfully!",
+              description:
+                "Your campaign is successfully uploaded. Now you can manage it from My Campaigns page.",
+            });
+            navigate("/dashboard/my-campaign");
+          }
+        });
     } catch (error) {
       setSpin(false);
       reset();
@@ -103,48 +105,61 @@ const CreateCampaign = () => {
   };
   return (
     <div className="w-11/12 mx-auto flex-col flex justify-center items-center pt-2">
+      <Helmet>
+        <title>Create Campaign | Petopia</title>
+      </Helmet>
       <Card className="lg:w-3/5  shadow-none border-none">
         <CardHeader className="text-center pt-0 lg:pt-6">
           <CardTitle className="text-xl md:text-2xl font-bold">
             Create a Campaign
           </CardTitle>
-          <CardDescription className='md:text-sm text-xs'>
+          <CardDescription className="md:text-sm text-xs">
             Launch Your Mission, Inspire Change.
           </CardDescription>
         </CardHeader>
 
-        <CardContent className='p-0 pb-10 lg:pb-0'>
+        <CardContent className="p-0 pb-10 lg:pb-0">
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="grid pb-5  items-center gap-4">
-            <section className="flex gap-2 md:gap-6 ">
-              <div className="flex flex-col w-2/4 space-y-1.5">
-                <Label htmlFor="name" className='text-xs md:text-sm'>Name</Label>
-                <Input
-                  {...register("name", {
-                    required: "Name is required",
-                    minLength: {
-                      value: 2,
-                      message: "Name must be at least 2 characters long",
-                    },
-                    maxLength: {
-                      value: 50,
-                      message: "Name must not exceed 50 characters",
-                    },
-                    pattern: {
-                      value: /^[A-Za-z\s]+$/,
-                      message: "Name can only contain letters and spaces",
-                    },
-                  })}
-                  className={errors.name ? "border-red-600 text-sm h-max md:text-base" : "text-sm h-max md:text-base"}
-                  type="text"
-                  placeholder="Enter pet name"
-                />
-                {errors.name && (
-                  <p className="text-red-600 text-xs md:text-sm">{errors.name.message}</p>
-                )}
-              </div>
+              <section className="flex gap-2 md:gap-6 ">
+                <div className="flex flex-col w-2/4 space-y-1.5">
+                  <Label htmlFor="name" className="text-xs md:text-sm">
+                    Name
+                  </Label>
+                  <Input
+                    {...register("name", {
+                      required: "Name is required",
+                      minLength: {
+                        value: 2,
+                        message: "Name must be at least 2 characters long",
+                      },
+                      maxLength: {
+                        value: 50,
+                        message: "Name must not exceed 50 characters",
+                      },
+                      pattern: {
+                        value: /^[A-Za-z\s]+$/,
+                        message: "Name can only contain letters and spaces",
+                      },
+                    })}
+                    className={
+                      errors.name
+                        ? "border-red-600 text-sm h-max md:text-base"
+                        : "text-sm h-max md:text-base"
+                    }
+                    type="text"
+                    placeholder="Enter pet name"
+                  />
+                  {errors.name && (
+                    <p className="text-red-600 text-xs md:text-sm">
+                      {errors.name.message}
+                    </p>
+                  )}
+                </div>
                 <div className="flex flex-col space-y-1.5 w-2/4">
-                  <Label htmlFor="image" className='text-xs md:text-sm'>Pet Image</Label>
+                  <Label htmlFor="image" className="text-xs md:text-sm">
+                    Pet Image
+                  </Label>
                   <Input
                     {...register("image", {
                       required: "Image file is required",
@@ -154,7 +169,11 @@ const CreateCampaign = () => {
                           "Only image files are allowed",
                       },
                     })}
-                    className={errors.image ? "border-red-600 text-sm h-max md:text-base" : "text-sm h-max md:text-base"}
+                    className={
+                      errors.image
+                        ? "border-red-600 text-sm h-max md:text-base"
+                        : "text-sm h-max md:text-base"
+                    }
                     type="file"
                   />
                   {errors.image && (
@@ -166,7 +185,9 @@ const CreateCampaign = () => {
               </section>
               <section className="flex gap-2 md:gap-6 ">
                 <div className="flex w-2/4 flex-col space-y-1.5">
-                  <Label htmlFor="amount" className='text-xs md:text-sm'>Maximum Amount</Label>
+                  <Label htmlFor="amount" className="text-xs md:text-sm">
+                    Maximum Amount
+                  </Label>
                   <Input
                     {...register("amount", {
                       required: "Amount is required",
@@ -175,7 +196,11 @@ const CreateCampaign = () => {
                         message: "Amount must be at least 1",
                       },
                     })}
-                    className={errors.amount ? "border-red-600 text-sm h-max md:text-base" : "text-sm h-max md:text-base"}
+                    className={
+                      errors.amount
+                        ? "border-red-600 text-sm h-max md:text-base"
+                        : "text-sm h-max md:text-base"
+                    }
                     type="number"
                     placeholder="Enter maximum amount"
                   />
@@ -186,9 +211,10 @@ const CreateCampaign = () => {
                   )}
                 </div>
                 <div className="flex flex-col w-2/4 space-y-1.5 ">
-                  <Label htmlFor="date" className='text-xs md:text-sm'>Last Donation Date</Label>
+                  <Label htmlFor="date" className="text-xs md:text-sm">
+                    Last Donation Date
+                  </Label>
                   <Controller
-                    
                     name="date"
                     control={control}
                     rules={{
@@ -239,12 +265,10 @@ const CreateCampaign = () => {
                 </div>
               </section>
 
-            
-
-             
-
               <div>
-                <Label htmlFor="short-desc" className='text-xs md:text-sm'>Short Description</Label>
+                <Label htmlFor="short-desc" className="text-xs md:text-sm">
+                  Short Description
+                </Label>
                 <Textarea
                   {...register("shortDescription", {
                     required: "Description is required",
@@ -258,7 +282,11 @@ const CreateCampaign = () => {
                       message: "Description must be under 200 characters",
                     },
                   })}
-                  className={errors.shortDescription ? "border-red-600 text-sm h-max md:text-base" : "text-sm h-max md:text-base"}
+                  className={
+                    errors.shortDescription
+                      ? "border-red-600 text-sm h-max md:text-base"
+                      : "text-sm h-max md:text-base"
+                  }
                   placeholder="Type something about the pet."
                 />
                 {errors.shortDescription && (
@@ -269,9 +297,10 @@ const CreateCampaign = () => {
               </div>
 
               <div>
-                <Label htmlFor="long-desc" className='text-xs md:text-sm'>Long Description</Label>
+                <Label htmlFor="long-desc" className="text-xs md:text-sm">
+                  Long Description
+                </Label>
                 <Textarea
-                 
                   {...register("longDescription", {
                     required: "Description is required",
                     minLength: {
@@ -284,7 +313,11 @@ const CreateCampaign = () => {
                       message: "Description must be under 2000 characters",
                     },
                   })}
-                  className={errors.longDescription ? "border-red-600 h-44 text-sm md:text-base" : "text-sm md:text-base h-44"}
+                  className={
+                    errors.longDescription
+                      ? "border-red-600 h-44 text-sm md:text-base"
+                      : "text-sm md:text-base h-44"
+                  }
                   placeholder="Type the details about the campaign."
                 />
                 {errors.longDescription && (
@@ -294,7 +327,7 @@ const CreateCampaign = () => {
                 )}
               </div>
             </div>
-            <Button disabled={spin} className='md:text-sm text-xs h-max w-full'>
+            <Button disabled={spin} className="md:text-sm text-xs h-max w-full">
               {spin && <ImSpinner3 className="animate-spin" />}Create
             </Button>
           </form>

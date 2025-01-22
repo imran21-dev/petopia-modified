@@ -28,6 +28,7 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import Lottie from "lottie-react";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { Helmet } from "react-helmet-async";
 const AdoptionRequest = () => {
   const { user, demoLoadTheme } = useContext(AssetContext);
   const axiosSecure = useAxiosSecure();
@@ -196,8 +197,11 @@ const AdoptionRequest = () => {
 
   return (
     <div className=" w-full text-center lg:text-left">
+       <Helmet>
+        <title>Adoption Requests | Petopia</title>
+      </Helmet>
       <h1 className="text-lg md:text-2xl font-bold">
-        Adoptions Requests - {requests?.length}
+        Adoption Requests - {requests?.length}
       </h1>
       <p className="mb-4 text-xs md:text-sm opacity-70 pt-1">
         Manage All Pet Adoption Requests with Ease – Accept or Reject

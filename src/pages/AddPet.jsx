@@ -20,8 +20,11 @@ import { useToast } from "@/hooks/use-toast";
 import { ToastAction } from "@/components/ui/toast";
 import AddPetCategory from "@/components/ui/AddPetCategory";
 import { Textarea } from "@/components/ui/textarea";
-import QuillEditor from "@/components/ui/QuillEditor";
+
 import useAxiosSecure from "@/hooks/useAxiosSecure";
+
+import TinyMCEEditor from "@/components/ui/TinyMCEEditor";
+import { Helmet } from "react-helmet-async";
 
 const imageHostingKey = import.meta.env.VITE_API_KEY;
 const imageHostingAPI = `https://api.imgbb.com/1/upload?key=${imageHostingKey}`;
@@ -35,7 +38,9 @@ const AddPet = () => {
     formState: { errors },
   } = useForm();
   const axioxSecure = useAxiosSecure();
-  const { user, editorContent, setEditorContent } = useContext(AssetContext);
+  const [content, setContent] = useState('<p>Type something here...</p>');
+  const [error, setError] = useState(false)
+  const { user,  } = useContext(AssetContext);
   const { toast } = useToast();
   const [spin, setSpin] = useState(false);
   const navigate = useNavigate();
@@ -57,6 +62,15 @@ const AddPet = () => {
       setSelectError(true);
       return;
     }
+
+    if (!content.trim() || content === '<p>Type something here...</p>') {
+      setError(true)
+      setSpin(false);
+      return
+    }else{
+      setError(false)
+    }
+
     const imageFile = data.image[0];
     const formData = new FormData();
     formData.append("image", imageFile);
@@ -72,7 +86,7 @@ const AddPet = () => {
         pet_category: selectedCategory,
         pet_location: data.location,
         short_description: data.shortDescription,
-        long_description: editorContent,
+        long_description: content,
         author: user.email,
         added_date: date,
         adopted: false
@@ -104,9 +118,12 @@ const AddPet = () => {
   };
 
   return (
-    <div className="w-11/12 mx-auto flex-col flex justify-center items-center pt-2">
+    <div className="w-11/12 mx-auto flex-col flex justify-center items-center md:pt-0 pt-2">
+       <Helmet>
+        <title>Add Pet | Petopia</title>
+      </Helmet>
       <Card className="lg:w-3/5  shadow-none border-none">
-        <CardHeader className="text-center pt-0 lg:pt-6">
+        <CardHeader className="text-center pt-0 ">
           <CardTitle className="text-xl md:text-2xl font-bold ">Add a Pet</CardTitle>
           <CardDescription className='md:text-sm text-xs'>
             Share the Joy – Upload a Pet and Find Them a Loving Home!
@@ -255,14 +272,7 @@ const AddPet = () => {
                 )}
               </div>
 
-              <div className="text-container">
-                <Label htmlFor="short-desc" className='text-xs md:text-sm'>Long Description (optional)</Label>
-                <QuillEditor
-                  value={editorContent}
-                  onChange={setEditorContent}
-                />
-              </div>
-              
+            <TinyMCEEditor value={content} onChange={(newContent) => setContent(newContent)} error={error}/>
             </div>
             <Button disabled={spin} className='md:text-sm w-full text-xs h-max'>
               {spin && <ImSpinner3 className="animate-spin" />}Add

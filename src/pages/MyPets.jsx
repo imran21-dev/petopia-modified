@@ -29,6 +29,7 @@ import { useToast } from "@/hooks/use-toast";
 import Lottie from "lottie-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { Helmet } from "react-helmet-async";
 const MyPets = () => {
   const axiosSecure = useAxiosSecure();
   const { user, demoLoadTheme } = useContext(AssetContext);
@@ -231,6 +232,9 @@ const MyPets = () => {
 
   return (
     <div className=" w-full text-center lg:text-left ">
+       <Helmet>
+        <title>My Pets | Petopia</title>
+      </Helmet>
       <h1 className="text-lg md:text-2xl font-bold ">My Pets - {myPets?.length}</h1>
       <p className="mb-4 text-xs md:text-sm opacity-70 pt-1">
         View and Manage All Your Added Pets in One Place.

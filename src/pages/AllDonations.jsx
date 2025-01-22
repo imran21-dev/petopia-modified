@@ -37,6 +37,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import noResule from "../assets/noresult.json";
 import { BarLoader } from "react-spinners";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { Helmet } from "react-helmet-async";
 
 const AllDonations = () => {
   const { user, demoLoadTheme } = useContext(AssetContext);
@@ -57,23 +58,23 @@ const AllDonations = () => {
   });
 
   const [themeMode, setThemeMode] = useState("light");
-      const theme = createTheme({
-        palette: {
-          mode: themeMode,
-          primary: { main: "#3490dc" },
-          secondary: { main: "#f9802c" },
-          text: {
-            light: "#1a202c",
-            dark: "#ffffff",
-          },
-        },
-      });
-      useEffect(() => {
-        const savedTheme = localStorage.getItem("theme");
-        if (savedTheme) {
-          setThemeMode(savedTheme);
-        }
-      }, [demoLoadTheme]);
+  const theme = createTheme({
+    palette: {
+      mode: themeMode,
+      primary: { main: "#3490dc" },
+      secondary: { main: "#f9802c" },
+      text: {
+        light: "#1a202c",
+        dark: "#ffffff",
+      },
+    },
+  });
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme) {
+      setThemeMode(savedTheme);
+    }
+  }, [demoLoadTheme]);
 
   const [campId, setcampId] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -83,29 +84,26 @@ const AllDonations = () => {
 
   const navigate = useNavigate();
 
-
   const handleDelete = (campaign) => {
-    setIsOpenDelete(true)
-    setcampId(campaign._id)
-  }
+    setIsOpenDelete(true);
+    setcampId(campaign._id);
+  };
 
   const handleContinueDelete = () => {
-    setSpin(true)
-    axiosSecure.delete(`/delete-campaign?id=${campId}&email=${user.email}`)
-    .then(res => {
-      if (res.data.deletedCount) {
-        setSpin(false)
-        refetch()
-        toast({
-          title: "Campaign Deleted Successfully!",
-          description:
-            "Your campaign is successfully deleted.",
-        });
-      }
-    })
-  }
-
-
+    setSpin(true);
+    axiosSecure
+      .delete(`/delete-campaign?id=${campId}&email=${user.email}`)
+      .then((res) => {
+        if (res.data.deletedCount) {
+          setSpin(false);
+          refetch();
+          toast({
+            title: "Campaign Deleted Successfully!",
+            description: "Your campaign is successfully deleted.",
+          });
+        }
+      });
+  };
 
   const handleEdit = async (campaign) => {
     const id = await campaign._id;
@@ -130,8 +128,8 @@ const AllDonations = () => {
             description:
               "Your campaign is successfully paused. You can resume it anytime.",
           });
-        }else{
-          setSpin(false)
+        } else {
+          setSpin(false);
         }
       });
   };
@@ -224,9 +222,19 @@ const AllDonations = () => {
         accessorKey: "active",
         header: "Status",
         cell: (info) => {
-          return <div className="md:text-sm">
-            {info.row.original.active ? <h2 className="text-green-500  font-medium px-1 py-[1px] bg-green-100 rounded-full">Active</h2> : <h2 className="text-red-500  font-medium px-1 py-[1px] bg-red-100 rounded-full">Paused</h2>}
-          </div>;
+          return (
+            <div className="md:text-sm">
+              {info.row.original.active ? (
+                <h2 className="text-green-500  font-medium px-1 py-[1px] bg-green-100 rounded-full">
+                  Active
+                </h2>
+              ) : (
+                <h2 className="text-red-500  font-medium px-1 py-[1px] bg-red-100 rounded-full">
+                  Paused
+                </h2>
+              )}
+            </div>
+          );
         },
       },
       {
@@ -240,14 +248,14 @@ const AllDonations = () => {
               <Button
                 onClick={() => handlePause(info.row.original)}
                 variant="secondary"
-                className='md:text-sm text-xs h-max'
+                className="md:text-sm text-xs h-max"
               >
                 Pause
               </Button>
             ) : (
               <Button
                 onClick={() => handleResume(info.row.original)}
-                className='md:text-sm text-xs h-max'
+                className="md:text-sm text-xs h-max"
               >
                 Resume
               </Button>
@@ -255,7 +263,7 @@ const AllDonations = () => {
             <Button
               onClick={() => handleEdit(info.row.original)}
               variant="secondary"
-              className='md:text-sm text-xs h-max'
+              className="md:text-sm text-xs h-max"
             >
               Edit
             </Button>
@@ -264,14 +272,14 @@ const AllDonations = () => {
                 setDonateCampId(info.row.original._id), setIsOpenDonators(true);
               }}
               variant="secondary"
-             className='md:text-sm text-xs h-max'
+              className="md:text-sm text-xs h-max"
             >
               Donators
             </Button>
             <Button
               onClick={() => handleDelete(info.row.original)}
               variant="secondary"
-              className='md:text-sm text-xs h-max'
+              className="md:text-sm text-xs h-max"
             >
               Delete
             </Button>
@@ -302,120 +310,135 @@ const AllDonations = () => {
 
   return (
     <div className="w-full text-center lg:text-left">
-      <h1 className="text-lg md:text-2xl font-bold">All Donation Campaigns - {campaigns?.length}</h1>
+      <Helmet>
+        <title>All Donations | Petopia</title>
+      </Helmet>
+      <h1 className="text-lg md:text-2xl font-bold">
+        All Donation Campaigns - {campaigns?.length}
+      </h1>
       <p className="mb-4 text-xs md:text-sm opacity-70 pt-1">
         Effortlessly manage all campaigns in one place.
       </p>
 
-    <section className="w-full ">
-    <div>
+      <section className="w-full ">
+        <div>
+          {isLoading ? (
+            <div className="flex flex-col w-full gap-3">
+              <Skeleton className="w-full h-14 bg-secondary"></Skeleton>
+              <Skeleton className="w-full h-14 bg-secondary"></Skeleton>
+              <Skeleton className="w-full h-14 bg-secondary"></Skeleton>
+              <Skeleton className="w-full h-14 bg-secondary"></Skeleton>
+              <Skeleton className="w-full h-14 bg-secondary"></Skeleton>
+              <Skeleton className="w-full h-14 bg-secondary"></Skeleton>
+              <Skeleton className="w-full h-14 bg-secondary"></Skeleton>
+              <Skeleton className="w-full h-14 bg-secondary"></Skeleton>
+              <Skeleton className="w-full h-14 bg-secondary"></Skeleton>
+              <Skeleton className="w-full h-14 bg-secondary"></Skeleton>
+            </div>
+          ) : campaigns.length < 1 ? (
+            <div className="w-full justify-center flex items-center pt-10">
+              <Lottie className="w-96" animationData={noResule}></Lottie>
+            </div>
+          ) : (
+            <div className="my-table overflow-x-auto mx-auto">
+              {!isLoading && (
+                <table className="w-max xl:w-full border-collapse ">
+                  <thead className="bg-primary/20">
+                    {table.getHeaderGroups().map((headerGroup) => (
+                      <tr key={headerGroup.id}>
+                        {headerGroup.headers.map((header) => (
+                          <th
+                            key={header.id}
+                            onClick={header.column.getToggleSortingHandler()}
+                            className="border text-sm md:text-base text-center px-2 md:px-4 py-1 md:py-2 cursor-pointer hover:bg-primary/20"
+                          >
+                            {flexRender(
+                              header.column.columnDef.header,
+                              header.getContext()
+                            )}
+                            {header.column.getIsSorted() === "asc" && (
+                              <IoArrowUp className="inline ml-2" />
+                            )}
+                            {header.column.getIsSorted() === "desc" && (
+                              <IoArrowDown className="inline ml-2" />
+                            )}
+                          </th>
+                        ))}
+                      </tr>
+                    ))}
+                  </thead>
+                  <tbody>
+                    {table.getRowModel().rows.map((row) => (
+                      <tr
+                        key={row.id}
+                        className="hover:bg-primary/5 text-xs md:text-base text-center"
+                      >
+                        {row.getVisibleCells().map((cell) => (
+                          <td
+                            key={cell.id}
+                            className="border px-2 md:px-4 py-2"
+                          >
+                            {flexRender(
+                              cell.column.columnDef.cell,
+                              cell.getContext()
+                            )}
+                          </td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              )}
+            </div>
+          )}
+        </div>
         {isLoading ? (
-          <div className="flex flex-col w-full gap-3">
-            <Skeleton className="w-full h-14 bg-secondary"></Skeleton>
-            <Skeleton className="w-full h-14 bg-secondary"></Skeleton>
-            <Skeleton className="w-full h-14 bg-secondary"></Skeleton>
-            <Skeleton className="w-full h-14 bg-secondary"></Skeleton>
-            <Skeleton className="w-full h-14 bg-secondary"></Skeleton>
-            <Skeleton className="w-full h-14 bg-secondary"></Skeleton>
-            <Skeleton className="w-full h-14 bg-secondary"></Skeleton>
-            <Skeleton className="w-full h-14 bg-secondary"></Skeleton>
-            <Skeleton className="w-full h-14 bg-secondary"></Skeleton>
-            <Skeleton className="w-full h-14 bg-secondary"></Skeleton>
-          </div>
-        ) : campaigns.length < 1 ? (
-          <div className="w-full justify-center flex items-center pt-10">
-            <Lottie className="w-96" animationData={noResule}></Lottie>
-          </div>
+          ""
+        ) : campaigns.length < 11 ? (
+          ""
         ) : (
-          <div className="my-table overflow-x-auto mx-auto">
-            {!isLoading && (
-              <table className="w-max xl:w-full border-collapse ">
-                <thead className="bg-primary/20">
-                  {table.getHeaderGroups().map((headerGroup) => (
-                    <tr key={headerGroup.id}>
-                      {headerGroup.headers.map((header) => (
-                        <th
-                          key={header.id}
-                          onClick={header.column.getToggleSortingHandler()}
-                          className="border text-sm md:text-base text-center px-2 md:px-4 py-1 md:py-2 cursor-pointer hover:bg-primary/20"
-                        >
-                          {flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                          {header.column.getIsSorted() === "asc" && (
-                            <IoArrowUp className="inline ml-2" />
-                          )}
-                          {header.column.getIsSorted() === "desc" && (
-                            <IoArrowDown className="inline ml-2" />
-                          )}
-                        </th>
-                      ))}
-                    </tr>
-                  ))}
-                </thead>
-                <tbody>
-                  {table.getRowModel().rows.map((row) => (
-                    <tr key={row.id} className="hover:bg-primary/5 text-xs md:text-base text-center">
-                      {row.getVisibleCells().map((cell) => (
-                        <td key={cell.id} className="border px-2 md:px-4 py-2">
-                          {flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext()
-                          )}
-                        </td>
-                      ))}
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            )}
+          <div className="py-3 flex  justify-center">
+            <ThemeProvider theme={theme}>
+              <Pagination
+                count={table.getPageCount()}
+                page={table.getState().pagination.pageIndex + 1}
+                onChange={handlePageChange}
+                sx={{
+                  "& .MuiPaginationItem-root": {
+                    color:
+                      themeMode === "light"
+                        ? theme.palette.text.light
+                        : theme.palette.text.dark,
+                  },
+                  "& .MuiPaginationItem-root:hover": {
+                    backgroundColor: "secondary.main",
+                    color: "white",
+                  },
+                }}
+              />
+            </ThemeProvider>
           </div>
         )}
-      </div>
-      {isLoading ? (
-        ""
-      ) : campaigns.length < 11 ? (
-        ""
-      ) : (
-         <div className="py-3 flex  justify-center">
-                <ThemeProvider theme={theme}>
-                  <Pagination
-                    count={table.getPageCount()}
-                    page={table.getState().pagination.pageIndex + 1}
-                    onChange={handlePageChange}
-                    sx={{
-                      "& .MuiPaginationItem-root": {
-                        color:
-                          themeMode === "light"
-                            ? theme.palette.text.light
-                            : theme.palette.text.dark,
-                      },
-                      "& .MuiPaginationItem-root:hover": {
-                        backgroundColor: "secondary.main",
-                        color: "white",
-                      },
-                    }}
-                  />
-                </ThemeProvider>
-              </div>
-      )}
-    </section>
-      
-       <AlertDialog open={isOpenDelete} onOpenChange={setIsOpenDelete}>
+      </section>
+
+      <AlertDialog open={isOpenDelete} onOpenChange={setIsOpenDelete}>
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Are you sure?</AlertDialogTitle>
             <AlertDialogDescription>
-              Are you sure you want to delete this campaign? This action will delete this
-              Campaign.
+              Are you sure you want to delete this campaign? This action will
+              delete this Campaign.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel onClick={() => setIsOpenDelete(false)}>
               Cancel
             </AlertDialogCancel>
-            <AlertDialogAction className='bg-red-600 hover:bg-red-500' disabled={spin} onClick={handleContinueDelete}>
+            <AlertDialogAction
+              className="bg-red-600 hover:bg-red-500"
+              disabled={spin}
+              onClick={handleContinueDelete}
+            >
               {spin && <ImSpinner3 className="animate-spin" />}Delete
             </AlertDialogAction>
           </AlertDialogFooter>
@@ -501,22 +524,19 @@ const AllDonations = () => {
                       <h2 className="text-sm font-medium">
                         {payUser.userName}
                       </h2>
-                      {
-                      !payUser.refund && 
-                      <h2 className="text-sm text-primary font-medium">
-                        ${payUser.donatedAmount / 100}
-                      </h2>
-                      }
-                      {
-                      payUser.refund && 
-                      <h2 className="text-sm text-primary font-medium line-through">
-                       ${payUser.donatedAmount / 100}
-                      </h2>
-                      }
+                      {!payUser.refund && (
+                        <h2 className="text-sm text-primary font-medium">
+                          ${payUser.donatedAmount / 100}
+                        </h2>
+                      )}
+                      {payUser.refund && (
+                        <h2 className="text-sm text-primary font-medium line-through">
+                          ${payUser.donatedAmount / 100}
+                        </h2>
+                      )}
                     </div>
                   ))}
                 </div>
-                
               </div>
             )}
           </div>

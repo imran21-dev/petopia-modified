@@ -144,3 +144,6 @@ width: 5px;
 #mobile-nav .active{
 @apply text-primary
 }
+.custom-editor {
+  @apply bg-gray-100 text-gray-800 p-4 rounded-md;
+}

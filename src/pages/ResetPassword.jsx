@@ -15,6 +15,7 @@ import { Link, useLocation } from "react-router-dom";
 import { ImSpinner3 } from "react-icons/im";
 import { sendPasswordResetEmail } from "firebase/auth";
 import { auth } from "@/auth/firebase.config";
+import { Helmet } from "react-helmet-async";
 
 const ResetPassword = () => {
     const {state} = useLocation()
@@ -52,7 +53,9 @@ const ResetPassword = () => {
   return (
     <div>
       <div className="w-11/12 mx-auto flex-col flex justify-center items-center pt-44">
-  
+      <Helmet>
+        <title>Reset Password | Petopia</title>
+      </Helmet>
         <Card className="xl:w-2/5  shadow-none border-none">
           <CardHeader className="text-center">
             <CardTitle className="text-lg md:text-2xl font-bold">

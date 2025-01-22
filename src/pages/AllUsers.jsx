@@ -28,6 +28,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import Lottie from "lottie-react";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { Pagination } from "@mui/material";
+import { Helmet } from "react-helmet-async";
 
 const AllUsers = () => {
   const { user, demoLoadTheme } = useContext(AssetContext);
@@ -128,14 +129,18 @@ const AllUsers = () => {
         cell: (info) => (
           <div className="">
             {info.row.original.role === "admin" ? (
-              <Button disabled variant="secondary" className='md:text-sm text-xs h-max'>
+              <Button
+                disabled
+                variant="secondary"
+                className="md:text-sm text-xs h-max"
+              >
                 Admin
               </Button>
             ) : (
               <Button
                 variant="secondary"
                 onClick={() => handleAdmin(info.row.original)}
-                className='md:text-sm text-xs h-max'
+                className="md:text-sm text-xs h-max"
               >
                 Make Admin
               </Button>
@@ -166,107 +171,118 @@ const AllUsers = () => {
 
   return (
     <div className="w-full text-center lg:text-left">
-      <h1 className="text-lg md:text-2xl font-bold">All Users - {allUser?.length}</h1>
+      <Helmet>
+        <title>All Users | Petopia</title>
+      </Helmet>
+      <h1 className="text-lg md:text-2xl font-bold">
+        All Users - {allUser?.length}
+      </h1>
       <p className="mb-4 text-xs md:text-sm opacity-70 pt-1">
         You can manage all the users from this page.
       </p>
 
       <section className="w-full ">
-      <div>
+        <div>
+          {isLoading ? (
+            <div className="flex flex-col w-full gap-3">
+              <Skeleton className="w-full h-14 bg-secondary"></Skeleton>
+              <Skeleton className="w-full h-14 bg-secondary"></Skeleton>
+              <Skeleton className="w-full h-14 bg-secondary"></Skeleton>
+              <Skeleton className="w-full h-14 bg-secondary"></Skeleton>
+              <Skeleton className="w-full h-14 bg-secondary"></Skeleton>
+              <Skeleton className="w-full h-14 bg-secondary"></Skeleton>
+              <Skeleton className="w-full h-14 bg-secondary"></Skeleton>
+              <Skeleton className="w-full h-14 bg-secondary"></Skeleton>
+              <Skeleton className="w-full h-14 bg-secondary"></Skeleton>
+              <Skeleton className="w-full h-14 bg-secondary"></Skeleton>
+            </div>
+          ) : allUser.length < 1 ? (
+            <div className="w-full justify-center flex items-center pt-10">
+              <Lottie className="w-96" animationData={noResule}></Lottie>
+            </div>
+          ) : (
+            <div className="my-table overflow-x-auto mx-auto">
+              {!isLoading && (
+                <table className="w-max xl:w-full border-collapse">
+                  <thead className="bg-primary/20">
+                    {table.getHeaderGroups().map((headerGroup) => (
+                      <tr key={headerGroup.id}>
+                        {headerGroup.headers.map((header) => (
+                          <th
+                            key={header.id}
+                            onClick={header.column.getToggleSortingHandler()}
+                            className="border text-sm md:text-base text-center px-2 md:px-4 py-1 md:py-2 cursor-pointer hover:bg-primary/20"
+                          >
+                            {flexRender(
+                              header.column.columnDef.header,
+                              header.getContext()
+                            )}
+                            {header.column.getIsSorted() === "asc" && (
+                              <IoArrowUp className="inline ml-2" />
+                            )}
+                            {header.column.getIsSorted() === "desc" && (
+                              <IoArrowDown className="inline ml-2" />
+                            )}
+                          </th>
+                        ))}
+                      </tr>
+                    ))}
+                  </thead>
+                  <tbody>
+                    {table.getRowModel().rows.map((row) => (
+                      <tr
+                        key={row.id}
+                        className="hover:bg-primary/5 text-xs md:text-base text-center"
+                      >
+                        {row.getVisibleCells().map((cell) => (
+                          <td
+                            key={cell.id}
+                            className="border px-2 md:px-4 py-2"
+                          >
+                            {flexRender(
+                              cell.column.columnDef.cell,
+                              cell.getContext()
+                            )}
+                          </td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              )}
+            </div>
+          )}
+        </div>
+
         {isLoading ? (
-          <div className="flex flex-col w-full gap-3">
-            <Skeleton className="w-full h-14 bg-secondary"></Skeleton>
-            <Skeleton className="w-full h-14 bg-secondary"></Skeleton>
-            <Skeleton className="w-full h-14 bg-secondary"></Skeleton>
-            <Skeleton className="w-full h-14 bg-secondary"></Skeleton>
-            <Skeleton className="w-full h-14 bg-secondary"></Skeleton>
-            <Skeleton className="w-full h-14 bg-secondary"></Skeleton>
-            <Skeleton className="w-full h-14 bg-secondary"></Skeleton>
-            <Skeleton className="w-full h-14 bg-secondary"></Skeleton>
-            <Skeleton className="w-full h-14 bg-secondary"></Skeleton>
-            <Skeleton className="w-full h-14 bg-secondary"></Skeleton>
-          </div>
-        ) : allUser.length < 1 ? (
-          <div className="w-full justify-center flex items-center pt-10">
-            <Lottie className="w-96" animationData={noResule}></Lottie>
-          </div>
+          ""
+        ) : allUser.length < 11 ? (
+          ""
         ) : (
-          <div className="my-table overflow-x-auto mx-auto">
-            {!isLoading && (
-              <table className="w-max xl:w-full border-collapse">
-                <thead className="bg-primary/20">
-                  {table.getHeaderGroups().map((headerGroup) => (
-                    <tr key={headerGroup.id}>
-                      {headerGroup.headers.map((header) => (
-                        <th
-                          key={header.id}
-                          onClick={header.column.getToggleSortingHandler()}
-                          className="border text-sm md:text-base text-center px-2 md:px-4 py-1 md:py-2 cursor-pointer hover:bg-primary/20"
-                        >
-                          {flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                          {header.column.getIsSorted() === "asc" && (
-                            <IoArrowUp className="inline ml-2" />
-                          )}
-                          {header.column.getIsSorted() === "desc" && (
-                            <IoArrowDown className="inline ml-2" />
-                          )}
-                        </th>
-                      ))}
-                    </tr>
-                  ))}
-                </thead>
-                <tbody>
-                  {table.getRowModel().rows.map((row) => (
-                    <tr key={row.id} className="hover:bg-primary/5 text-xs md:text-base text-center">
-                      {row.getVisibleCells().map((cell) => (
-                        <td key={cell.id} className="border px-2 md:px-4 py-2">
-                          {flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext()
-                          )}
-                        </td>
-                      ))}
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            )}
+          <div className="py-3 flex  justify-center">
+            <ThemeProvider theme={theme}>
+              <Pagination
+                count={table.getPageCount()}
+                page={table.getState().pagination.pageIndex + 1}
+                onChange={handlePageChange}
+                sx={{
+                  "& .MuiPaginationItem-root": {
+                    color:
+                      themeMode === "light"
+                        ? theme.palette.text.light
+                        : theme.palette.text.dark,
+                  },
+                  "& .MuiPaginationItem-root:hover": {
+                    backgroundColor: "secondary.main",
+                    color: "white",
+                  },
+                }}
+              />
+            </ThemeProvider>
           </div>
         )}
-      </div>
-
-      {isLoading ? (
-        ""
-      ) : allUser.length < 11 ? (
-        ""
-      ) : (
-        <div className="py-3 flex  justify-center">
-          <ThemeProvider theme={theme}>
-            <Pagination
-              count={table.getPageCount()}
-              page={table.getState().pagination.pageIndex + 1}
-              onChange={handlePageChange}
-              sx={{
-                "& .MuiPaginationItem-root": {
-                  color:
-                    themeMode === "light"
-                      ? theme.palette.text.light
-                      : theme.palette.text.dark,
-                },
-                "& .MuiPaginationItem-root:hover": {
-                  backgroundColor: "secondary.main",
-                  color: "white",
-                },
-              }}
-            />
-          </ThemeProvider>
-        </div>
-      )}
       </section>
-     
+
       <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>

@@ -8,6 +8,7 @@ import PetCare from "@/components/ui/PetCare";
 
 import SuccessStory from "@/components/ui/SuccessStory";
 import { useEffect, useState } from "react";
+import { Helmet } from "react-helmet-async";
 
 
 
@@ -18,6 +19,9 @@ useEffect(() => {
 },[])
   return (
     <div >
+      <Helmet>
+        <title>Home | Petopia</title>
+      </Helmet>
       <div className="bg-primary/10">
         <Banner></Banner>
       </div>

@@ -35,6 +35,7 @@ import { CalendarIcon } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
 import { useQuery } from "@tanstack/react-query";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Helmet } from "react-helmet-async";
 
 const imageHostingKey = import.meta.env.VITE_API_KEY;
 const imageHostingAPI = `https://api.imgbb.com/1/upload?key=${imageHostingKey}`;
@@ -163,6 +164,9 @@ const UpdateAllCampaign = () => {
 
   return (
     <div className="w-11/12 mx-auto flex-col flex justify-center items-center pt-2">
+      <Helmet>
+              <title>Update Campaign | Petopia</title>
+            </Helmet>
       {isLoading ? (
         <div className="w-full pt-10 flex gap-3 flex-col items-center">
           <Skeleton className="w-full md:w-1/5 bg-secondary h-10"></Skeleton>

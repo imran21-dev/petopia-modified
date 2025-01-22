@@ -29,6 +29,7 @@ import {
 import Payment from "@/components/ui/Payment";
 import CampaignCart from "@/components/ui/CampaignCart";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Helmet } from "react-helmet-async";
 
 const DonationDetails = () => {
   const { id } = useParams();
@@ -80,6 +81,9 @@ if (forRefetch !== demoLoad) {
 
   return (
     <div className="w-11/12 mx-auto pt-3 md:pt-5">
+      <Helmet>
+              <title>{`Donation Details - ${id} | Petopia`}</title>
+            </Helmet>
       <h1 className="text-lg lg:text-2xl font-bold pb-3 lg:pb-10">Campaign Details</h1>
       {isLoading ? (
         <div>

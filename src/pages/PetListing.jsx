@@ -1,5 +1,3 @@
-
-
 import { Button } from "@/components/ui/button";
 import PetCard from "@/components/ui/PetCard";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -14,26 +12,28 @@ import noResule from "../assets/noresult.json";
 import Lottie from "lottie-react";
 import { CgClose } from "react-icons/cg";
 import { useLocation } from "react-router-dom";
-
+import { Helmet } from "react-helmet-async";
 
 const PetListing = () => {
   const skeleton = [1, 1, 1, 1, 1, 1, 1, 1];
   const axiosPublic = useAxiosPublic();
 
-  const {state} = useLocation()
+  const { state } = useLocation();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  
+
   useEffect(() => {
-    window.scrollTo(0,0)
-  },[])
+    window.scrollTo(0, 0);
+  }, []);
 
   const [demoLoad, setDemoLoad] = useState(0);
   const [keyword, setKeyword] = useState(state?.keyword ? state.keyword : "");
-  const [selectedCategory, setSelectedCategory] = useState(state?.category ? state.category : "");
+  const [selectedCategory, setSelectedCategory] = useState(
+    state?.category ? state.category : ""
+  );
 
   const { ref, inView } = useInView();
 
@@ -62,11 +62,10 @@ const PetListing = () => {
       setKeyword("");
       return;
     }
-  
+
     setKeyword(data.keyword);
     refetch();
     setSelectedCategory("");
-    
   };
 
   useEffect(() => {
@@ -84,11 +83,11 @@ const PetListing = () => {
     document.getElementById("Form").reset();
   };
 
-
-
-
   return (
-    <div  className="w-11/12 mx-auto pt-3 md:pt-5">
+    <div className="w-11/12 mx-auto pt-3 md:pt-5">
+      <Helmet>
+        <title>Pet Listing | Petopia</title>
+      </Helmet>
       <div className="grid gap-2 lg:grid-cols-3 items-center pb-5">
         <h1 className="text-lg md:text-xl font-bold">All Pets</h1>
         <div className="flex justify-center  items-center gap-2 w-full">
@@ -105,15 +104,14 @@ const PetListing = () => {
             onSubmit={handleSubmit(onSubmit)}
             className="border text-sm md:text-base  flex items-center pl-2 rounded-full overflow-hidden"
           >
-            <CiSearch className="text-xl opacity-50" />
+            <CiSearch className="text-3xl opacity-50" />
             <input
-              
               type="text"
               {...register("keyword")}
               placeholder="Search..."
               className="bg-transparent pl-1 pr-3 w-full"
             />
-            <Button className='md:text-sm text-xs h-max'>Search</Button>
+            <Button className="md:text-sm text-xs h-max">Search</Button>
           </form>
         </div>
         <div className="flex  justify-end">
@@ -158,8 +156,8 @@ const PetListing = () => {
         </div>
       )}
       <div ref={ref} className="text-center text-sm py-5 opacity-50">
-      {isFetchingNextPage && <p>Loading...</p>}
-      {!hasNextPage && !isLoading && <p >No more pet available</p>}
+        {isFetchingNextPage && <p>Loading...</p>}
+        {!hasNextPage && !isLoading && <p>No more pet available</p>}
       </div>
     </div>
   );

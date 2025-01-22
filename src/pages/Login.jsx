@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ImSpinner3 } from "react-icons/im";
 
-
 import {
   Card,
   CardContent,
@@ -18,15 +17,11 @@ import googlePng from "../assets/google.png";
 import facebookPng from "../assets/facebook.png";
 import { useForm } from "react-hook-form";
 
-
 import { AssetContext } from "@/auth/ContextApi";
 
 import { useToast } from "@/hooks/use-toast";
 import { ToastAction } from "@/components/ui/toast";
-
-
-
-
+import { Helmet } from "react-helmet-async";
 
 const Login = () => {
   const {
@@ -39,57 +34,55 @@ const Login = () => {
   const handleCheckbox = (checked) => {
     setIsChecked(checked);
   };
- const {state} = useLocation()
+  const { state } = useLocation();
 
-  const {login,googleLogin,facebookLogin} = useContext(AssetContext)
-  const { toast } = useToast()
-  const [spin, setSpin] = useState(false)
-  const navigate = useNavigate()
+  const { login, googleLogin, facebookLogin } = useContext(AssetContext);
+  const { toast } = useToast();
+  const [spin, setSpin] = useState(false);
+  const navigate = useNavigate();
 
   const onSubmit = async (data) => {
-    setSpin(true)
-    const {email, password} = data
+    setSpin(true);
+    const { email, password } = data;
     login(email, password)
-    .then(() => {
-      toast({
-        title: 'Successfully Logged In!',
-         description: "Welcome back! You're now signed in and ready to explore.",
-       })
-        setSpin(false)
-        reset()
-        if (state) {
-          navigate(state.from)
-        }else{
-
-          navigate('/')
-        }
-    })
-    .catch((error) => {
-        setSpin(false)
-        reset()
+      .then(() => {
         toast({
-            variant: "destructive",
-            title: "Uh oh! Something went wrong.",
-            description: `${error.code}`,
-            action: <ToastAction altText="Try again">Try again</ToastAction>,
-          })
-    })
-
-   
+          title: "Successfully Logged In!",
+          description:
+            "Welcome back! You're now signed in and ready to explore.",
+        });
+        setSpin(false);
+        reset();
+        if (state) {
+          navigate(state.from);
+        } else {
+          navigate("/");
+        }
+      })
+      .catch((error) => {
+        setSpin(false);
+        reset();
+        toast({
+          variant: "destructive",
+          title: "Uh oh! Something went wrong.",
+          description: `${error.code}`,
+          action: <ToastAction altText="Try again">Try again</ToastAction>,
+        });
+      });
   };
 
   const handleGoogleLogin = () => {
     googleLogin()
       .then(() => {
         toast({
-          title: 'Successfully Logged In!',
-           description: "Welcome back! You're now signed in and ready to explore.",
-         })
-         if (state) {
-          navigate(state.from)
-        }else{
-
-          navigate('/')
+          title: "Successfully Logged In!",
+          description:
+            "Welcome back! You're now signed in and ready to explore.",
+        });
+        if (state) {
+          navigate(state.from);
+        } else {
+          navigate("/");
         }
       })
       .catch((error) => {
@@ -104,53 +97,62 @@ const Login = () => {
 
   const handleFacebookLogin = () => {
     facebookLogin()
-    .then(() => {
-      toast({
-        title: 'Successfully Logged In!',
-         description: "Welcome back! You're now signed in and ready to explore.",
-       })
-       if (state) {
-        navigate(state.from)
-      }else{
-
-        navigate('/')
-      }
-    })
-    .catch((error) => {
-      toast({
-        variant: "destructive",
-        title: "Uh oh! Something went wrong.",
-        description: `${error.code}`,
-        action: <ToastAction altText="Try again">Try again</ToastAction>,
+      .then(() => {
+        toast({
+          title: "Successfully Logged In!",
+          description:
+            "Welcome back! You're now signed in and ready to explore.",
+        });
+        if (state) {
+          navigate(state.from);
+        } else {
+          navigate("/");
+        }
+      })
+      .catch((error) => {
+        toast({
+          variant: "destructive",
+          title: "Uh oh! Something went wrong.",
+          description: `${error.code}`,
+          action: <ToastAction altText="Try again">Try again</ToastAction>,
+        });
       });
-    });
-}
+  };
 
-const [emailValue, setEmailValue] = useState('')
-const handleEmail = (e) => {
-  setEmailValue(e.target.value)
-}
-
+  const [emailValue, setEmailValue] = useState("");
+  const handleEmail = (e) => {
+    setEmailValue(e.target.value);
+  };
 
   return (
     <div className="w-11/12 mx-auto flex-col flex  justify-center items-center pt-10">
- 
+      <Helmet>
+        <title>Login | Petopia</title>
+      </Helmet>
       <Card className="xl:w-2/5  shadow-none border-none">
         <CardHeader className="text-center">
           <CardTitle className="text-lg md:text-2xl font-bold ">
             Welcome back!
           </CardTitle>
-          <CardDescription className='md:text-base text-xs'>
-          Log in to continue your journey with us.
+          <CardDescription className="md:text-base text-xs">
+            Log in to continue your journey with us.
           </CardDescription>
         </CardHeader>
         <section className="w-full flex flex-col items-center">
           <div className="pb-3 md:pb-5 flex justify-center flex-wrap gap-2">
-            <Button className='md:text-sm text-xs h-max' onClick={handleGoogleLogin} variant="outline">
+            <Button
+              className="md:text-sm text-xs h-max"
+              onClick={handleGoogleLogin}
+              variant="outline"
+            >
               <img className="w-3 md:w-4" src={googlePng} alt="" />
               Continue with Google
             </Button>
-            <Button className='md:text-sm text-xs h-max' onClick={handleFacebookLogin} variant="outline">
+            <Button
+              className="md:text-sm text-xs h-max"
+              onClick={handleFacebookLogin}
+              variant="outline"
+            >
               <img className="w-3 md:w-4" src={facebookPng} alt="" />
               Continue with Facebook
             </Button>
@@ -161,12 +163,13 @@ const handleEmail = (e) => {
             <div className="w-20  md:w-32 h-[1px] bg-secondary-foreground/20" />
           </div>
         </section>
-        <CardContent className='p-0'>
+        <CardContent className="p-0">
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="grid pb-5 w-full items-center gap-3 md:gap-4">
-             
               <div className="flex flex-col space-y-1.5">
-                <Label htmlFor="email" className='text-xs md:text-sm'>Email</Label>
+                <Label htmlFor="email" className="text-xs md:text-sm">
+                  Email
+                </Label>
                 <Input
                   {...register("email", {
                     required: "Email is required",
@@ -175,29 +178,37 @@ const handleEmail = (e) => {
                       message: "Please enter a valid email address",
                     },
                   })}
-                  className={errors.email ? "border-red-600 text-sm h-max md:text-base" : "text-sm h-max md:text-base"}
+                  className={
+                    errors.email
+                      ? "border-red-600 text-sm h-max md:text-base"
+                      : "text-sm h-max md:text-base"
+                  }
                   type="email"
                   onKeyUp={handleEmail}
                   placeholder="Enter your email"
                 />
                 {errors.email && (
-                  <p className="text-red-600 text-xs md:text-sm">{errors.email.message}</p>
+                  <p className="text-red-600 text-xs md:text-sm">
+                    {errors.email.message}
+                  </p>
                 )}
               </div>
 
               <div className="flex flex-col space-y-1.5">
-                <Label htmlFor="password" className='text-xs md:text-sm'>
-                  Password 
+                <Label htmlFor="password" className="text-xs md:text-sm">
+                  Password
                 </Label>
                 <Input
                   {...register("password", {
                     required: "Password is required",
-                   
-                   
                   })}
                   type={isChecked ? "text" : "password"}
                   placeholder="Password"
-                  className={errors.password ? "border-red-600 text-sm h-max md:text-base" : "text-sm h-max md:text-base"}
+                  className={
+                    errors.password
+                      ? "border-red-600 text-sm h-max md:text-base"
+                      : "text-sm h-max md:text-base"
+                  }
                 />
                 {errors.password && (
                   <p className="text-red-600 text-xs md:text-sm">
@@ -217,11 +228,18 @@ const handleEmail = (e) => {
                 >
                   Show password
                 </label>
-                <Link state={{email: emailValue}} to='/reset-password' className="text-[10px] md:text-xs flex-1 text-right text-primary hover:underline">Forgot password?</Link>
+                <Link
+                  state={{ email: emailValue }}
+                  to="/reset-password"
+                  className="text-[10px] md:text-xs flex-1 text-right text-primary hover:underline"
+                >
+                  Forgot password?
+                </Link>
               </div>
-              
             </div>
-            <Button disabled={spin} className='md:text-sm text-xs h-max w-full'>{spin && <ImSpinner3 className="animate-spin"/>}Login</Button>
+            <Button disabled={spin} className="md:text-sm text-xs h-max w-full">
+              {spin && <ImSpinner3 className="animate-spin" />}Login
+            </Button>
           </form>
           <h1 className="text-[10px] md:text-xs text-center py-2 font-medium">
             Do not have an account?{" "}

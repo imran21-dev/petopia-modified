@@ -33,6 +33,7 @@ import useAxiosSecure from "@/hooks/useAxiosSecure";
 import { useToast } from "@/hooks/use-toast";
 import { Skeleton } from "@/components/ui/skeleton";
 import moment from "moment";
+import { Helmet } from "react-helmet-async";
 const PetDetails = () => {
   const { id } = useParams();
   const axiosPublic = useAxiosPublic();
@@ -114,85 +115,96 @@ const PetDetails = () => {
   const handleContinue = () => {
     navigate("/login");
   };
- 
+
   return (
     <div className="w-11/12 mx-auto pt-3 md:pt-5">
-      <h1 className="text-lg lg:text-2xl font-bold pb-3 lg:pb-10 ">Pet Details</h1>
+      <Helmet>
+        <title>{`Pet Details - ${id} | Petopia`}</title>
+      </Helmet>
+      <h1 className="text-lg lg:text-2xl font-bold pb-3 lg:pb-10 ">
+        Pet Details
+      </h1>
       <div>
-        {
-        petLoading ? 
-        <div>
+        {petLoading ? (
+          <div>
             <div className="grid lg:grid-cols-2 gap-3 lg:gap-10">
-                <Skeleton className='w-full h-64 lg:h-[500px] rounded-3xl bg-secondary'></Skeleton>
-                <div className="space-y-3">
-                    <Skeleton className='w-4/12 h-4 md:h-8 bg-secondary'></Skeleton>
-                    <Skeleton className='w-full h-6 md:h-14 bg-secondary'></Skeleton>
-                    <Skeleton className='w-3/12 h-4 md:h-8 bg-secondary'></Skeleton>
-                    <Skeleton className='w-3/12 h-4 md:h-8 bg-secondary'></Skeleton>
-                    <Skeleton className='w-3/12 h-4 md:h-8 bg-secondary'></Skeleton>
-                    <Skeleton className='w-2/12 h-4 md:h-8 bg-secondary'></Skeleton>
-                    <Skeleton className='w-5/12 h-2 md:h-5 bg-secondary'></Skeleton>
-                    <Skeleton className='w-2/12 h-4 md:h-10 bg-secondary'></Skeleton>
-                </div>
+              <Skeleton className="w-full h-64 lg:h-[500px] rounded-3xl bg-secondary"></Skeleton>
+              <div className="space-y-3">
+                <Skeleton className="w-4/12 h-4 md:h-8 bg-secondary"></Skeleton>
+                <Skeleton className="w-full h-6 md:h-14 bg-secondary"></Skeleton>
+                <Skeleton className="w-3/12 h-4 md:h-8 bg-secondary"></Skeleton>
+                <Skeleton className="w-3/12 h-4 md:h-8 bg-secondary"></Skeleton>
+                <Skeleton className="w-3/12 h-4 md:h-8 bg-secondary"></Skeleton>
+                <Skeleton className="w-2/12 h-4 md:h-8 bg-secondary"></Skeleton>
+                <Skeleton className="w-5/12 h-2 md:h-5 bg-secondary"></Skeleton>
+                <Skeleton className="w-2/12 h-4 md:h-10 bg-secondary"></Skeleton>
+              </div>
             </div>
-            <Skeleton className='w-full h-14 md:h-32 mt-3 md:mt-5 bg-secondary'></Skeleton>
-        </div>
-        : 
-       <div>
-        <div className="grid lg:grid-cols-2 gap-3 lg:gap-10">
-          <img
-            className="w-full h-64 lg:h-[500px] object-cover rounded-3xl"
-            src={pet?.pet_image}
-            alt="pet image"
-          />
-
-          <div className="flex-1">
-            <div>
-              <h1 className="text-lg lg:text-2xl font-bold">
-                My name is {pet?.pet_name}!
-              </h1>
-              <p className="flex items-center gap-2 text-sm md:text-base py-1 md:py-2 font-medium">
-                <FaLocationDot />
-                {pet?.pet_location}
-              </p>
-              <p className="font-medium text-sm ">{pet?.short_description}</p>
-
-              <p className="text-sm md:text-base py-1 md:py-2 font-medium flex items-center gap-1">
-                Age <IoMdArrowDropright /> {pet?.pet_age} years
-              </p>
-              <p className="font-medium flex items-center gap-1 text-sm md:text-base">
-                Category <IoMdArrowDropright /> {pet?.pet_category}
-              </p>
-              <p className=" md:pb-5 text-sm md:text-base pt-1 pb-3 md:pt-2 font-medium flex items-center gap-1">
-                Added on <IoMdArrowDropright />{" "}
-                {moment(pet?.added_date).format("MMM Do YY")}
-              </p>
-            </div>
-
-            {pet?.author === user?.email ? (
-              <Link to="/dashboard/my-pets">
-                <Button className='md:text-sm text-xs h-max'>Manage</Button>
-              </Link>
-            ) : isLoading ? (
-              <Skeleton className="w-28 h-8"></Skeleton>
-            ) : isRequested.status === false ? (
-              <Button className='md:text-sm text-xs h-max' disabled>Requested</Button>
-            ) : (
-              <Button className='md:text-sm text-xs h-max' onClick={handlePetApotion}>Adopt</Button>
-            )}
+            <Skeleton className="w-full h-14 md:h-32 mt-3 md:mt-5 bg-secondary"></Skeleton>
           </div>
-        </div>
+        ) : (
+          <div>
+            <div className="grid lg:grid-cols-2 gap-3 lg:gap-10">
+              <img
+                className="w-full h-64 lg:h-[500px] object-cover rounded-3xl"
+                src={pet?.pet_image}
+                alt="pet image"
+              />
 
-        <h2 className="font-semibold pt-3 md:pt-5">Description</h2>
-        <div
-          className="md:py-3 py-1 text-xs md:text-sm"
-          dangerouslySetInnerHTML={{ __html: pet?.long_description }}
-        ></div>
+              <div className="flex-1">
+                <div>
+                  <h1 className="text-lg lg:text-2xl font-bold">
+                    My name is {pet?.pet_name}!
+                  </h1>
+                  <p className="flex items-center gap-2 text-sm md:text-base py-1 md:py-2 font-medium">
+                    <FaLocationDot />
+                    {pet?.pet_location}
+                  </p>
+                  <p className="font-medium text-sm ">
+                    {pet?.short_description}
+                  </p>
+
+                  <p className="text-sm md:text-base py-1 md:py-2 font-medium flex items-center gap-1">
+                    Age <IoMdArrowDropright /> {pet?.pet_age} years
+                  </p>
+                  <p className="font-medium flex items-center gap-1 text-sm md:text-base">
+                    Category <IoMdArrowDropright /> {pet?.pet_category}
+                  </p>
+                  <p className=" md:pb-5 text-sm md:text-base pt-1 pb-3 md:pt-2 font-medium flex items-center gap-1">
+                    Added on <IoMdArrowDropright />{" "}
+                    {moment(pet?.added_date).format("MMM Do YY")}
+                  </p>
+                </div>
+
+                {pet?.author === user?.email ? (
+                  <Link to="/dashboard/my-pets">
+                    <Button className="md:text-sm text-xs h-max">Manage</Button>
+                  </Link>
+                ) : isLoading ? (
+                  <Skeleton className="w-28 h-8"></Skeleton>
+                ) : isRequested.status === false ? (
+                  <Button className="md:text-sm text-xs h-max" disabled>
+                    Requested
+                  </Button>
+                ) : (
+                  <Button
+                    className="md:text-sm text-xs h-max"
+                    onClick={handlePetApotion}
+                  >
+                    Adopt
+                  </Button>
+                )}
+              </div>
+            </div>
+
+            <h2 className="font-semibold pt-3 md:pt-5">Description</h2>
+            <div
+              className="md:py-3 py-1 text-xs md:text-sm"
+              dangerouslySetInnerHTML={{ __html: pet?.long_description }}
+            ></div>
+          </div>
+        )}
       </div>
-        }
-      </div>
-
-
 
       <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
         <AlertDialogContent>

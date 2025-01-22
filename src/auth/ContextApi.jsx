@@ -3,7 +3,7 @@ import { createContext, useEffect, useState } from "react";
 import { auth } from "./firebase.config";
 import { createUserWithEmailAndPassword, FacebookAuthProvider, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
 import useAxiosPublic from "@/hooks/useAxiosPublic";
-import 'quill/dist/quill.snow.css';
+
 export const AssetContext = createContext(null);
 
 const ContextApi = ({ children }) => {
@@ -13,7 +13,7 @@ const ContextApi = ({ children }) => {
   const [isOpenPayment, setIsOpenPayment] = useState(false);
   const [demoLoad, setDemoLoad] = useState(0)
   const [demoLoadTheme, setDemoLoadTheme] = useState(0)
-  const [editorContent, setEditorContent] = useState('');
+ 
 
 
 
@@ -87,8 +87,6 @@ const ContextApi = ({ children }) => {
     googleLogin,
     facebookLogin,
     logOut,
-    editorContent,
-    setEditorContent,
     isOpenPayment,
     setIsOpenPayment,
     demoLoad,
