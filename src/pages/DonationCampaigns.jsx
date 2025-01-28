@@ -56,7 +56,7 @@ const DonationCampaigns = () => {
           page.map((camp) => <CampaignCart key={camp._id} camp={camp} />)
         )}
       </div>
-
+    
       <div ref={ref} className="text-center text-sm py-5 opacity-50">
         {isFetchingNextPage && <p>Loading...</p>}
         {!hasNextPage && !isLoading && <p>No more campaigns available</p>}
