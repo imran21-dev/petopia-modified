@@ -176,7 +176,7 @@ const Login = () => {
             <div className="grid pb-5 w-full items-center gap-3 md:gap-4">
               <Dialog>
                 <DialogTrigger className="text-sm text-primary hover:underline">
-                  See Admin credential
+                  Se Admin credential
                 </DialogTrigger>
                 <DialogContent>
                   <DialogHeader>
