@@ -114,6 +114,16 @@ const Navbar = () => {
             <NavLink to="/donation-campaigns" className="navlist-text">
               Donation Campaigns
             </NavLink>
+             {
+             user && <>
+             <NavLink to="/dashboard" className="navlist-text">
+              Dashboard
+            </NavLink>
+            <h2 onClick={handleLogOut}  className="navlist-text cursor-pointer">
+              Log out
+            </h2>
+             </>
+             }
           </div>
 
           <div className="flex items-center flex-1 justify-end gap-2">
