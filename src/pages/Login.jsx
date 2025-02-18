@@ -18,10 +18,18 @@ import facebookPng from "../assets/facebook.png";
 import { useForm } from "react-hook-form";
 
 import { AssetContext } from "@/auth/ContextApi";
-
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
 import { ToastAction } from "@/components/ui/toast";
 import { Helmet } from "react-helmet-async";
+import { set } from "date-fns";
 
 const Login = () => {
   const {
@@ -164,8 +172,23 @@ const Login = () => {
           </div>
         </section>
         <CardContent className="p-0">
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form id="form" onSubmit={handleSubmit(onSubmit)}>
             <div className="grid pb-5 w-full items-center gap-3 md:gap-4">
+              <Dialog>
+                <DialogTrigger className="text-sm text-primary hover:underline">
+                  See Admin credential
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>Use Admin Credential</DialogTitle>
+                    <DialogDescription className="text-xs md:text-sm">
+                      Email: imransorker456@gmail.com <br />
+                      Password: 9c@#$Ma7
+                    </DialogDescription>
+                  </DialogHeader>
+                </DialogContent>
+              </Dialog>
+
               <div className="flex flex-col space-y-1.5">
                 <Label htmlFor="email" className="text-xs md:text-sm">
                   Email
