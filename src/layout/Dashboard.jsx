@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link, NavLink, Outlet } from "react-router-dom";
 import { RiApps2AddFill } from "react-icons/ri";
-import { FaCat, FaCloudMoon } from "react-icons/fa";
+import { FaCat, FaCloudMoon, FaUserCircle } from "react-icons/fa";
 import { GoHomeFill } from "react-icons/go";
 import { IoAccessibility, IoPartlySunnySharp } from "react-icons/io5";
 import { BiSolidDonateHeart } from "react-icons/bi";
@@ -110,6 +110,11 @@ const Dashboard = () => {
               Admin Home
             </NavLink>
 
+            <NavLink to="/dashboard/profile" className="dashboard-list">
+                  <FaUserCircle className="text-lg" />
+                  Profile
+                </NavLink>
+
             <NavLink to="/dashboard/add-pet" className="dashboard-list">
               <RiApps2AddFill className="text-lg" />
               Add a Pet
@@ -166,6 +171,11 @@ const Dashboard = () => {
               <GoHomeFill className="text-lg" />
               Home
             </NavLink>
+
+            <NavLink to="/dashboard/profile" className="dashboard-list">
+                  <FaUserCircle className="text-lg" />
+                  Profile
+                </NavLink>
 
             <NavLink to="/dashboard/add-pet" className="dashboard-list">
               <RiApps2AddFill className="text-lg" />
@@ -234,6 +244,11 @@ const Dashboard = () => {
                   Admin Home
                 </NavLink>
 
+                <NavLink to="/dashboard/profile" className="dashboard-list">
+                  <FaUserCircle className="text-lg" />
+                  Profile
+                </NavLink>
+
                 <NavLink to="/dashboard/add-pet" className="dashboard-list">
                   <RiApps2AddFill className="text-lg" />
                   Add a Pet
@@ -298,6 +313,11 @@ const Dashboard = () => {
                 <NavLink to="/dashboard/home" className="dashboard-list">
                   <GoHomeFill className="text-lg" />
                   Home
+                </NavLink>
+
+                <NavLink to="/dashboard/profile" className="dashboard-list">
+                  <FaUserCircle className="text-lg" />
+                  Profile
                 </NavLink>
 
                 <NavLink to="/dashboard/add-pet" className="dashboard-list">

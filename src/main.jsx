@@ -34,6 +34,7 @@ import UpdateAllCampaign from "./pages/UpdateAllCampaign";
 import ResetPassword from "./pages/ResetPassword";
 import ErrorPage from "./pages/ErrorPage";
 import { HelmetProvider } from "react-helmet-async";
+import Profile from "./pages/Profile";
 
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
@@ -185,6 +186,14 @@ const router = createBrowserRouter([
               <AdminRoute>
                 <AllDonations></AllDonations>
               </AdminRoute>
+            ),
+          },
+          {
+            path: "/dashboard/profile",
+            element: (
+             <PrivateRoute>
+              <Profile></Profile>
+             </PrivateRoute>
             ),
           },
           {

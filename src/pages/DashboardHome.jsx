@@ -18,9 +18,7 @@ import Charts from "@/components/ui/Charts";
 const DashboardHome = () => {
   const { user } = useContext(AssetContext);
 
-  const handleImage = (e) => {
-    e.target.src = fakeUser;
-  };
+
   const [isAdmin] = useAdmin();
   const axiosSecure = useAxiosSecure();
    const {
@@ -76,18 +74,9 @@ const DashboardHome = () => {
         <title>Dashboard | Petopia</title>
       </Helmet>
 
-      {/* <div className="flex flex-col text-center md:text-left md:flex-row items-center md:gap-10 gap-3 w-full">
-        <img
-          onError={handleImage}
-          className="w-32 h-32 rounded-full object-cover"
-          src={user?.photoURL}
-          alt=""
-        />
-       
-      </div> */}
 
         <section className="w-full">
-          {isLoading || isLoadingc || isLoadingmc || isLoadingu ? <>ok</> : <>
+          {isLoading || isLoadingc || isLoadingmc || isLoadingu ? <></> : <>
             <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4  gap-3">
             <div className="flex justify-center items-center gap-3 bg-secondary/50  py-10 rounded-lg">
             <HiMiniUsers className="text-3xl" />
