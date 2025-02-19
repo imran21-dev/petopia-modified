@@ -7,6 +7,7 @@ import Footer from "@/components/ui/Footer";
 import PetCare from "@/components/ui/PetCare";
 
 import SuccessStory from "@/components/ui/SuccessStory";
+import Support from "@/components/ui/Support";
 import WhyAdopt from "@/components/ui/WhyAdopt";
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
@@ -34,6 +35,7 @@ useEffect(() => {
       <SuccessStory></SuccessStory>
       <PetCare></PetCare>
       <WhyAdopt></WhyAdopt>
+      <Support></Support>
       </div>
       <Footer></Footer>
     </div>
