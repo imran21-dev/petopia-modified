@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import logo from "../../assets/logo.png";
-import { Link, Navigate, NavLink, useNavigate } from "react-router-dom";
+import { Link, Navigate, NavLink, useLocation, useNavigate } from "react-router-dom";
 import fakeUser from "../../assets/fakeuser.webp";
 import { RxDashboard } from "react-icons/rx";
 import { MdLogout } from "react-icons/md";
@@ -87,9 +87,12 @@ const Navbar = () => {
   };
   const [open, setOpen] = useState(false)
 
+  const {pathname} = useLocation()
+  
+
   return (
     <Headroom>
-      <div className={` duration-300 z-50 relative pt-2 pb-2 md:pb-0 md:pt-0 bg-background shadow-sm`}>
+      <div className={` duration-300 z-50 relative pt-2 pb-2 md:pb-0 md:pt-0 bg-background shadow-sm ${pathname.includes('/dashboard') && 'hidden'} ` }>
         <div className="w-11/12 mx-auto md:gap-10 flex  items-center">
          <div className="relative block md:hidden">
          <button  onClick={() => setOpen(!open)} className="hover:bg-secondary p-2 rounded-full mr-2 text-sm">{open ? <IoMdClose/> : <RiMenu2Fill/>}</button> 
