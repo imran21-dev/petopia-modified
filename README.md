@@ -1,12 +1,14 @@
 
 ## Project Name - Petopia
-
+![Service Scope](https://i.postimg.cc/0jK9Ts1s/Neon-Retro-Stars-Marketing-Mockup-Website-Instagram-Post.png)
 ## Purpose of the Website
 The purpose of this website is to create a platform where individuals can connect to find and adopt pets in need of a loving home. Users can browse through various pets available for adoption or add their own pets to the platform for others to adopt. Additionally, the website provides a space for users to explore and contribute to donation campaigns aimed at supporting pet care and adoption efforts. This platform fosters a community dedicated to improving the lives of pets and their potential owners.
 ### Live URLs 
 - [https://petopia-f7bab.web.app/](https://petopia-f7bab.web.app/)
 - [https://petopia-f7bab.firebaseapp.com/](https://petopia-f7bab.firebaseapp.com/)
 
+### Project's Docs
+-  [https://docs.google.com/document/d/1XMDfnfDngCbYNdrX2zE-lsYkZSsEmF3xxCr7C1jY_K8/edit?tab=t.0](https://docs.google.com/document/d/1XMDfnfDngCbYNdrX2zE-lsYkZSsEmF3xxCr7C1jY_K8/edit?tab=t.0)
 
 ### Key Features:
 - ***Adopt Pets:*** Users can browse a variety of pets available for adoption and find their perfect companion.
